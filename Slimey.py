@@ -38,9 +38,7 @@ async def update_odds():
     bottleflipvar = random.randint(30,80)
     megaflip = random.randint(20,60)
 
-else:
-  print("It is not 9")
-  print("----------")
+
 def is_it_me(ctx):
   return ctx.author.id == 830751616927268884
 
