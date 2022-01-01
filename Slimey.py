@@ -36,6 +36,7 @@ if now.hour == 9 and now.minute == 0 and now.second == 0:
   bottleflipvar = random.randint(30,80)
   megaflip = random.randint(20,60)
 
+
 else:
   print("It is not 9")
   print("----------")
