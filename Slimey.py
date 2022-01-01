@@ -28,14 +28,15 @@ async def on_ready ():
   print(f"Logged in as {bot.user} (ID: {bot.user.id})")
   print("----------")
 
-now = datetime.datetime.now()
+@tasks.loop(seconds=10)
+async def update_odds():
+  now = datetime.datetime.now()
 
-if now.hour == 9 and now.minute == 0 and now.second == 0:
-  global megaflip
-  global bottleflipvar
-  bottleflipvar = random.randint(30,80)
-  megaflip = random.randint(20,60)
-
+  if now.hour == 9 and now.minute == 0 and now.second == 0:
+    global megaflip
+    global bottleflipvar
+    bottleflipvar = random.randint(30,80)
+    megaflip = random.randint(20,60)
 
 else:
   print("It is not 9")
