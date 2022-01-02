@@ -204,7 +204,6 @@ async def invite (ctx):
   await ctx.reply("Invite me now @ https://discord.com/api/oauth2/authorize?client_id=915488552568123403&permissions=1538373582279&scope=bot%20applications.commands")
 
 @bot.command()
-@commands.check(is_it_me)
 @commands.cooldown (1,10,commands.BucketType.user)
 async def rps(ctx, response):
   if response == "rock" or response == "paper" or response == "scissor" or response == "scissors":
