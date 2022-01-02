@@ -226,6 +226,8 @@ async def rps(ctx, response):
       await ctx.send("I win!")
     elif botRes == "paper" and response == "scissors":
       await ctx.send("You win!")
+    elif botRes == "scissor" and response == "paper":
+      await ctx.send("I win!")
 
   else:
     em = discord.Embed(title = "Oops!", description = "Invalid respons! Please type a response that contains rock, paper, scissor and remember its case sensitive!", color = discord.Color.red())
