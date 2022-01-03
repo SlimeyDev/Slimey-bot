@@ -206,7 +206,7 @@ async def invite (ctx):
 
 @bot.command()
 @commands.cooldown (1,10,commands.BucketType.user)
-async def rps(ctx, response):
+async def rps(ctx, response = None):
   if response == "rock" or response == "paper" or response == "scissor" or response == "scissors":
 
     botRes = random.choice(["rock", "paper", "scissor"])
