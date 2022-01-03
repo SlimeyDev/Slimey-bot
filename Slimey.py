@@ -27,7 +27,7 @@ async def on_ready ():
   #f"{len(bot.guilds)} servers | <help"
   #status=discord.Status.idle
   #await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
-  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="a movie"))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help"))
   print(f"Logged in as {bot.user} (ID: {bot.user.id})")
   print("----------")
 
