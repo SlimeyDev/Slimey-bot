@@ -29,7 +29,7 @@ async def on_ready ():
   print(f"Logged in as {bot.user} (ID: {bot.user.id})")
   print("----------")
 
-@tasks.loop(seconds=10)
+@tasks.loop(seconds=1)
 async def update_odds():
   now = datetime.datetime.now()
 
