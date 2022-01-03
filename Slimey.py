@@ -25,7 +25,7 @@ bot = commands.Bot (command_prefix = "<", help_command = None)
 async def on_ready ():
   update_odds.start()
   #f"{len(bot.guilds)} servers | <help"
-  await bot.change_presence(status=discord.Status.online, activity=discord.Game(f"{len(bot.guilds)} servers | <help"))
+  await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching(f"{len(bot.guilds)} servers | <help"))
   print(f"Logged in as {bot.user} (ID: {bot.user.id})")
   print("----------")
 
