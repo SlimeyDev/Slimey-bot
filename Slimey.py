@@ -154,6 +154,7 @@ async def dadjoke (ctx):
 
   await ctx.reply (sending_joke)
 
+
 @bot.command ()
 async def inspire (ctx):
   quote = get_quote()
