@@ -76,8 +76,7 @@ def get_Joke():
 @bot.command()
 @commands.check(is_it_me)
 async def restart (ctx):
-  em = discord.Embed (title = "Bot will be restarted", description="The bot will restarting now", delete_after=2.5, color = discord.Colour.purple)
-  em.set_footer (text = "This message will be deleted in 2 seconds")
+  em = discord.Embed (title = "Bot will be restarted", description="The bot will restarting now", color = discord.Colour.purple())
   await ctx.reply(embed = em)
   # Running git pull for getting last commit
   os.system("git pull")
