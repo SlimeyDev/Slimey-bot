@@ -87,7 +87,7 @@ async def restart (ctx):
 
 @bot.command()
 async def ping (ctx):
-  em = discord.Embed (title = "Pong!", description = f"{round(bot.latency*1000)}ms", color = discord.Colour.blue())
+  em = discord.Embed (title = "Pong !", description = f"{round(bot.latency*1000)}ms", color = discord.Colour.blue())
 
   await ctx.reply(embed = em)
 
