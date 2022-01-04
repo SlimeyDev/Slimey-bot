@@ -15,6 +15,7 @@ import requests
 import random
 from requests.models import Response
 import datetime
+import os, sys
 # from discord.ext import slash_commands
 
 bot = commands.Bot (command_prefix = "<", help_command = None)
@@ -72,6 +73,16 @@ def get_Joke():
   joke = Joke(setup, punchline)
   return(joke) 
 
+@bot.command()
+@commands.check(is_it_me)
+async def restart (ctx):
+  em = discord.Embed (title = "Bot will be restarted", description="The bot will restarting now", delete_after=2.5, color = discord.Colour.purple)
+  em.set_footer (text = "This message will be deleted in 2 seconds")
+  await ctx.reply(embed = em)
+  # Running git pull for getting last commit
+  os.system("git pull")
+  # Restarting the bot to load latest local commit
+  os.execv(sys.executable, ['python'] + sys.argv)
 
 
 @bot.command()
