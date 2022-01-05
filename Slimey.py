@@ -324,7 +324,7 @@ async def password(ctx, lenght):
 
 @bot.command()
 @commands.check(is_it_me)
-async def embed(ctx, *, title_em = "please enter the title!", description_em = "please enter the description!"):
+async def embed(ctx, title_em = "please enter the title!", description_em = "please enter the description!"):
   em = discord.Embed(title = title_em, description = description_em)
   await ctx.send(embed = em)
    
