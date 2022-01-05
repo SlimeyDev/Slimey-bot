@@ -10,6 +10,7 @@ from discord.enums import Status
 from discord.errors import ClientException
 from discord.ext import commands, tasks
 import json
+from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
 import requests
 import random
