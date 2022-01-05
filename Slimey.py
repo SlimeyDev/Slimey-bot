@@ -161,7 +161,7 @@ async def inspire(ctx):
   await ctx.reply(quote)
 
 @bot.slash_command(description="testing slash command, work in progress...", guild_ids=[857367409190895647])
-async def wallpaper(ctx):
+async def test(ctx):
   await ctx.respond("test slash command!")
 
 @bot.command ()
