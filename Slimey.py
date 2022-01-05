@@ -155,14 +155,14 @@ async def dadjoke (ctx):
 
   await ctx.reply (sending_joke)
 
-@bot.command ()
-async def inspire (ctx):
+@bot.command()
+async def inspire(ctx):
   quote = get_quote()
-  await ctx.reply (quote)
+  await ctx.reply(quote)
 
-@bot.slash_command(description="Random wallpaper von Unsplash", guild_ids=[857367409190895647])
+@bot.slash_command(description="testing slash command, work in progress...", guild_ids=[857367409190895647])
 async def wallpaper(ctx):
-   await ctx.respond("test slash command!")
+  await ctx.respond("test slash command!")
 
 @bot.command ()
 async def twitch (ctx):
