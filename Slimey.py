@@ -159,7 +159,7 @@ async def inspire(ctx):
   quote = get_quote()
   await ctx.reply(quote)
 
-@bot.slash_command(description="testing slash command, work in progress...", guild_ids=[857367409190895647])
+@bot.slash_command(description="testing slash command, work in progress...", guild_ids=[888382819427057714])
 async def test(ctx):
   await ctx.respond("test slash command!")
 
@@ -276,10 +276,6 @@ async def test(ctx):
   await ctx.send(emoji)
   emoji = '❌'
   await ctx.send(emoji)
-
-@bot.slash_command(description="Testing slash command, work in progress.", guild_ids=[888382819427057714])
-async def test(ctx):
-  await ctx.respond("test slash command")
 
 @bot.command()
 @commands.check(is_it_me)
