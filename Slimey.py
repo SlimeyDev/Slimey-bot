@@ -274,7 +274,7 @@ async def say(ctx, *, message: str):
   await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
 @bot.command()
 @commands.cooldown (1,5,commands.BucketType.user)
-async def password(ctx, lenght):
+async def password(ctx, lenght=12):
   if lenght <=100:
     if lenght < 4:
       embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Too small... :joy:")
@@ -298,7 +298,7 @@ async def password(ctx, lenght):
 
 # slash command version of <password:
 @bot.slash_command()
-async def password(ctx, lenght=12):
+async def password(ctx, lenght):
   if lenght <=100:
     if lenght < 4:
       embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Too small... :joy:")
