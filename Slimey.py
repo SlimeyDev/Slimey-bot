@@ -17,7 +17,6 @@ import random
 from requests.models import Response
 import datetime
 import os, sys
-# from discord.ext import slash_commands
 
 bot = commands.Bot (command_prefix = "<", help_command = None)
 
