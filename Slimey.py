@@ -40,6 +40,8 @@ async def update_odds():
   if now.hour == 9 and now.minute == 0 and now.second == 0:
     global megaflip
     global bottleflipvar
+    megaflip = 0
+    bottleflipvar = 0
     bottleflipvar = random.randint(30,80)
     megaflip = random.randint(20,60)
 
