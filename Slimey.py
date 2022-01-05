@@ -275,7 +275,7 @@ async def say(ctx, *, message: str):
 @bot.command()
 @commands.cooldown (1,5,commands.BucketType.user)
 async def password(ctx, lenght=12):
-		if lenght <=32:
+		if lenght <=100:
 			chars = string.digits + string.ascii_letters + string.punctuation
 
 			passwords = []
@@ -284,12 +284,12 @@ async def password(ctx, lenght=12):
 				password = ''.join(secrets.choice(chars) for _ in range(lenght))
 				passwords.append(password)
 
-			embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{lenght}** long.\n\n"	
+			embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{lenght}** characters long.\n\n"	
 			f"```txt\n{passwords[0]}\n{passwords[1]}\n{passwords[2]}\n{passwords[3]}\n{passwords[4]}```")
 	
 			await ctx.reply(embed=embed, mention_author=False)
 		else:
-			embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 32!")
+			embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
 
 			await ctx.reply(embed=embed)
 @bot.command()
