@@ -278,7 +278,9 @@ async def test(ctx):
   emoji = '❌'
   await ctx.send(emoji)
 
-# @bot.slash_command(description="Testing image processing with this command.", guild_ids=[888382819427057714])
+@bot.slash_command(description="Testing slash command, work in progress.", guild_ids=[888382819427057714])
+async def test(ctx):
+  await ctx.respond("test slash command")
 
 @bot.command()
 @commands.check(is_it_me)
