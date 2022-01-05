@@ -37,7 +37,7 @@ async def on_ready ():
 async def update_odds():
   now = datetime.datetime.now()
 
-  if now.hour == 9 and now.minute == 0 and now.second == 0:
+  if now.hour == 12 and now.minute == 0 and now.second == 0:
     global megaflip
     global bottleflipvar
     megaflip = 0
