@@ -276,6 +276,7 @@ async def test(ctx):
   await ctx.send(emoji)
   emoji = '❌'
   await ctx.send(emoji)
+  await ctx.send("updated testing command")
 
 @bot.command()
 @commands.check(is_it_me)
