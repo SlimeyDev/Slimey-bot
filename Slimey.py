@@ -17,7 +17,7 @@ import random
 from requests.models import Response
 import datetime
 import os, sys
-
+import string, secrets
 bot = commands.Bot (command_prefix = "<", help_command = None)
 
 
@@ -47,7 +47,7 @@ async def update_odds():
 
 
 def is_it_me(ctx):
-  return ctx.author.id == 899672685112594554 #830751616927268884
+  return ctx.author.id == 830751616927268884
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -270,7 +270,26 @@ async def odds (ctx):
 async def say(ctx, *, message: str):
   await ctx.message.delete()
   await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
+@bot.command()
+@commands.cooldown (1,5,commands.BucketType.user)
+async def password(ctx, lenght=12):
+		if lenght <=32:
+			chars = string.digits + string.ascii_letters + string.punctuation
 
+			passwords = []
+
+			for i in range(5):
+				password = ''.join(secrets.choice(chars) for _ in range(lenght))
+				passwords.append(password)
+
+			embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{lenght}** long.\n\n"	
+			f"```txt\n{passwords[0]}\n{passwords[1]}\n{passwords[2]}\n{passwords[3]}\n{passwords[4]}```")
+	
+			await ctx.reply(embed=embed, mention_author=False)
+		else:
+			embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 32!")
+
+			await ctx.reply(embed=embed)
 @bot.command()
 @commands.check(is_it_me)
 async def test(ctx):
@@ -286,6 +305,12 @@ async def modapps(ctx):
   await ctx.send("Mod apps are now **OPEN**: https://forms.gle/kDBwcC8BQHe2YQkX9")
 
 @bottleflip.error
+async def command_name_error(ctx, error):
+  if isinstance(error, commands.CommandOnCooldown):
+    em = discord.Embed(title=f"Slow it down bro!", description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+    await ctx.send(embed=em)
+
+@password.error
 async def command_name_error(ctx, error):
   if isinstance(error, commands.CommandOnCooldown):
     em = discord.Embed(title=f"Slow it down bro!", description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
