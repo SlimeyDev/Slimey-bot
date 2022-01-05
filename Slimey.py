@@ -217,7 +217,7 @@ async def help (ctx):
   em.add_field(name="<magic8ball <question>", value="Ask it a question and it will tell you your faith...", inline=False)
   em.add_field(name="<yesorno <question>", value="Answers **Yes** or **No** to the question you entered", inline=False)
   em.add_field(name="<rps <value>", value="Play some rock paper scissors wwwith me!", inline=False)
-  em.add_field(name="<password <value>", value="Generate some passwords!", inline=False)
+  em.add_field(name="<password <value>  OR /password", value="Generate some passwords!", inline=False)
 
   await ctx.send(embed = em)
 
@@ -295,6 +295,33 @@ async def password(ctx, lenght=12):
   else:
     embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
     await ctx.reply(embed=embed)
+
+# slash command version of <password:
+@bot.slash_command()
+async def password(ctx, lenght=12):
+  if lenght <=100:
+    if lenght < 4:
+      embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Too small... :joy:")
+      await ctx.respond(embed=embed)
+      return
+    chars = string.digits + string.ascii_letters + string.punctuation
+
+    passwords = []
+
+    for i in range(5):
+      password = ''.join(secrets.choice(chars) for _ in range(lenght))
+      passwords.append(password)
+
+    embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{lenght}** characters long.\n\n"	
+    f"```txt\n{passwords[0]}\n{passwords[1]}\n{passwords[2]}\n{passwords[3]}\n{passwords[4]}```")
+
+    await ctx.respond(embed=embed, mention_author=False)
+  else:
+    embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
+    await ctx.respond(embed=embed)
+
+
+
 @bot.command()
 @commands.check(is_it_me)
 async def embed(ctx, *, title_em = "please enter the title!", description_em = "please enter the description!"):
