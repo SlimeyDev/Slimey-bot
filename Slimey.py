@@ -216,7 +216,9 @@ async def help (ctx):
   em.add_field(name="<say <value>", value="Sends the value!", inline=False)
   em.add_field(name="<magic8ball <question>", value="Ask it a question and it will tell you your faith...", inline=False)
   em.add_field(name="<yesorno <question>", value="Answers **Yes** or **No** to the question you entered", inline=False)
-  em.add_field(name="<rps <value>", value="Play some rock paper scissors wwwith me!")
+  em.add_field(name="<rps <value>", value="Play some rock paper scissors wwwith me!", inline=False)
+  em.add_field(name="<password <value>", value="Generate some passwords!", inline=False)
+
   await ctx.send(embed = em)
 
 @bot.command()
