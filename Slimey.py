@@ -47,7 +47,7 @@ async def update_odds():
 
 
 def is_it_me(ctx):
-  return ctx.author.id == 830751616927268884
+  return ctx.author.id == 899672685112594554 #830751616927268884
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -83,7 +83,7 @@ async def restart (ctx):
   # Running git pull for getting last commit
   os.system("git pull")
   # Restarting the bot to load latest local commit
-  os.execv(sys.executable, ['python'] + sys.argv)
+  os.execv('Slimey.py', ['python'] + sys.argv)
 
 
 @bot.command()
