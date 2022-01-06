@@ -321,7 +321,28 @@ async def password(ctx, length):
     embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
     await ctx.respond(embed=embed)
 
+@bot.slash_command()
+async def meme(ctx):
+    url = "https://meme-api.herokuapp.com/gimme/memes"
+    resp = requests.get(url=url)
+    meme_json = resp.json()
+    random_meme = meme_json["url"]
+    
+    meme_subreddit = meme_json["subreddit"]
+    meme_author = meme_json["author"]
+    meme_title = meme_json["title"]
+    meme_link = meme_json["postLink"]
+    meme_upvotes = meme_json["ups"]
+    if meme_upvotes > 1000:
+        meme_upvotes = round(meme_json["ups"], -3)
 
+    api_meme = discord.Embed(title="Meme", colour=discord.Colour.blue(), description=(f"**`Subreddit`** „r/{meme_subreddit}“\n**`Title`** „[{meme_title}]({meme_link})“\n\n"
+    f"**`Post-Creator`** „{meme_author}“\n**`Upvotes`** {meme_upvotes}"), timestamp=datetime.datetime.now())
+    api_meme.set_image(url=random_meme)
+    await ctx.respond(embed=api_meme)
+    m = await ctx.interaction.original_message()
+    await m.add_reaction("👍")
+    await m.add_reaction("👎")
 
 @bot.command()
 @commands.check(is_it_me)
