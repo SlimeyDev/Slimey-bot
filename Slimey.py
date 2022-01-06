@@ -82,6 +82,14 @@ def get_Joke():
 async def restart (ctx):
   em = discord.Embed (title = "Bot will be restarted", description="The bot will restarting now", color = discord.Colour.purple())
   await ctx.reply(embed = em)
+  # Restarting the bot
+  os.execv('Slimey.py', ['python'] + sys.argv)
+
+@bot.command()
+@commands.check(is_it_me)
+async def update (ctx):
+  em = discord.Embed (title = "Bot will be updating", description="I fetch new code now if available", color = discord.Colour.purple())
+  await ctx.reply(embed = em)
   # Running git pull for getting last commit
   os.system("git pull")
   # Restarting the bot to load latest local commit
