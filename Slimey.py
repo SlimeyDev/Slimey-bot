@@ -20,6 +20,8 @@ import os
 import sys
 import string
 import secrets
+
+
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 
@@ -133,7 +135,7 @@ async def restart(ctx):
 @commands.check(is_it_me)
 async def update(ctx):
     em = discord.Embed(title="Bot will be updating",
-                       description="I fetch new code now if available", color=discord.Colour.purple())
+                       description="I will fetch new code now if available", color=discord.Colour.purple())
     await ctx.reply(embed=em)
     # Running git pull for getting last commit
     os.system("git pull")
