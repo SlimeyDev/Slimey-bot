@@ -23,6 +23,41 @@ import secrets
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 
+if not os.path.exists('config.json'):
+    with open("config.json", 'w') as f:
+        f.write("""{"token":"","owners":[]}""")
+    with open("config.json", 'r') as f:
+        conf = json.load(f)
+
+    
+    print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs: ")
+
+    input_token = input("Enter Token: ")
+    print("\n\nGood! Now enter the Owner_IDs. If you don't want to set an OPTIONAL owner ID, just press enter without any input.")
+    input_owner1 = input("Enter first Owner ID (required): ")
+    if input_owner1 == "":
+        print("Required option.")
+        exit()
+    input_owner2 = input("Enter second Owner ID (optional): ")
+    if input_owner2 == "":
+        input_owner2 = "1"
+    input_owner3 = input("Enter third Owner ID (optional): ")
+    if input_owner3 == "":
+        input_owner3 = "1"
+    print("Input recorded.\nWriting to configuration...")
+    with open("config.json", 'w') as f:
+        conf["token"] = input_token
+        conf["owners"].append(int(input_owner1))
+        conf["owners"].append(int(input_owner2))
+        conf["owners"].append(int(input_owner3))
+
+        json.dump(conf, f, indent=4)
+        print("Succesfully recorded all configurations. If you want to run this setup again, delete 'config.json'.")
+
+
+with open("config.json", 'r') as f:
+            conf = json.load(f)
+
 @bot.event
 async def on_ready():
     update_odds.start()
@@ -49,7 +84,7 @@ async def update_odds():
 
 
 def is_it_me(ctx):
-    owners = [830751616927268884, 899672685112594554]
+    owners = conf["owners"]
     if ctx.author.id in owners:
         return ctx.author.id
 
@@ -462,4 +497,5 @@ async def on_command_error(ctx, error):
 
         await ctx.reply(embed=em)
 
-bot.run("OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M")
+bot.run(conf["token"])
+#OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M
