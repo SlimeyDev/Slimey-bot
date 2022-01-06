@@ -227,8 +227,8 @@ async def help (ctx):
   em.add_field(name="<magic8ball <question>", value="Ask it a question and it will tell you your faith...", inline=False)
   em.add_field(name="<yesorno <question>", value="Answers **Yes** or **No** to the question you entered", inline=False)
   em.add_field(name="<rps <value>", value="Play some rock paper scissors wwwith me!", inline=False)
-  em.add_field(name="<password <value>", value="Generate some passwords!", inline=False)
-  em.add_field(name="<meme or /meme", value="Sends a meme from reddit!")
+  em.add_field(name="<send_password <value>", value="Generate some passwords!", inline=False)
+  em.add_field(name="/send_meme", value="Sends a meme from reddit!")
 
   await ctx.send(embed = em)
 
