@@ -47,7 +47,9 @@ async def update_odds():
 
 
 def is_it_me(ctx):
-  return ctx.author.id == 830751616927268884
+  owners = [830751616927268884, 899672685112594554]
+  if ctx.author.id in owners:
+    return ctx.author.id
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
