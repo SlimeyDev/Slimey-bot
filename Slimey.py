@@ -363,8 +363,7 @@ async def meme(ctx):
     api_meme = discord.Embed(title="Meme", colour=discord.Colour.blue(), description=(f"**`Subreddit`** „r/{meme_subreddit}“\n**`Title`** „[{meme_title}]({meme_link})“\n\n"
     f"**`Post-Creator`** „{meme_author}“\n**`Upvotes`** {meme_upvotes}"), timestamp=datetime.datetime.now())
     api_meme.set_image(url=random_meme)
-    await ctx.respond(embed=api_meme)
-    m = await ctx.interaction.original_message()
+    m = await ctx.send(embed=api_meme)
     await m.add_reaction("👍")
     await m.add_reaction("👎")
 
