@@ -285,33 +285,14 @@ async def say(ctx, *, message: str):
   await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
 
 @bot.command()
-@commands.cooldown (1,5,commands.BucketType.user)
-async def password(ctx, length:int=12):
-  if length <=100:
-    if length < 4:
-      embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Too small... :joy:")
-      await ctx.reply(embed=embed)
-      return
-    chars = string.digits + string.ascii_letters + string.punctuation
-
-    passwords = []
-
-    for i in range(5):
-      password = ''.join(secrets.choice(chars) for _ in range(length))
-      passwords.append(password)
-
-    embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{length}** characters long.\n\n"	
-    f"```txt\n{passwords[0]}\n{passwords[1]}\n{passwords[2]}\n{passwords[3]}\n{passwords[4]}```")
-
-    await ctx.reply(embed=embed, mention_author=False)
-  else:
-    embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
-    await ctx.reply(embed=embed)
+async def password(ctx):
+    await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_password`)")
 
 # slash command version of <password:
 @bot.slash_command()
-async def password(ctx, length):
-  if length < 100:
+async def send_password(ctx, length):
+  length = int(length)
+  if length <= 100:
     if length < 4:
       embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Too small... :joy:")
       await ctx.respond(embed=embed)
@@ -327,13 +308,13 @@ async def password(ctx, length):
     embed = discord.Embed(title="Generated passwords", color=discord.Colour.blue(), description=f"I generated **5** passwords for you, which are **{length}** characters long.\n\n"	
     f"```txt\n{passwords[0]}\n{passwords[1]}\n{passwords[2]}\n{passwords[3]}\n{passwords[4]}```")
 
-    await ctx.respond(embed=embed, mention_author=False)
+    await ctx.respond(embed=embed)
   else:
     embed = discord.Embed(title="Error", color=discord.Colour.red(), description=f"Please don't go higher than 100!")
     await ctx.respond(embed=embed)
 
 @bot.slash_command()
-async def meme(ctx):
+async def send_meme(ctx):
     url = "https://meme-api.herokuapp.com/gimme/memes"
     resp = requests.get(url=url)
     meme_json = resp.json()
@@ -357,25 +338,8 @@ async def meme(ctx):
 
 @bot.command()
 async def meme(ctx):
-    url = "https://meme-api.herokuapp.com/gimme/memes"
-    resp = requests.get(url=url)
-    meme_json = resp.json()
-    random_meme = meme_json["url"]
-    
-    meme_subreddit = meme_json["subreddit"]
-    meme_author = meme_json["author"]
-    meme_title = meme_json["title"]
-    meme_link = meme_json["postLink"]
-    meme_upvotes = meme_json["ups"]
-    if meme_upvotes > 1000:
-        meme_upvotes = round(meme_json["ups"], -3)
+  await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_meme`)")
 
-    api_meme = discord.Embed(title="Meme", colour=discord.Colour.blue(), description=(f"**`Subreddit`** „r/{meme_subreddit}“\n**`Title`** „[{meme_title}]({meme_link})“\n\n"
-    f"**`Post-Creator`** „{meme_author}“\n**`Upvotes`** {meme_upvotes}"), timestamp=datetime.datetime.now())
-    api_meme.set_image(url=random_meme)
-    m = await ctx.send(embed=api_meme)
-    await m.add_reaction("👍")
-    await m.add_reaction("👎")
 
 @bot.command()
 @commands.check(is_it_me)
