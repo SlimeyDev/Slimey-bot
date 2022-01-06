@@ -107,7 +107,7 @@ async def update(ctx):
 @bot.command()
 async def ping(ctx):
     em = discord.Embed(
-        title="Pong !", description=f"{round(bot.latency*1000)}ms", color=discord.Colour.blue())
+        title="Pong !!", description=f"{round(bot.latency*1000)}ms", color=discord.Colour.blue())
 
     await ctx.reply(embed=em)
 
