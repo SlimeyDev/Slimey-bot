@@ -91,7 +91,7 @@ async def restart(ctx):
                        description="The bot will restarting now", color=discord.Colour.purple())
     await ctx.reply(embed=em)
     # Restarting the bot
-    os.execv('Slimey.py', ['python'] + sys.argv)
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 
 @bot.command()
