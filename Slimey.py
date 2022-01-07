@@ -11,7 +11,7 @@ from discord.embeds import Embed
 from discord.enums import Status
 from discord.errors import ClientException
 from discord.ext import commands, tasks
-from discord.ui import Button, view
+from discord.ui import Button, View
 import json
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
@@ -445,9 +445,17 @@ async def embed(ctx, title_em="please enter the title!", description_em="please 
 @commands.check(is_it_me)
 async def test(ctx):
     button = Button(label="Test button!", style=discord.ButtonStyle.green, emoji="👋")
+    button2 = Button(emoji="😊")
+    button3 = Button(label="red", style=discord.ButtonStyle.red)
+    button4 = Button(label="my yt", url="https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A")
+
     view = View()
     view.add_item(button)
-    await ctx.send("Hi!", view = view)
+    view.add_item(button2)
+    view.add_item(button3)
+    view.add_item(button4)
+
+    await ctx.send("Test button command!", view = view)
 
 
 @bot.command()
