@@ -4,14 +4,19 @@ from discord import colour
 from discord import asset
 from discord import message
 from discord import channel
+from discord import emoji
+from discord import components
 from discord.colour import Color
 from discord.embeds import Embed
 from discord.enums import Status
 from discord.errors import ClientException
 from discord.ext import commands, tasks
+from discord.ui import Button, view
 import json
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
+from discord.ui.button import button, View
+from discord.utils import V
 import requests
 import random
 from requests.models import Response
@@ -226,12 +231,6 @@ async def inspire(ctx):
     quote = get_quote()
     await ctx.reply(quote)
 
-
-@bot.slash_command(description="testing slash command, work in progress...", guild_ids=[888382819427057714])
-async def test(ctx):
-    await ctx.respond("test slash command!")
-
-
 @bot.command()
 async def twitch(ctx):
     await ctx.reply("GO FOLLOW ME ON TWITCH RIGHT NOW: https://www.twitch.tv/theslimeydevloper")
@@ -445,11 +444,10 @@ async def embed(ctx, title_em="please enter the title!", description_em="please 
 @bot.command()
 @commands.check(is_it_me)
 async def test(ctx):
-    emoji = '✅'
-    await ctx.send(emoji)
-    emoji = '❌'
-    await ctx.send(emoji)
-    await ctx.send("updated testing command ... again")
+    button = Button(label="Test button!", style=discord.ButtonStyle.green, emoji="👋")
+    view = View()
+    view.add_item(button)
+    await ctx.send("Hi!", view = view)
 
 
 @bot.command()
