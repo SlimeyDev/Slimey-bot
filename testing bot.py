@@ -11,9 +11,9 @@ import json
 import os
 import random
 
-os.chdir("C:\\Users\\Nesar.K\\Desktop\\Testing bot\\mainbank.json")
+os.chdir("C:\\Users\\Nesar.K\\Desktop\\pycord")
 
-bot = commands.Bot(command_prefix=".", help_command=None)
+bot = commands.Bot(command_prefix=".")
 
 
 @bot.event
@@ -38,12 +38,12 @@ async def test(ctx):
     await ctx.send("Test button command!", view = view)
 
 
-bot.command(aliases = ["bal"])
+@bot.command(aliases = ["bal"])
 async def balance(ctx):
     await open_account(ctx.author)
 
     user = ctx.author
-    users = get_bank_data()
+    users = await get_bank_data()
 
     wallet_amt = users[str(user.id)]["wallet"]
     bank_amt = users[str(user.id)]["bank"]
@@ -59,17 +59,17 @@ async def balance(ctx):
 async def beg(ctx):
     await open_account(ctx.author)
 
-    users = get_bank_data()
+    users = await get_bank_data()
 
     user = ctx.author
 
-    earnings = random.randrange(101)
+    earnings = random.randint(1,101)
 
     await ctx.send(f"Someone gave you {earnings} coins!")
 
-    wallet_amt = users[str(user.id)]["wallet"] + earnings
+    wallet_amt = users[str(user.id)]["wallet"]  =+ earnings
 
-    with open("mainbainkk.json", "w") as f:
+    with open("mainbank.json", "w") as f:
         json.dump(users, f)
 
 
@@ -85,16 +85,52 @@ async def open_account(user):
         users[str(user.id)]["wallet"] = 0
         users[str(user.id)]["bank"] = 0
 
-    with open("mainbainkk.json", "w") as f:
+    with open("mainbank.json", "w") as f:
         json.dump(users, f)
     return True
 
 
+@bot.command()
+async def withdraw(ctx, amount = None):
+    await open_account(ctx.author)
+
+    if amount == None:
+        await ctx.send("Please specify a value to withdraw!")
+        return
+    
+    bal = await update_bank(ctx.author)
+
+    amount = int(amount)
+
+    if amount>bal[1]:
+        await ctx.send("You dont have that much money!")
+        return
+
+    if amount>0:
+        await ctx.send("Amount musst be positive!")
+        return
+
+    await update_bank(ctx.author, amount)
+    await update_bank(ctx.author, -1 * amount, "bank")
+
+    await ctx.send(f"you withdrew {amount} coins")
+
 async def get_bank_data():
-    with open("mainbainkk.json", "r") as f:
+    with open("mainbank.json", "r") as f:
         users = json.load(f)
     
     return users
+
+async def update_bank(user, change = 0, mode = "wallet"):
+    users = await get_bank_data
+
+    users[str(user.id)][mode] += change
+
+    with open("mainbank.json", "w") as f:
+        json.dump(users, f)
+    
+    bal = [users[str(user.id)]["wallet"], users[str(user.id)]["bank"]]
+    return bal
 
 
 bot.run("OTI0NTc3NDMxOTg0MTQ0Mzk0.Ycgl1Q.2T-vJSp_xl1OUJxTmvdL1IwGlxk")
