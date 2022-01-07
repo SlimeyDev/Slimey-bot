@@ -15,7 +15,7 @@ from discord.ui import Button, View
 import json
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
-from discord.ui.button import button, View
+from discord.ui import Button, View
 from discord.utils import V
 import requests
 import random
