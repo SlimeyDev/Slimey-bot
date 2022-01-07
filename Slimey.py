@@ -306,6 +306,7 @@ async def help(ctx):
     em.add_field(name="<send_password <value>",
                  value="Generate some passwords!", inline=False)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
+    em.add_field(name="/timeout <user> <int> <s | min | h | d> [reason]", value="Timeout members!")
 
     await ctx.send(embed=em)
 
@@ -507,7 +508,7 @@ async def on_command_error(ctx, error):
 
 @bot.slash_command(pass_context=True)
 async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
-    if not ctx.author.guild_permissions.kick_members:
+    if not ctx.author.guild_permissions.timeout_members:
         await ctx.respond("You have no permission to timeout members!", ephemeral=True)
         return
 
