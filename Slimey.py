@@ -25,8 +25,8 @@ import os
 import sys
 import string
 import secrets
-
-
+import asyncio
+from discord.commands import Option
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 
@@ -504,6 +504,66 @@ async def on_command_error(ctx, error):
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
+
+@bot.slash_command(pass_context=True)
+async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
+    if not ctx.author.guild_permissions.kick_members:
+        await ctx.respond("You have no permission to timeout members!", ephemeral=True)
+        return
+
+    duration = None
+    time_unit_text = None
+
+    if time_unit == "s":
+        duration = time * 1
+        time_unit_text = "Second(s)"
+    elif time_unit == "min":
+        duration = time * 60
+        time_unit_text = "Minute(s)"
+    elif time_unit == "h":
+        duration = time * 3600
+        time_unit_text = "Hour(s)"
+    elif time_unit == "d":
+        duration = time * 86400
+        time_unit_text = "Day(s)"
+
+    time_to_timeout = datetime.timedelta(seconds=duration)
+    try:
+        await target.timeout_for(time_to_timeout, reason=reason)
+    except discord.HTTPException:
+        await ctx.respond("I don't have the permission to do that.", ephemeral=True)
+        return
+
+    timeout_embed = discord.Embed(
+        title=f"Timed {target} out", color=discord.Colour.blue())
+    timeout_embed.add_field(
+        name="Server", value=f"{ctx.guild.name}", inline=True)
+    timeout_embed.add_field(
+        name="Responsible moderator", value=f"<@{ctx.author.id}>", inline=True)
+    timeout_embed.add_field(
+        name="Target", value=f"<@{target.id}>", inline=True)
+    timeout_embed.add_field(
+        name="Time", value=f"{time} {time_unit_text}", inline=True)
+    timeout_embed.add_field(
+        name="Reason", value=f"```{reason}```", inline=True)
+
+    await ctx.respond(embed=timeout_embed)
+
+    try:
+        timeout_embed = discord.Embed(
+            title=f"You have been timed out!", description=f"You have been timed-out on {ctx.guild.name} for {time} {time_unit_text}!\nReason: ```{reason}```", color=discord.Colour.blue())
+        await target.send(embed=timeout_embed)
+    except discord.errors.DiscordException:
+        pass
+
+    await asyncio.sleep(duration)
+    try:
+        timeout_over_embed = discord.Embed(
+            title=f"Your timeout has expired", description=f"Your timeout on {ctx.guild.name} for {time} {time_unit_text} has expired.", color=discord.Colour.blue())
+        await target.send(embed=timeout_over_embed)
+    except discord.errors.DiscordException:
+        pass
+
 
 bot.run(conf["token"])
 #OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M
