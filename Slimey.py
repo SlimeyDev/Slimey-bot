@@ -287,7 +287,7 @@ async def help(ctx):
     em.add_field(name="<inspire",
                  value="Sends you an insperational qoute!", inline=True)
     em.add_field(name="<dadjoke",
-                 value="Sends u a stupid dadjoke -_-", inline=True)
+                 value="Sends u a stupid dadjoke\n -_-", inline=True)
     em.add_field(name="<ping", value="Tells you your latecy.", inline=False)
     em.add_field(
         name="<odds", value="Tells you your odds of getting a bottle flip!", inline=True)
@@ -303,11 +303,11 @@ async def help(ctx):
     em.add_field(name="<yesorno <question>",
                  value="Answers **Yes** or **No** to the question you entered", inline=True)
     em.add_field(name="<rps <value>",
-                 value="Play some rock paper scissors wwwith me!", inline=False)
+                 value="Play some rock paper scissors with me!", inline=False)
     em.add_field(name="<send_password <value>",
                  value="Generate some passwords!", inline=True)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
-    em.add_field(name="/timeout <user> <int> <s | min | h | d> [reason]", value="Timeout members!", inline=True)
+    em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
     await ctx.send(embed=em)
 
 
