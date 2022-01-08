@@ -27,6 +27,7 @@ import string
 import secrets
 import asyncio
 from discord.commands import Option
+
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 
@@ -307,7 +308,6 @@ async def help(ctx):
                  value="Generate some passwords!", inline=False)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
     em.add_field(name="/timeout <user> <int> <s | min | h | d> [reason]", value="Timeout members!")
-
     await ctx.send(embed=em)
 
 
@@ -562,7 +562,6 @@ async def emojify(ctx, *, text=None):
             await ctx.send("".join(emojis))
 
 
-
 @report.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
@@ -595,7 +594,6 @@ async def on_command_error(ctx, error):
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
-
 
 
 bot.run(conf["token"])
