@@ -276,38 +276,38 @@ async def info(ctx):
 async def help(ctx):
     em = discord.Embed(
         title="Currently the existing commands are -", color=discord.Colour.blue())
-    em.add_field(name="<coinflip", value="Flips a coin!", inline=False)
+    em.add_field(name="<coinflip", value="Flips a coin!", inline=True)
     em.add_field(name="<youtube",
-                 value="Shows TheSlimeyDevloper's youtube.", inline=False)
-    em.add_field(name="<info", value="Gives info on the bot.", inline=False)
+                 value="Shows TheSlimeyDevloper's youtube.", inline=True)
+    em.add_field(name="<info", value="Gives info on the bot.", inline=True)
     em.add_field(name="<bottleflip",
                  value="Flips a bottle! Well there are chances of getting something *rare*.", inline=False)
     em.add_field(
-        name="<twitch", value="Show you TheSlimeyDevloper's twitch account.", inline=False)
+        name="<twitch", value="Show you TheSlimeyDevloper's twitch account.", inline=True)
     em.add_field(name="<inspire",
-                 value="Sends you an insperational qoute!", inline=False)
+                 value="Sends you an insperational qoute!", inline=True)
     em.add_field(name="<dadjoke",
-                 value="Sends u a stupid dadjoke -_-", inline=False)
+                 value="Sends u a stupid dadjoke -_-", inline=True)
     em.add_field(name="<ping", value="Tells you your latecy.", inline=False)
     em.add_field(
-        name="<odds", value="Tells you your odds of getting a bottle flip!", inline=False)
+        name="<odds", value="Tells you your odds of getting a bottle flip!", inline=True)
     em.add_field(
-        name="<invite", value="Sends an invite link to invite me to your server!", inline=False)
+        name="<invite", value="Sends an invite link to invite me to your server!", inline=True)
     em.add_field(name="<clear <value>",
-                 value="Used to clear a bunch of messages!", inline=False)
+                 value="Used to clear a bunch of messages!", inline=True)
     em.add_field(
         name="<report", value="Use this command to report bugs and problems on the bot!", inline=False)
-    em.add_field(name="<say <value>", value="Sends the value!", inline=False)
+    em.add_field(name="<say <value>", value="Sends the value!", inline=True)
     em.add_field(name="<magic8ball <question>",
-                 value="Ask it a question and it will tell you your faith...", inline=False)
+                 value="Ask it a question and it will tell you your faith...", inline=True)
     em.add_field(name="<yesorno <question>",
-                 value="Answers **Yes** or **No** to the question you entered", inline=False)
+                 value="Answers **Yes** or **No** to the question you entered", inline=True)
     em.add_field(name="<rps <value>",
                  value="Play some rock paper scissors wwwith me!", inline=False)
     em.add_field(name="<send_password <value>",
-                 value="Generate some passwords!", inline=False)
+                 value="Generate some passwords!", inline=True)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
-    em.add_field(name="/timeout <user> <int> <s | min | h | d> [reason]", value="Timeout members!")
+    em.add_field(name="/timeout <user> <int> <s | min | h | d> [reason]", value="Timeout members!", inline=True)
     await ctx.send(embed=em)
 
 
