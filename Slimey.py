@@ -367,9 +367,14 @@ async def odds(ctx):
 
 
 @bot.command()
-async def say(ctx, *, message: str):
-    await ctx.message.delete()
-    await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
+async def say(ctx, *, message: str = None):
+
+    if message == None:
+        await ctx.send("Please enter a message to send!")
+    
+    else:
+        await ctx.message.delete()
+        await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
 
 
 @bot.command()
