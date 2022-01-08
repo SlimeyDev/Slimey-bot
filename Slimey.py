@@ -465,47 +465,6 @@ async def modapps(ctx):
     await ctx.send("Mod apps are now **OPEN**: https://forms.gle/kDBwcC8BQHe2YQkX9")
 
 
-@bottleflip.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-@report.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-@rps.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-@coinflip.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-
-        em = discord.Embed(title="Permission Error",
-                           description="You don't have the permission(s) to do that!", color=discord.Colour.red())
-
-        await ctx.reply(embed=em)
-
 @bot.slash_command(pass_context=True)
 async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
     if not ctx.author.guild_permissions.timeout_members:
@@ -564,6 +523,49 @@ async def timeout(ctx, target: Option(discord.Member, "The member you want to ti
         await target.send(embed=timeout_over_embed)
     except discord.errors.DiscordException:
         pass
+
+
+@bottleflip.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
+
+@report.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
+
+@rps.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
+
+@coinflip.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+
+        em = discord.Embed(title="Permission Error",
+                           description="You don't have the permission(s) to do that!", color=discord.Colour.red())
+
+        await ctx.reply(embed=em)
+
 
 
 bot.run(conf["token"])
