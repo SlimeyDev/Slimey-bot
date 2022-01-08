@@ -533,6 +533,31 @@ async def command_name_error(ctx, error):
         await ctx.send(embed=em)
 
 
+@bot.command()
+@commands.check(is_it_me)
+async def emojify(ctx, *, text=None):
+    if text == None:
+        await ctx.send("Please enter the text you wont to emojify!")
+    
+    else:
+        emojis = []
+
+        for beans in text:
+            if beans.isdecimal():
+                num2word = {
+                    "0" : "zero", "1" : "one", "2" : "two", "3" : "three", "4" : "four", "5" : "five", "6" : "six", "7" : "seven", "8" : "eight", "9" : "nine"}
+                emojis.append(f":{num2word.get(beans)}:")
+            
+            elif beans.isalph():
+                emojis.append(f":regional_indicator_{beans}:")
+            
+            else:
+                emojis.append(beans)
+            
+            await ctx.send("".join(emojis))
+
+
+
 @report.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
