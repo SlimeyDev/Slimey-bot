@@ -308,6 +308,8 @@ async def help(ctx):
                  value="Generate some passwords!", inline=True)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
     em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
+    em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!")
+
     await ctx.send(embed=em)
 
 
@@ -442,9 +444,17 @@ async def meme(ctx):
 
 @bot.command()
 @commands.check(is_it_me)
-async def embed(ctx, title_em="please enter the title!", description_em="please enter the description!"):
-    em = discord.Embed(title=title_em, description=description_em)
-    await ctx.send(embed=em)
+async def embed(ctx, title_em=None, description_em=None):
+
+    if title_em == None and description_em == None or description_em == None or title_em == None:
+
+        em = discord.Embed(title = "Error!", description = "No value specified for embed title or description")
+
+        await ctx.send(embed=em)
+
+    else:
+        em = discord.Embed(title=title_em, description=description_em)
+        await ctx.send(embed=em)
 
 
 @bot.command()
