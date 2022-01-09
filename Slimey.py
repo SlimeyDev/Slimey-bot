@@ -308,7 +308,7 @@ async def help(ctx):
                  value="Generate some passwords!", inline=True)
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
     em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
-    em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!")
+    em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
 
     await ctx.send(embed=em)
 
