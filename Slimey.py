@@ -443,7 +443,6 @@ async def meme(ctx):
 
 
 @bot.command()
-@commands.check(is_it_me)
 async def embed(ctx, title_em=None, description_em=None):
 
     if title_em == None and description_em == None or description_em == None or title_em == None:
