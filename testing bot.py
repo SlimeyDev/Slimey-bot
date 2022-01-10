@@ -11,7 +11,6 @@ import json
 import os
 import random
 
-os.chdir("C:\\Users\\Nesar.K\\Desktop\\pycord")
 
 bot = commands.Bot(command_prefix=".")
 
@@ -39,4 +38,4 @@ async def test(ctx):
 
 
 
-bot.run("OTI0NTc3NDMxOTg0MTQ0Mzk0.Ycgl1Q.2T-vJSp_xl1OUJxTmvdL1IwGlxk")
+bot.run("OTI0NTc3NDMxOTg0MTQ0Mzk0.Ycgl1Q.ZCAvD2q4rMMkJhQmsTTa9UM9Rs8")
