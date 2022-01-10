@@ -274,7 +274,7 @@ async def bottleflip(ctx):
 
 @bot.command()
 async def info(ctx):
-    await ctx.reply("Information on the bot: This bot was made using VS Code using the language Python. It was made by a new creator TheSlimeyDevloper.")
+    await ctx.reply("Information on the bot: This bot was made using VS Code using the language Python. It was made by a new creator TheSlimeyDevloper.\nCurrent creators of this bot are TheSlimeyDev_YT#8584, fun12545#5552, Fuchsdo#4581")
 
 
 @bot.command()
