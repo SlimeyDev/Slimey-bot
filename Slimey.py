@@ -127,9 +127,9 @@ def get_Joke():
     return(joke)
 
 @bot.event
-async def on_message(msg):
-    if message == "<@915488552568123403>":
-        await msg.send('My prefix is "<"!')
+async def on_message(message):
+    if bot.user.mentioned_in(message):
+        await message.channel.send('My prefix is "<" type "<help" for all the commands!')
 
 
 @bot.command()
