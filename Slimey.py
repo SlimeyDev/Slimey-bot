@@ -544,6 +544,16 @@ async def timeout(ctx, target: Option(discord.Member, "The member you want to ti
         pass
 
 
+
+@bot.command()
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, member: discord.Member, *, reason=None):
+    if reason==None:
+      reason="No reason was specified"
+    await ctx.guild.kick(member)
+    await ctx.send(f'User {member.mention} has been kicked for {reason}')
+
+
 @bottleflip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
