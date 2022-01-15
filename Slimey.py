@@ -314,6 +314,8 @@ async def help(ctx):
     em.add_field(name="/send_meme", value="Sends a meme from reddit!")
     em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
     em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
+    em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
+    em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
 
     await ctx.send(embed=em)
 
@@ -547,11 +549,46 @@ async def timeout(ctx, target: Option(discord.Member, "The member you want to ti
 
 @bot.command()
 @commands.has_permissions(kick_members=True)
-async def kick(ctx, member: discord.Member, *, reason=None):
-    if reason==None:
-      reason="No reason was specified"
-    await ctx.guild.kick(member)
-    await ctx.send(f'User {member.mention} has been kicked for {reason}')
+async def kick(ctx, member: discord.Member = None, *, reason=None):
+
+    if member==None:
+        await ctx.reply("Please specify a member to kick")
+    
+    else:
+
+        if reason==None:
+
+            reason="No reason was specified"
+
+        await ctx.guild.kick(member)
+        
+        em = discord.Embed(title = f"Kicked successfully", color = discord.Color.green())
+        em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
+        em.add_field(name = "Reason", value = f"{reason}")
+        
+        await ctx.send(embed = em)
+
+
+@bot.command()
+@commands.has_permissions(ban_members = True)
+async def ban(ctx, member : discord.Member, *, reason = None):
+
+    if member==None:
+        await ctx.send("Please specify a member to ban")
+    
+    else:
+
+        if reason==None:
+
+            reason="No reason was specified"
+
+        await member.ban(reason = reason)
+
+        em = discord.Embed(title = f"Banned successfully", color = discord.Color.green())
+        em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
+        em.add_field(name = "Reason", value = f"{reason}")
+
+        await ctx.send(embed = em)
 
 
 @bottleflip.error
