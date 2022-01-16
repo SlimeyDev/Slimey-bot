@@ -68,16 +68,16 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
-    update_odds.start()
+    #update_odds.start()
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
-    Bot_Status = f"{len(bot.guilds)} servers | <help"
+    Bot_Status = f"BOT DOWN!"
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("----------")
 
-
+"""
 @tasks.loop(seconds=1)
 async def update_odds():
     now = datetime.datetime.now()
@@ -127,9 +127,9 @@ def get_Joke():
     return(joke)
 
 @bot.event
-async def on_message(message):
-    if bot.user.mentioned_in(message):
-        await message.channel.send('My prefix is "<" type "<help" for all the commands!')
+async def on_message(msg):
+    if bot.user.mentioned_in(msg) and not msg.content == "@everyone":
+        await msg.channel.send('My prefix is "<" type "<help" for all the commands!')
 
 
 @bot.command()
@@ -656,6 +656,7 @@ async def on_command_error(ctx, error):
 
         await ctx.reply(embed=em)
 
+"""
 
 bot.run(conf["token"])
 #OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M
