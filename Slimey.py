@@ -77,7 +77,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("----------")
 
-"""
+
 @tasks.loop(seconds=1)
 async def update_odds():
     now = datetime.datetime.now()
@@ -656,7 +656,6 @@ async def on_command_error(ctx, error):
 
         await ctx.reply(embed=em)
 
-"""
 
 bot.run(conf["token"])
 #OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M
