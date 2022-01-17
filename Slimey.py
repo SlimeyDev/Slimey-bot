@@ -311,7 +311,7 @@ async def help(ctx):
                  value="Play some rock paper scissors with me!", inline=False)
     em.add_field(name="<send_password <value>",
                  value="Generate some passwords!", inline=True)
-    em.add_field(name="/send_meme", value="Sends a meme from reddit!")
+    em.add_field(name="/send_meme", value="Sends a meme from reddit!", inline=True)
     em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
     em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
     em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
