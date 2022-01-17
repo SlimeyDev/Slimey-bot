@@ -72,7 +72,7 @@ async def on_ready():
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
-    Bot_Status = f"BOT DOWN!"
+    Bot_Status = f"{len(bot.guilds)} servers | <help"
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("----------")
@@ -658,4 +658,4 @@ async def on_command_error(ctx, error):
 
 
 bot.run(conf["token"])
-#OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.DvgaNxLR__3LkjcaBhFe7wv-y7M
+#OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.cTMdj9INhXSTguBGBwKGToiahrc
