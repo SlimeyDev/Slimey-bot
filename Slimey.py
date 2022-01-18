@@ -78,8 +78,7 @@ async def on_ready():
     print("----------")
 
 
-@tasks.loop(seconds=1)
-async def update_odds():
+def update_odds():
     now = datetime.datetime.now()
 
     if now.hour == 12 and now.minute == 0 and now.second == 0:
@@ -92,7 +91,7 @@ async def update_odds():
 
 
 def is_it_me(ctx):
-    owners = conf["owners"]
+    owners = conf["owner"]
     if ctx.author.id in owners:
         return ctx.author.id
 
@@ -655,6 +654,10 @@ async def on_command_error(ctx, error):
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
+
+
+
+update_odds()
 
 
 bot.run(conf["token"])
