@@ -125,10 +125,10 @@ def get_Joke():
     joke = Joke(setup, punchline)
     return(joke)
 
-@bot.event
-async def on_message(msg):
-    if bot.user.mentioned_in(msg) and not msg.content == "@everyone":
-        await msg.channel.send('My prefix is "<" type "<help" for all the commands!')
+# @bot.event
+# async def on_message(msg):
+#     if bot.user.mentioned_in(msg) and not msg.content == "@everyone":
+#         await msg.channel.send('My prefix is "<" type "<help" for all the commands!')
 
 
 @bot.command()
