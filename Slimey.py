@@ -134,7 +134,7 @@ async def on_message(msg):
 @bot.command()
 @commands.check(is_it_me)
 async def restart(ctx):
-    em = discord.Embed(title="Bot will be restarted",
+    em = discord.Embed(title="<:Slimey_tick:933232568210436136> Bot will be restarted",
                        description="The bot will restarting now", color=discord.Colour.purple())
     await ctx.reply(embed=em)
     # Restarting the bot
@@ -144,8 +144,8 @@ async def restart(ctx):
 @bot.command()
 @commands.check(is_it_me)
 async def update(ctx):
-    em = discord.Embed(title="Bot will be updating",
-                       description="I will fetch new code now if available", color=discord.Colour.purple())
+    em = discord.Embed(title="<:Slimey_tick:933232568210436136> Bot will be updating",
+                       description="Fetching new code if available", color=discord.Colour.purple())
     await ctx.reply(embed=em)
     # Running git pull for getting last commit
     os.system("git pull")
@@ -351,7 +351,7 @@ async def rps(ctx, response=None):
 
     else:
         em = discord.Embed(
-            title="Oops!", description="Invalid respons! Please type a response that contains rock, paper, scissor and remember its case sensitive!", color=discord.Color.red())
+            title="<:Slimey_x:933232568055267359> Oops!", description="Invalid respons! Please type a response that contains rock, paper, scissor and remember its case sensitive!", color=discord.Color.red())
         await ctx.reply(embed=em)
 
 
@@ -378,7 +378,7 @@ async def odds(ctx):
 async def say(ctx, *, message: str = None):
 
     if message == None:
-        await ctx.send("Please enter a message to send!")
+        await ctx.send("<:Slimey_x:933232568055267359> Please enter a message to send!")
     
     else:
         await ctx.message.delete()
@@ -414,7 +414,7 @@ async def send_password(ctx, length):
 
         await ctx.respond(embed=embed)
     else:
-        embed = discord.Embed(title="Error", color=discord.Colour.red(
+        embed = discord.Embed(title="<:Slimey_x:933232568055267359> Error", color=discord.Colour.red(
         ), description=f"Please don't go higher than 100!")
         await ctx.respond(embed=embed)
 
@@ -488,7 +488,7 @@ async def modapps(ctx):
 @bot.slash_command(pass_context=True)
 async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
     if not ctx.author.guild_permissions.timeout_members:
-        await ctx.respond("You have no permission to timeout members!", ephemeral=True)
+        await ctx.respond("<:Slimey_x:933232568055267359> You have no permission to timeout members!", ephemeral=True)
         return
 
     duration = None
@@ -551,7 +551,7 @@ async def timeout(ctx, target: Option(discord.Member, "The member you want to ti
 async def kick(ctx, member: discord.Member = None, *, reason=None):
 
     if member==None:
-        await ctx.reply("Please specify a member to kick")
+        await ctx.reply("<:Slimey_x:933232568055267359> Please specify a member to kick")
     
     else:
 
@@ -561,7 +561,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
 
         await ctx.guild.kick(member)
         
-        em = discord.Embed(title = f"Kicked successfully", color = discord.Color.green())
+        em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Kicked successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
         
@@ -573,7 +573,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
 async def ban(ctx, member : discord.Member, *, reason = None):
 
     if member==None:
-        await ctx.send("Please specify a member to ban")
+        await ctx.send("<:Slimey_x:933232568055267359> Please specify a member to ban")
     
     else:
 
@@ -583,7 +583,7 @@ async def ban(ctx, member : discord.Member, *, reason = None):
             
         await member.ban(reason = reason)
 
-        em = discord.Embed(title = f"Banned successfully", color = discord.Color.green())
+        em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Banned successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
 
@@ -593,7 +593,7 @@ async def ban(ctx, member : discord.Member, *, reason = None):
 @bottleflip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
@@ -606,7 +606,7 @@ async def hello(ctx):
 @report.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
@@ -614,7 +614,7 @@ async def command_name_error(ctx, error):
 @rps.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
@@ -622,7 +622,7 @@ async def command_name_error(ctx, error):
 @coinflip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"Slow it down bro!",
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
@@ -631,7 +631,7 @@ async def command_name_error(ctx, error):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
 
-        em = discord.Embed(title="Permission Error",
+        em = discord.Embed(title="<:Slimey_x:933232568055267359> Permission Error",
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
