@@ -580,7 +580,7 @@ async def ban(ctx, member : discord.Member, *, reason = None):
         if reason==None:
 
             reason="No reason was specified"
-
+            
         await member.ban(reason = reason)
 
         em = discord.Embed(title = f"Banned successfully", color = discord.Color.green())
