@@ -204,13 +204,6 @@ async def clear(ctx, amount=5):
     await ctx.channel.purge(limit=amount + 1)
 
 
-@bot.command()
-async def edittest(ctx):
-  message = await ctx.send("hello")
-  await asyncio.sleep(1)
-  await message.edit(content="newcontent")
-
-
 @bot.command(aliases=["cointos", "cointoss", "flipcoin"])
 @commands.cooldown(1, 10, commands.BucketType.user)
 async def coinflip(ctx):
