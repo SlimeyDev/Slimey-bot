@@ -204,6 +204,13 @@ async def clear(ctx, amount=5):
     await ctx.channel.purge(limit=amount + 1)
 
 
+@bot.command()
+async def edittest(ctx):
+  message = await ctx.send("hello")
+  await asyncio.sleep(1)
+  await message.edit(content="newcontent")
+
+
 @bot.command(aliases=["cointos", "cointoss", "flipcoin"])
 @commands.cooldown(1, 10, commands.BucketType.user)
 async def coinflip(ctx):
@@ -565,7 +572,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
         
-        await ctx.send(embed = em)
+        await ctx.sfend(embed = em)
 
 
 @bot.command()
@@ -596,11 +603,6 @@ async def command_name_error(ctx, error):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
-
-
-@bot.command()
-async def hello(ctx):
-    await ctx.send("Hi!")
 
 
 @report.error
