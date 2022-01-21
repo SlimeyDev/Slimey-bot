@@ -590,6 +590,13 @@ async def ban(ctx, member : discord.Member == None, *, reason = None):
         await ctx.send(embed = em)
 
 
+@bot.command()
+async def vote(ctx):
+    em = discord.Embed(title = "Vote on me on top.gg!", url = "https://top.gg/bot/915488552568123403/vote", color = discord.Color.gold())
+
+    await ctx.reply(embed=em)
+
+
 @bottleflip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
