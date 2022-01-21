@@ -73,8 +73,14 @@ async def on_ready():
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
     Bot_Status = f"{len(bot.guilds)} servers | <help"
+    members = sum([guild.member_count for guild in bot.guilds])
+    channels = 0
+    for guild in bot.guilds:
+        channels += len(guild.channels)
+    stats = {"Guilds": len(bot.guilds), "Users": members, "Channels": channels}
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    print("Current stats: ", stats)
     print("----------")
 
 
