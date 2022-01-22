@@ -31,16 +31,13 @@ import time
 import psutil
 import platform
 import shutil
-<<<<<<< HEAD
 from PIL import Image
 from io import BytesIO
 
 bot_version = "5"
-=======
 
 
 
->>>>>>> 6bfddabd6de4fab1fcc92296a0d694d3e0bac18d
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 
