@@ -348,6 +348,8 @@ async def help(ctx):
     em.add_field(
         name="<report", value="Use this command to report bugs and problems on the bot!", inline=False)
     em.add_field(name="<say <value>", value="Sends the value!", inline=True)
+    em.add_field(name="<sayweird <value>", value="Sends the value, but with alternating upper and lower case letters!", inline=True)
+
     em.add_field(name="<magic8ball <question>",
                  value="Ask it a question and it will tell you your faith...", inline=True)
     em.add_field(name="<yesorno <question>",
@@ -661,6 +663,19 @@ async def rip(ctx, target: discord.Member = None):
     rip.paste(pic, (337, 215))
     rip.save("rip_gen.jpg")
     await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
+
+@bot.command()
+
+@bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
+async def sayweird(ctx, *, message: str = None):
+    if message == None:
+        await ctx.send("<:Slimey_x:933232568055267359> Please enter a message to send!")
+    
+    else:
+        await ctx.message.delete()
+        message = "".join([x.upper() if i % 2 != 0 else x for i, x in enumerate(message)])
+
+        await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
 
 @bottleflip.error
 async def command_name_error(ctx, error):
