@@ -664,8 +664,6 @@ async def rip(ctx, target: discord.Member = None):
     rip.save("rip_gen.jpg")
     await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
 
-@bot.command()
-
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
     if message == None:
