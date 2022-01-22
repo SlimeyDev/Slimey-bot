@@ -580,7 +580,7 @@ async def vote(ctx):
     view = View()
     view.add_item(button)
 
-    await ctx.send("Vote this bot on top.gg!", view = view)
+    await ctx.reply("Vote this bot on top.gg!", view = view)
 
 
 @bottleflip.error
