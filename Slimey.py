@@ -264,7 +264,7 @@ async def bottleflip(ctx):
 
 
 @bot.command(aliases=["about", "botinfo", "bot"])
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(1, 10, commands.BucketType.user)
 
 async def info(ctx):
     info = (f"Information on the bot: This bot was made using VS Code using the language Python. It was made by TheSlimeyDevloper and it's maintained by `TheSlimeyDev_YT#8584` and `$ Frido#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
@@ -294,7 +294,7 @@ async def stats(ctx):
     
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk** Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk**"+"\n"+"Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
 
     info = (f'__**CURRENT Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
