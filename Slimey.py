@@ -27,7 +27,7 @@ import string
 import secrets
 import asyncio
 from discord.commands import Option
-
+import time
 bot = commands.Bot(command_prefix="<", help_command=None)
 
 config_json = {"token":"","owners":[]}
@@ -52,10 +52,10 @@ async def on_ready():
     channels = 0
     for guild in bot.guilds:
         channels += len(guild.channels)
-    stats = {"Guilds": len(bot.guilds), "Users": members, "Channels": channels}
+    stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
-    print("Current stats: ", stats)
+    print("Current stats:", stats)
     print("----------")
 
 
@@ -252,10 +252,12 @@ async def bottleflip(ctx):
             await ctx.reply(embed=em)
 
 
-@bot.command()
+@bot.command(aliases=["about", "stats", "botinfo", "bot"])
 async def info(ctx):
-    await ctx.reply("Information on the bot: This bot was made using VS Code using the language Python. It was made by a new creator TheSlimeyDevloper.\nCurrent creators of this bot are TheSlimeyDev_YT#8584, fun12545#5552, $ Frido#7590")
-
+    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It was made by TheSlimeyDevloper and it's maintained by `TheSlimeyDev_YT#8584` and `$ Frido#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
+    f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n(Last updated: <t:{int(time.time())}:R>)')
+    
+    await ctx.reply(info)
 
 @bot.command()
 async def help(ctx):
