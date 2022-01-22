@@ -43,7 +43,7 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
-    #update_odds.start()
+    update_odds.start()
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
@@ -254,7 +254,7 @@ async def bottleflip(ctx):
 
 @bot.command()
 async def info(ctx):
-    await ctx.reply("Information on the bot: This bot was made using VS Code using the language Python. It was made by a new creator TheSlimeyDevloper.\nCurrent creators of this bot are TheSlimeyDev_YT#8584, fun12545#5552, Fuchsdo#4581")
+    await ctx.reply("Information on the bot: This bot was made using VS Code using the language Python. It was made by a new creator TheSlimeyDevloper.\nCurrent creators of this bot are TheSlimeyDev_YT#8584, fun12545#5552, $ Frido#7590")
 
 
 @bot.command()
@@ -296,6 +296,7 @@ async def help(ctx):
     em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
     em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
     em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
+    em.add_field(name="<vote", value="Vote the bot on top.gg!")
 
     await ctx.send(embed=em)
 
@@ -573,9 +574,13 @@ async def ban(ctx, member : discord.Member == None, *, reason = None):
 
 @bot.command()
 async def vote(ctx):
-    em = discord.Embed(title = "Vote on me on top.gg!", url = "https://top.gg/bot/915488552568123403/vote", color = discord.Color.gold())
 
-    await ctx.reply(embed=em)
+    button = Button(label="Top.gg", url="https://top.gg/bot/915488552568123403/vote")
+
+    view = View()
+    view.add_item(button)
+
+    await ctx.send("Vote this bot on top.gg!", view = view)
 
 
 @bottleflip.error
@@ -618,7 +623,6 @@ async def on_command_error(ctx, error):
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
-
 
 
 update_odds()
