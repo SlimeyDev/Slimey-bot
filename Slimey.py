@@ -43,7 +43,7 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
-    update_odds.start()
+    update_odds()
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
