@@ -73,8 +73,14 @@ async def on_ready():
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
     Bot_Status = f"{len(bot.guilds)} servers | <help"
+    members = sum([guild.member_count for guild in bot.guilds])
+    channels = 0
+    for guild in bot.guilds:
+        channels += len(guild.channels)
+    stats = {"Guilds": len(bot.guilds), "Users": members, "Channels": channels}
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    print("Current stats: ", stats)
     print("----------")
 
 
@@ -488,7 +494,7 @@ async def modapps(ctx):
 
 @bot.slash_command(pass_context=True)
 async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
-    if not ctx.author.guild_permissions.timeout_members:
+    if not ctx.author.guild_permissions.moderate_members:
         await ctx.respond("<:Slimey_x:933232568055267359> You have no permission to timeout members!", ephemeral=True)
         return
 
