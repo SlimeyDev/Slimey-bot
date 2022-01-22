@@ -51,7 +51,7 @@ async def on_ready():
     global members
     global stats
     global channels
-    
+    global start_time
     members = sum([guild.member_count for guild in bot.guilds])
     channels = 0
     for guild in bot.guilds:
@@ -60,6 +60,7 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
+    start_time = int(time.time())
     print("----------")
 
     
@@ -254,7 +255,7 @@ async def bottleflip(ctx):
 @bot.command(aliases=["about", "stats", "botinfo", "bot"])
 async def info(ctx):
     info = (f"Information on the bot: This bot was made using VS Code using the language Python. It was made by TheSlimeyDevloper and it's maintained by `TheSlimeyDev_YT#8584` and `$ Frido#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
-    f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n(Last updated: <t:{int(time.time())}:R>)')
+    f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n(Last updated: <t:{start_time}:R>)')
     
     await ctx.reply(info)
 
