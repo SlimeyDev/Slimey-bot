@@ -315,6 +315,7 @@ async def help(ctx):
     em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
     em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
     em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
+    em.add_field(name="<vote", value="Vote the bot on top.gg!")
 
     await ctx.send(embed=em)
 
@@ -592,9 +593,13 @@ async def ban(ctx, member : discord.Member == None, *, reason = None):
 
 @bot.command()
 async def vote(ctx):
-    em = discord.Embed(title = "Vote on me on top.gg!", url = "https://top.gg/bot/915488552568123403/vote", color = discord.Color.gold())
 
-    await ctx.reply(embed=em)
+    button = Button(label="Top.gg", url="https://top.gg/bot/915488552568123403/vote")
+
+    view = View()
+    view.add_item(button)
+
+    await ctx.send("Vote this bot on top.gg!", view = view)
 
 
 @bottleflip.error
