@@ -28,8 +28,11 @@ import secrets
 import asyncio
 from discord.commands import Option
 import time
+import psutil
+import platform
+import shutil
+bot_version = "5"
 bot = commands.Bot(command_prefix="<", help_command=None)
-
 config_json = {"token":"","owners":[]}
 if not os.path.exists('config.json'):
     with open ("config.json", 'w') as f:
@@ -60,8 +63,16 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
+    global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
-    print("----------")
+    cpu_usage = psutil.cpu_percent(4)
+    ram_usage = psutil.virtual_memory()[2]
+    python_version = platform.python_version()
+    os_system = platform.system()
+    os_release = platform.release()
+    total, used, free = shutil.disk_usage("/")
+    disk_stats = f"**Disk** Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+    print("All stats loaded\n----------")
 
     
     global bottleflipvar
@@ -252,12 +263,53 @@ async def bottleflip(ctx):
             await ctx.reply(embed=em)
 
 
-@bot.command(aliases=["about", "stats", "botinfo", "bot"])
+@bot.command(aliases=["about", "botinfo", "bot"])
+@commands.cooldown(1, 5, commands.BucketType.user)
+
 async def info(ctx):
     info = (f"Information on the bot: This bot was made using VS Code using the language Python. It was made by TheSlimeyDevloper and it's maintained by `TheSlimeyDev_YT#8584` and `$ Frido#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
-    f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n(Last updated: <t:{start_time}:R>)')
+    f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
+    
+    f"**Last restarted** <t:{start_time}:R>\n"
+    f"**CPU usage** {cpu_usage}%\n"
+    f"**RAM usage** {ram_usage}%\n"
+    f"{disk_stats}\n"
+    f"**Python-Version** {python_version}\n"
+    f"**Bot-Version** {bot_version}\n"
+    f"**OS info** {os_system} {os_release}\n\n"
+    f"**API connection ping** {round(bot.latency * 1000)}ms\n\n"
+    f":information_source: **Note:** Because of performance reasons, the most stats are last updated on <t:{start_time}>."
+    )
     
     await ctx.reply(info)
+
+@bot.command()
+@commands.check(is_it_me)
+async def stats(ctx):
+    await ctx.message.add_reaction('🔄')
+    members = sum([guild.member_count for guild in bot.guilds])
+    channels = 0
+    for guild in bot.guilds:
+        channels += len(guild.channels)
+    
+    stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
+    total, used, free = shutil.disk_usage("/")
+    disk_stats = f"**Disk** Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+
+    info = (f'__**CURRENT Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
+    
+    f"**Last restarted** <t:{start_time}:R>\n"
+    f"**CPU usage** {psutil.cpu_percent(4)}%\n"
+    f"**RAM usage** {psutil.virtual_memory()[2]}%\n"
+    f"{disk_stats}\n"
+    f"**Python-Version** {platform.python_version()}\n"
+    f"**Bot-Version** {bot_version}\n"
+    f"**OS info** {platform.system()} {platform.release()}\n\n"
+    f"**API connection ping** {round(bot.latency * 1000)}ms"
+    )
+    
+    await ctx.send(info)
+    await ctx.message.remove_reaction("🔄", bot.user)
 
 @bot.command()
 async def help(ctx):
@@ -615,7 +667,12 @@ async def command_name_error(ctx, error):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
-
+@info.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
 
 @bot.event
 async def on_command_error(ctx, error):
