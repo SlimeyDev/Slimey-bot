@@ -31,11 +31,20 @@ import time
 import psutil
 import platform
 import shutil
+<<<<<<< HEAD
 from PIL import Image
 from io import BytesIO
 
 bot_version = "5"
+=======
+
+
+
+>>>>>>> 6bfddabd6de4fab1fcc92296a0d694d3e0bac18d
 bot = commands.Bot(command_prefix="<", help_command=None)
+
+
+
 config_json = {"token":"","owners":[]}
 if not os.path.exists('config.json'):
     with open ("config.json", 'w') as f:
@@ -66,6 +75,8 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
+    global bot_version
+    bot_version = "5.3"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -267,7 +278,7 @@ async def bottleflip(ctx):
 
 
 @bot.command(aliases=["about", "botinfo", "bot"])
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(1, 10, commands.BucketType.user)
 
 async def info(ctx):
     info = (f"Information on the bot: This bot was made using VS Code using the language Python. It was made by TheSlimeyDevloper and it's maintained by `TheSlimeyDev_YT#8584` and `$ Frido#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
@@ -297,7 +308,7 @@ async def stats(ctx):
     
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk** Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk**"+"\n"+"Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
 
     info = (f'__**CURRENT Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
