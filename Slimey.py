@@ -31,6 +31,9 @@ import time
 import psutil
 import platform
 import shutil
+from PIL import Image
+from io import BytesIO
+
 bot_version = "5"
 bot = commands.Bot(command_prefix="<", help_command=None)
 config_json = {"token":"","owners":[]}
@@ -351,7 +354,7 @@ async def help(ctx):
     em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
     em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
     em.add_field(name="<vote", value="Vote the bot on top.gg!")
-
+    em.add_field(name="<rip <user>", value="Show someone's grave... or yours!")
     await ctx.send(embed=em)
 
 
@@ -601,7 +604,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
         
-        await ctx.sfend(embed = em)
+        await ctx.send(embed = em)
 
 
 @bot.command()
@@ -636,6 +639,20 @@ async def vote(ctx):
 
     await ctx.reply("Vote this bot on top.gg!", view = view)
 
+@bot.command()
+@commands.cooldown(1, 10, commands.BucketType.user)
+
+async def rip(ctx, target: discord.Member = None):
+    if target == None:
+        target = ctx.author
+    rip = Image.open("rip.jpg")
+    asset = target.avatar
+    data = BytesIO(await asset.read())
+    pic = Image.open(data)
+    pic = pic.resize((213, 213))
+    rip.paste(pic, (337, 215))
+    rip.save("rip_gen.jpg")
+    await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
 
 @bottleflip.error
 async def command_name_error(ctx, error):
@@ -668,6 +685,12 @@ async def command_name_error(ctx, error):
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 @info.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+@rip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
