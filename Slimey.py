@@ -43,15 +43,15 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
-<<<<<<< HEAD
-    update_odds()
-=======
-    global stats
->>>>>>> ba19b73b9579122b6ae18e5fb6208db34f8b2533
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
     Bot_Status = f"{len(bot.guilds)} servers | <help"
+    
+    global members
+    global stats
+    global channels
+    
     members = sum([guild.member_count for guild in bot.guilds])
     channels = 0
     for guild in bot.guilds:
@@ -62,17 +62,12 @@ async def on_ready():
     print("Current stats:", stats)
     print("----------")
 
+    
+    global bottleflipvar
+    global megaflip
 
-def update_odds():
-    now = datetime.datetime.now()
-
-    if now.hour == 12 and now.minute == 0 and now.second == 0:
-        global megaflip
-        global bottleflipvar
-        megaflip = 0
-        bottleflipvar = 0
-        bottleflipvar = random.randint(30, 80)
-        megaflip = random.randint(20, 60)
+    bottleflipvar = random.randint(30, 80)
+    megaflip = random.randint(20, 60)
 
 
 def is_it_me(ctx):
@@ -630,8 +625,6 @@ async def on_command_error(ctx, error):
 
         await ctx.reply(embed=em)
 
-
-update_odds()
 
 
 bot.run(conf["token"])
