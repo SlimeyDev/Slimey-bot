@@ -30,41 +30,16 @@ from discord.commands import Option
 
 bot = commands.Bot(command_prefix="<", help_command=None)
 
-
+config_json = {"token":"","owners":[]}
 if not os.path.exists('config.json'):
-    with open("config.json", 'w') as f:
-        f.write("""{"token":"","owners":[]}""")
-    with open("config.json", 'r') as f:
-        conf = json.load(f)
-
+    with open ("config.json", 'w') as f:
+        f.write(json.dumps(config_json, indent=4))
     
-    print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs: ")
-
-    input_token = input("Enter Token: ")
-    print("\n\nGood! Now enter the Owner_IDs. If you don't want to set an OPTIONAL owner ID, just press enter without any input.")
-    input_owner1 = input("Enter first Owner ID (required): ")
-    if input_owner1 == "":
-        print("Required option.")
-        exit()
-    input_owner2 = input("Enter second Owner ID (optional): ")
-    if input_owner2 == "":
-        input_owner2 = "1"
-    input_owner3 = input("Enter third Owner ID (optional): ")
-    if input_owner3 == "":
-        input_owner3 = "1"
-    print("Input recorded.\nWriting to configuration...")
-    with open("config.json", 'w') as f:
-        conf["token"] = input_token
-        conf["owners"].append(int(input_owner1))
-        conf["owners"].append(int(input_owner2))
-        conf["owners"].append(int(input_owner3))
-
-        json.dump(conf, f, indent=4)
-        print("Succesfully recorded all configurations. If you want to run this setup again, delete 'config.json'.")
-
+    print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs in the config.json file.")
+    exit("Run the bot again after you entered the config values")
 
 with open("config.json", 'r') as f:
-            conf = json.load(f)
+    conf = json.load(f)
 
 @bot.event
 async def on_ready():
@@ -97,7 +72,7 @@ def update_odds():
 
 
 def is_it_me(ctx):
-    owners = conf["owner"]
+    owners = conf["owners"]
     if ctx.author.id in owners:
         return ctx.author.id
 
@@ -650,4 +625,3 @@ update_odds()
 
 
 bot.run(conf["token"])
-#OTE1NDg4NTUyNTY4MTIzNDAz.YacVJw.cTMdj9INhXSTguBGBwKGToiahrc
