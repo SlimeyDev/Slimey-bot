@@ -650,7 +650,6 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=em)
 
 
-
 update_odds()
 
 
