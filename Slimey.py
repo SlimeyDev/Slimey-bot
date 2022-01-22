@@ -31,8 +31,13 @@ import time
 import psutil
 import platform
 import shutil
-bot_version = "5"
+
+
+
 bot = commands.Bot(command_prefix="<", help_command=None)
+
+
+
 config_json = {"token":"","owners":[]}
 if not os.path.exists('config.json'):
     with open ("config.json", 'w') as f:
@@ -63,6 +68,8 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
+    global bot_version
+    bot_version = "5.3"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
