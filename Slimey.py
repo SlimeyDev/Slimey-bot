@@ -333,22 +333,22 @@ async def help(ctx, mode = None):
         await ctx.send(embed=em)
     
     elif mode == "fun":
-        em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`")
+        em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`", color=discord.Color.green())
 
         await ctx.reply(embed=em)
     
     elif mode == "moderation":
-        em = discord.Embed(title="Moderation commands -", description="`<kick`\n`<ban`\n`/timeout`\n`<clear`")
+        em = discord.Embed(title="Moderation commands -", description="`<kick`\n`<ban`\n`/timeout`\n`<clear`", color=discord.Color.red())
         
         await ctx.reply(embed=em)
     
     elif mode == "minigames":
-        em = discord.Embed(title="Minigames commands -", description = "`<coinflip`\n`<bottleflip`\n`<rps`\n`<odds`")
+        em = discord.Embed(title="Minigames commands -", description = "`<coinflip`\n`<bottleflip`\n`<rps`\n`<odds`", color=discord.Color.blue())
 
         await ctx.reply(embed=em)
     
     elif mode == "utility":
-        em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`")
+        em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`", color=discord.Color.purple())
 
         await ctx.reply(embed=em)
 
