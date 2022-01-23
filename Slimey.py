@@ -341,7 +341,7 @@ async def help(ctx, mode: typing.Optional[str]):
             
             await ctx.reply(embed=em)
         
-        elif mode == "minigames":
+        elif mode == "minigame":
             em = discord.Embed(title="Minigames commands -", description = "`<coinflip`\n`<bottleflip`\n`<rps`\n`<odds`", color=discord.Color.blue())
     
             await ctx.reply(embed=em)
