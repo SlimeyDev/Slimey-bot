@@ -361,10 +361,10 @@ async def help(ctx):
     em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
     em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
     em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
-    em.add_field(name="<vote", value="Vote the bot on top.gg!")
-    em.add_field(name="<rip <user>", value="Show someone's grave... or yours!")
-    em.add_field(name="<sayweird <value>", value="Says the value wEiRdLy")
-    em.add_field(name="<kill <user>", value="Kills the user...")
+    em.add_field(name="<vote", value="Vote the bot on top.gg!", inline=True)
+    em.add_field(name="<rip <user>", value="Show someone's grave... or yours!", inline=False)
+    em.add_field(name="<sayweird <value>", value="Says the value wEiRdLy", inline=True)
+    em.add_field(name="<kill <user>", value="Kills the user...", inline=True)
     
     await ctx.send(embed=em)
 
