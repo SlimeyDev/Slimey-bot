@@ -323,23 +323,9 @@ async def stats(ctx):
 
 
 @bot.command()
-<<<<<<< HEAD
 async def help(ctx, mode: typing.Optional[str]):
     
     if mode == "fun":
-=======
-async def help(ctx, mode = None):
-    
-    if mode is None:
-        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
-        em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
-        em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
-        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
-       
-        await ctx.send(embed=em)
-    
-    elif mode == "fun":
->>>>>>> 3c28a69e753595e9e7fe2e0380fa2efdfd30f9e0
         em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`", color=discord.Color.green())
 
         await ctx.reply(embed=em)
