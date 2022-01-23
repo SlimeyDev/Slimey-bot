@@ -365,6 +365,7 @@ async def help(ctx):
     em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
     em.add_field(name="<vote", value="Vote the bot on top.gg!")
     em.add_field(name="<rip <user>", value="Show someone's grave... or yours!")
+    em.add_field(name="<sayweird <value>", value="Says the value wEiRdLy")
     await ctx.send(embed=em)
 
 
