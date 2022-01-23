@@ -324,9 +324,7 @@ async def stats(ctx):
 
 @bot.command()
 async def help(ctx, mode: typing.Optional[str]):
-    #print("DEBUG: help", type(mode))
     if mode == None:
-        #print("DEBUG: General help")
         em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
         em.add_field(name="suppor server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
