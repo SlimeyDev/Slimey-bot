@@ -320,54 +320,37 @@ async def stats(ctx):
     await ctx.send(info)
     await ctx.message.remove_reaction("🔄", bot.user)
 
+
 @bot.command()
-async def help(ctx):
-    em = discord.Embed(
-        title="Currently the existing commands are -", color=discord.Colour.blue())
-    em.add_field(name="<coinflip", value="Flips a coin!", inline=True)
-    em.add_field(name="<youtube",
-                 value="Shows TheSlimeyDevloper's youtube.", inline=True)
-    em.add_field(name="<info", value="Gives info on the bot.", inline=True)
-    em.add_field(name="<bottleflip",
-                 value="Flips a bottle! Well there are chances of getting something *rare*.", inline=False)
-    em.add_field(
-        name="<twitch", value="Show you TheSlimeyDevloper's twitch account.", inline=True)
-    em.add_field(name="<inspire",
-                 value="Sends you an insperational qoute!", inline=True)
-    em.add_field(name="<dadjoke",
-                 value="Sends u a stupid dadjoke\n -_-", inline=True)
-    em.add_field(name="<ping", value="Tells you your latecy.", inline=False)
-    em.add_field(
-        name="<odds", value="Tells you your odds of getting a bottle flip!", inline=True)
-    em.add_field(
-        name="<invite", value="Sends an invite link to invite me to your server!", inline=True)
-    em.add_field(name="<clear <value>",
-                 value="Used to clear a bunch of messages!", inline=True)
-    em.add_field(
-        name="<report", value="Use this command to report bugs and problems on the bot!", inline=False)
-    em.add_field(name="<say <value>", value="Sends the value!", inline=True)
-    em.add_field(name="<sayweird <value>", value="Sends the value, but with alternating upper and lower case letters!", inline=True)
-
-    em.add_field(name="<magic8ball <question>",
-                 value="Ask it a question and it will tell you your faith...", inline=True)
-    em.add_field(name="<yesorno <question>",
-                 value="Answers **Yes** or **No** to the question you entered", inline=True)
-    em.add_field(name="<rps <value>",
-                 value="Play some rock paper scissors with me!", inline=False)
-    em.add_field(name="<send_password <value>",
-                 value="Generate some passwords!", inline=True)
-    em.add_field(name="/send_meme", value="Sends a meme from reddit!", inline=True)
-    em.add_field(name="/timeout <user> <int> \n<s | min | h | d> [reason]", value="Timeout members!", inline=True)
-    em.add_field(name="<embed <title> <description>", value="You can make embeds using this command!", inline=False)
-    em.add_field(name="<kick <member> <reason>", value="kicks a member", inline=True)
-    em.add_field(name="<ban <member> <reason>", value="Bans a member", inline=True)
-    em.add_field(name="<vote", value="Vote the bot on top.gg!", inline=True)
-    em.add_field(name="<rip <user>", value="Show someone's grave... or yours!", inline=False)
-    em.add_field(name="<sayweird <value>", value="Says the value wEiRdLy", inline=True)
-    em.add_field(name="<kill <user>", value="Kills the user...", inline=True)
+async def help(ctx, mode = None):
     
-    await ctx.send(embed=em)
+    if mode == None:
+        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.colour.gold())
+        em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
+        em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
+        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
+       
+        await ctx.send(embed=em)
+    
+    elif mode == "fun":
+        em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`")
 
+        await ctx.reply(embed=em)
+    
+    elif mode == "moderation":
+        em = discord.Embed(title="Moderation commands -", description="`<kick`\n`<ban`\n`/timeout`\n`<clear`")
+        
+        await ctx.reply(embed=em)
+    
+    elif mode == "minigames":
+        em = discord.Embed(title="Minigames commands -", description = "`<coinflip`\n`<bottleflip`\n`<rps`\n`<odds`")
+
+        await ctx.reply(embed=em)
+    
+    elif mode == "utility":
+        em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`")
+
+        await ctx.reply(embed=em)
 
 @bot.command()
 async def invite(ctx):
@@ -496,20 +479,6 @@ async def send_meme(ctx):
 @bot.command()
 async def meme(ctx):
     await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_meme`)")
-
-
-@bot.command()
-async def embed(ctx, title_em=None, description_em=None):
-
-    if title_em == None and description_em == None or description_em == None or title_em == None:
-
-        em = discord.Embed(title = "Error!", description = "No value specified for embed title or description")
-
-        await ctx.send(embed=em)
-
-    else:
-        em = discord.Embed(title=title_em, description=description_em)
-        await ctx.send(embed=em)
 
 
 @bot.command()
