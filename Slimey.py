@@ -326,7 +326,7 @@ async def stats(ctx):
 async def help(ctx, mode: typing.Optional[str]):
     if mode == None:
         em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
-        em.add_field(name="suppor server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
+        em.add_field(name="support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
         em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
         await ctx.reply(embed=em)
