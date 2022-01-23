@@ -33,6 +33,7 @@ import platform
 import shutil
 from PIL import Image
 from io import BytesIO
+import typing
 
 
 
@@ -322,17 +323,9 @@ async def stats(ctx):
 
 
 @bot.command()
-async def help(ctx, mode = "nill"):
+async def help(ctx, mode: typing.Optional[str]):
     
-    if mode == "nill":
-        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.colour.gold())
-        em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
-        em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
-        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
-       
-        await ctx.send(embed=em)
-    
-    elif mode == "fun":
+    if mode == "fun":
         em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`", color=discord.Color.green())
 
         await ctx.reply(embed=em)
@@ -351,6 +344,14 @@ async def help(ctx, mode = "nill"):
         em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`", color=discord.Color.purple())
 
         await ctx.reply(embed=em)
+
+    else:
+        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
+        em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
+        em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
+        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
+       
+        await ctx.send(embed=em)
 
 @bot.command()
 async def invite(ctx):
