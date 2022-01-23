@@ -682,7 +682,7 @@ async def kill(ctx, target: discord.Member = None):
         " died due to WiLd DoG AtAcK",
         " died because they were looking at the microwave while cooking burrito's",
         " droned to death ",
-        " dired bcz there mom killed them",
+        " died bcz there mom killed them",
         " died bcz of shame",
         " died due to cold"
     ]
