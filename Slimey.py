@@ -322,10 +322,10 @@ async def stats(ctx):
 
 
 @bot.command()
-async def help(ctx, mode = "nill"):
+async def help(ctx, mode = None):
     
-    if mode == "nill":
-        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.colour.gold())
+    if mode is None:
+        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
         em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
         em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
         em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
