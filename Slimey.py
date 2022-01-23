@@ -322,9 +322,9 @@ async def stats(ctx):
 
 
 @bot.command()
-async def help(ctx, mode = "catagories"):
+async def help(ctx, mode = "nill"):
     
-    if mode == "catagories":
+    if mode == "nill":
         em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.colour.gold())
         em.add_field(name="suppor server", url="https://discord.gg/eHteZEmfXe", inline=False)
         em.add_field(name="website", url="https://www.slimey.tk/", inline=False)
