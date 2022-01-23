@@ -71,7 +71,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
-    bot_version = "5.5"
+    bot_version = "5.3"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -680,7 +680,11 @@ async def kill(ctx, target: discord.Member = None):
         " died eating expired choclate",
         " tripped and died",
         " died due to WiLd DoG AtAcK",
-        " died because they were looking at the microwave while cooking burrito's"
+        " died because they were looking at the microwave while cooking burrito's",
+        " droned to death ",
+        " dired bcz there mom killed them",
+        " died bcz of shame",
+        " died due to cold"
     ]
 
     message = f"{target}{random.choice(kill)}"
