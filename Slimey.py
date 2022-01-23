@@ -34,8 +34,6 @@ import shutil
 from PIL import Image
 from io import BytesIO
 
-bot_version = "5"
-
 
 
 bot = commands.Bot(command_prefix="<", help_command=None)
@@ -366,6 +364,8 @@ async def help(ctx):
     em.add_field(name="<vote", value="Vote the bot on top.gg!")
     em.add_field(name="<rip <user>", value="Show someone's grave... or yours!")
     em.add_field(name="<sayweird <value>", value="Says the value wEiRdLy")
+    em.add_field(name="<kill <user>", value="Kills the user...")
+    
     await ctx.send(embed=em)
 
 
@@ -664,6 +664,29 @@ async def rip(ctx, target: discord.Member = None):
     rip.paste(pic, (337, 215))
     rip.save("rip_gen.jpg")
     await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
+
+
+@bot.command()
+async def kill(ctx, target: discord.Member = None):
+    if target == None:
+        target = ctx.author
+    
+    kill = [
+        " choked on a lego and died",
+        " stepped on a lego and died",
+        " died when they were writing their death note",
+        " died.",
+        " choked on a carrot and died",
+        " died eating expired choclate",
+        " tripped and died",
+        " died due to WiLd DoG AtAcK",
+        " died because they were looking at the microwave while cooking burrito's"
+    ]
+
+    message = f"{target}{random.choice(kill)}"
+
+    await ctx.send(message)
+
 
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
