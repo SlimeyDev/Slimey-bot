@@ -72,7 +72,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
-    bot_version = "5.7.0"
+    bot_version = "5.7.2"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -129,9 +129,21 @@ def get_Joke():
 
 # @bot.event
 # async def on_message(msg):
-#     if bot.user.mentioned_in(msg) and not msg.content == "@everyone":
+#     if msg == "<@!915488552568123403>":
 #         await msg.channel.send('My prefix is "<" type "<help" for all the commands!')
 
+
+@bot.event
+async def on_guild_join(guild):
+    
+    embed = discord.Embed(color=discord.Color(0xC77FF3), title="Hey! I'm Slimey", description="Thanks for adding me to your server!\nType `<help` for commands and `<info` for some information on the bot and the owners of this bot!")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/934713054678118500/9a79eebc8700d854ae683f7f2e8b1360.webp")
+    embed.set_footer(icon_url="https://cdn.discordapp.com/avatars/934713054678118500/9a79eebc8700d854ae683f7f2e8b1360.webp", text="Slimey bot")
+    try:
+        joinchannel = guild.system_channel
+        await joinchannel.send(embed=embed)
+    except:
+        await guild.text_channels[0].send(embed=embed)
 
 @bot.command()
 @commands.check(is_it_me)
