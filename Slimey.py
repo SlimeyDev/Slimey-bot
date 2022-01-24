@@ -68,7 +68,7 @@ async def on_ready():
     for guild in bot.guilds:
         channels += len(guild.channels)
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
