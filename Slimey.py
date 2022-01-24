@@ -913,7 +913,8 @@ async def countdown(ctx, count=10):
 
     for i in range(count):
         current_count += 1
-    await ctx.send(str(current_count))
+        await ctx.send(str(current_count))
+        await asyncio.sleep(1)
 
 @avatar.error
 async def command_name_error(ctx, error):
