@@ -51,7 +51,7 @@ def load_guild_prefix(bot, message):
     guild_prefix = data["custom_prefixes"][f"{message.guild.id}"]
     return guild_prefix
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_guild_prefix()), help_command=None)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_guild_prefix), help_command=None)
 
 
 
