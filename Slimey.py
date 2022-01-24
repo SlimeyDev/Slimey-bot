@@ -52,7 +52,7 @@ def load_prefix(message):
     else:
         custom_prefix = data["custom_prefixes"][f"{message.guild.id}"]
         pref = custom_prefix
-
+    print(pref)
     return pref
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_prefix), help_command=None)
