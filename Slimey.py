@@ -373,7 +373,7 @@ async def help(ctx, mode: typing.Optional[str]):
     else:
         show_prefix = data["custom_prefixes"][f"{ctx.guild.id}"]    
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`", color = discord.Color.gold())
+        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`, `{show_prefix}help chatbot`, `{show_prefix}help economy`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
         em.add_field(name="Support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
@@ -397,6 +397,14 @@ async def help(ctx, mode: typing.Optional[str]):
         
         elif mode == "utility":
             em = discord.Embed(title="👀 Other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`", color=discord.Color.purple())
+    
+            await ctx.reply(embed=em)
+        elif mode == "chatbot":
+            em = discord.Embed(title="💬 Chatbot commands:", description="*Coming soon!*", color=discord.Color.dark_orange())
+    
+            await ctx.reply(embed=em)
+        elif mode == "economy":
+            em = discord.Embed(title="💰 Economy commands:", description="*Coming soon!*", color=discord.Color.dark_magenta())
     
             await ctx.reply(embed=em)
 
