@@ -1,4 +1,4 @@
 /test.py
 config.json
 rip_gen.jpg
-data.json
+data*.json

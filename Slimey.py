@@ -75,6 +75,12 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
+    print("Backup data file...")
+    with open('data.json', 'r') as data_src:
+        backup_data = json.load(data_src)
+        with open('data-{}.json'.format(datetime.datetime.now().strftime('%Y-%m-%d-%X')), 'w+') as backup_creation:
+            json.dump(backup_data, backup_creation)
+        print("Done")
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
