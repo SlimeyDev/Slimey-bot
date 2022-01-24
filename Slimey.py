@@ -45,7 +45,7 @@ with open('data.json', 'r') as data_source:
     data = json.load(data_source)
     prefixes = data
 
-def load_prefix(bot, message):
+def load_prefix(message):
     if (f"{message.guild.id}") not in data["custom_prefixes"]:
         default_prefix = "<"
         pref = default_prefix
