@@ -591,7 +591,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
 async def ban(ctx, member : discord.Member == None, *, reason = None):
 
     if member==None:
-        await ctx.send("<:Slimey_x:933232568055267359> Please specify a member to ban")
+        await ctx.reply("<:Slimey_x:933232568055267359> Please specify a member to ban")
     
     else:
 
