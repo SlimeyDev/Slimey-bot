@@ -396,7 +396,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
@@ -889,6 +889,27 @@ async def foxshow(ctx):
     await asyncio.sleep(3)
     await m.edit(embed=em5)
     await ctx.send(":fox: = :smiling_face_with_3_hearts:")
+
+@bot.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def avatar(ctx, target: discord.Member = None):
+    if target == None:
+        target = ctx.author
+    
+    else:
+        
+        em = discord.Embed(title = f"{target.name}'s Avatar")
+        em.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
+        em.set_image(url=target.avatar.url)
+        await ctx.send(embed = em)
+
+@avatar.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
 @fox.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
