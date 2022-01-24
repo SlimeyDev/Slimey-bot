@@ -44,7 +44,7 @@ with open('data.json', 'r') as data_source:
     data = json.load(data_source)
     prefixes = data
 
-def load_guild_prefix(client, message):
+def load_guild_prefix(message):
     with open('data.json', 'r') as data_source:
         data = json.load(data_source)
         guild_prefix = data["custom_prefixes"][f"{message.guild.id}"]
