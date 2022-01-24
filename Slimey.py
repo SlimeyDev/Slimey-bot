@@ -909,10 +909,10 @@ async def countdown(ctx, count=10):
     if count > 60:
         await ctx.send("The maximum allowed value is 60.")
         return
-    current_count = 0
+    current_count = count
 
     for i in range(count):
-        current_count += 1
+        current_count += -1
         await ctx.send(str(current_count))
         await asyncio.sleep(1)
 
