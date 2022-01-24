@@ -701,7 +701,7 @@ async def kill(ctx, target: discord.Member = None):
     
 @bot.command(aliases=["pref", "setprefix", "changeprefix"])
 @commands.cooldown(1, 5, commands.BucketType.user)
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(kick_members=True)
 async def prefix(ctx,*, pref=None):
     if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
         if pref == None or pref == "<":
