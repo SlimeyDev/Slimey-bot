@@ -1,3 +1,4 @@
+from lzma import PRESET_DEFAULT
 import discord
 from discord import embeds
 from discord import colour
@@ -44,14 +45,17 @@ with open('data.json', 'r') as data_source:
     data = json.load(data_source)
     prefixes = data
 
-def load_guild_prefix(bot, message):
+def load_prefix(bot, message):
     if (f"{message.guild.id}") not in data["custom_prefixes"]:
-        return "<"
-    
-    guild_prefix = data["custom_prefixes"][f"{message.guild.id}"]
-    return guild_prefix
+        default_prefix = "<"
+        pref = default_prefix
+    else:
+        custom_prefix = data["custom_prefixes"][f"{message.guild.id}"]
+        pref = custom_prefix
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_guild_prefix()), help_command=None)
+    return pref
+
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_prefix), help_command=None)
 
 
 
