@@ -391,7 +391,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`", color=discord.Color.purple())
+            em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`\n`<weather`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
 
@@ -704,7 +704,57 @@ async def kill(ctx, target: discord.Member = None):
     message = f"{target}{random.choice(kill)}"
 
     await ctx.send(message)
-    
+
+@bot.command()
+async def weather(ctx, location = None):
+    if location == None:
+        await ctx.send("Please include a location, friend!")
+        return
+
+    response = requests.get(f"https://pixel-api-production.up.railway.app/data/weather/?location={location}")
+    json_data = json.loads(response.text)
+    if "error" in json_data:
+        if json_data["error"] == "Location not found":
+            await ctx.send("I didn't found that city/location.")
+        else:
+            await ctx.send("Unknown Error. :person_shrugging:")
+        await ctx.message.add_reaction('❌')
+        return
+
+    await ctx.message.add_reaction('🔄')
+    resp_location = json_data["info"]["location"]
+    resp_country = json_data["info"]["country"]
+    #resp_region = json_data["info"]["region"]
+    resp_temp = json_data["weather"]["temp_c"]
+    resp_temp_feel = json_data["weather"]["feels_c"]
+    resp_desc = json_data["weather"]["condition"]
+    resp_ico = json_data["weather"]["icon"]
+
+    if float(resp_temp_feel) <4:
+        color = 0x153db0
+    elif float(resp_temp_feel) <4:
+        color = 0x3a80d3
+    elif float(resp_temp_feel) <8:
+        color = 0x3ad3c5
+    elif float(resp_temp_feel) <15:
+        color = 0xf0da3d
+    elif float(resp_temp_feel) <20:
+        color = 0xf08e3d
+    elif float(resp_temp_feel) <25:
+        color = 0xf0633d
+    elif float(resp_temp_feel) <30:
+        color = 0xf31106
+    elif float(resp_temp_feel) <35:
+        color = 0xc40900
+    embed = discord.Embed(color=discord.Colour(color), title=f"Weather in {resp_location} ({resp_country})", description=f"**`Temperatur`:** {resp_temp}\n"
+    f"**`Feels like`:** {resp_temp_feel}\n"
+    f"**`Description`:** {resp_desc}\n\nWind and humidity coming soon!")
+    embed.set_thumbnail(url=resp_ico)
+    embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
+    await ctx.message.remove_reaction('🔄', bot.user)
+
+    await ctx.send(embed=embed)
+
 @bot.command(aliases=["pref", "setprefix", "changeprefix"])
 @commands.cooldown(1, 5, commands.BucketType.user)
 @commands.has_permissions(kick_members=True)
