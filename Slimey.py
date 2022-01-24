@@ -396,7 +396,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
@@ -902,7 +902,27 @@ async def avatar(ctx, target: discord.Member = None):
     em.set_image(url=target.avatar.url)
     await ctx.send(embed = em)
 
+@bot.command()
+@commands.cooldown(1, 23, commands.BucketType.user)
+@commands.has_permissions(manage_messages=True)
+async def countdown(ctx, count=10):
+    if count > 60:
+        await ctx.send("The maximum allowed value is 60.")
+        return
+    current_count = 0
+
+    for i in range(count):
+        current_count += 1
+    await ctx.send(str(current_count))
+
 @avatar.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
+@countdown.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
