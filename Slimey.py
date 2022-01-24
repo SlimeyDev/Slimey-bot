@@ -830,12 +830,13 @@ async def sayweird(ctx, *, message: str = None):
 async def fox(ctx):
     response = requests.get("https://randomfox.ca/floof/")
     json_data = json.loads(response.text)
+    print(json_data)
     fox_image_url = json_data["image"]
     fox_link = json_data["link"]
-    em = discord.Embed(color=discord.Colour(0xE97451))
+    em = discord.Embed(color=discord.Colour(0xE97451), title=f"[Random fox!]({fox_link})")
     em.set_image(url=fox_image_url)
     em.set_author(name="Random Fox!", url=fox_link)
-    await ctx.send(em=em)
+    await ctx.send(embed=em)
 
 @fox.error
 async def command_name_error(ctx, error):
