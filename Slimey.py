@@ -368,30 +368,35 @@ async def stats(ctx):
 
 @bot.command()
 async def help(ctx, mode: typing.Optional[str]):
+    if (f"{ctx.guild.id}") not in data["custom_prefixes"]:
+        show_prefix = "<"
+    else:
+        show_prefix = data["custom_prefixes"][f"{ctx.guild.id}"]    
     if mode == None:
-        em = discord.Embed(title="Current commands -", description="`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
-        em.add_field(name="support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
+        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`", color = discord.Color.gold())
+        em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
+        em.add_field(name="Support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
-        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet!*", inline=False)
+        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet! We also add more detailed descriptions for each command soon.*", inline=False)
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="Fun commands -", description="`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_meme`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
         elif mode == "moderation":
-            em = discord.Embed(title="Moderation commands -", description="`<kick`\n`<ban`\n`/timeout`\n`<clear`", color=discord.Color.red())
+            em = discord.Embed(title="🔒 Moderation commands:", description=f"`{show_prefix}kick`\n`{show_prefix}ban`\n`/timeout`\n`{show_prefix}clear`", color=discord.Color.red())
             
             await ctx.reply(embed=em)
         
         elif mode == "minigame":
-            em = discord.Embed(title="Minigames commands -", description = "`<coinflip`\n`<bottleflip`\n`<rps`\n`<odds`", color=discord.Color.blue())
+            em = discord.Embed(title="🎲 Minigames commands:", description = f"`{show_prefix}coinflip`\n`{show_prefix}bottleflip`\n`{show_prefix}rps`\n`{show_prefix}odds`", color=discord.Color.blue())
     
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="Other commands -", description="`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`\n`<weather`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
 
@@ -785,8 +790,8 @@ async def prefix(ctx,*, pref=None):
             return
 
     else:
-        if len(pref) > 5:
-            await ctx.send("Prefixes can't be longer than 5.")
+        if len(pref) > 3:
+            await ctx.send("Prefixes can't be longer than 3 characters.")
             return
         new_prefix = pref
         if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
