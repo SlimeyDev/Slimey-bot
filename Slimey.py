@@ -381,7 +381,7 @@ async def help(ctx, mode: typing.Optional[str]):
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -823,6 +823,27 @@ async def sayweird(ctx, *, message: str = None):
         message = "".join([x.upper() if i % 2 != 0 else x for i, x in enumerate(message)])
 
         await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
+
+@bot.command(aliases=["randomfox"])
+@commands.cooldown(1, 3, commands.BucketType.user)
+
+async def fox(ctx):
+    response = requests.get("https://randomfox.ca/floof/")
+    json_data = json.loads(response.text)
+    fox_image_url = json_data["image"]
+    fox_link = json_data["link"]
+    em = discord.Embed(color=discord.Colour(0xE97451))
+    em.set_image(url=fox_image_url)
+    em.set_author(name="Random Fox!", url=fox_link)
+    await ctx.send(em)
+
+@fox.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
 
 @bottleflip.error
 async def command_name_error(ctx, error):
