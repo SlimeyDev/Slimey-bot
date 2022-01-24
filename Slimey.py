@@ -1,4 +1,5 @@
 from lzma import PRESET_DEFAULT
+from ntpath import altsep
 import discord
 from discord import embeds
 from discord import colour
@@ -45,17 +46,19 @@ with open('data.json', 'r') as data_source:
     data = json.load(data_source)
     prefixes = data
 
-def load_prefix(message):
-    if (f"{message.guild.id}") not in data["custom_prefixes"]:
+def load_prefix(self, ctx):
+    if (f"{ctx.guild.id}") not in data["custom_prefixes"]:
         default_prefix = "<"
         pref = default_prefix
     else:
-        custom_prefix = data["custom_prefixes"][f"{message.guild.id}"]
+        custom_prefix = data["custom_prefixes"][f"{ctx.guild.id}"]
         pref = custom_prefix
-    print(pref)
+
     return pref
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(load_prefix), help_command=None)
+
+
+bot = commands.Bot(command_prefix=load_prefix, help_command=None)
 
 
 
@@ -109,6 +112,16 @@ async def on_ready():
     bottleflipvar = random.randint(30, 80)
     megaflip = random.randint(20, 60)
 
+@bot.event
+async def on_message(message):
+    if message.content == "<@!915488552568123403>":
+        if (f"{message.guild.id}") not in data["custom_prefixes"]:
+                show_prefix = "<"
+                await message.channel.send(f'My prefix is **`{show_prefix}`**. Type "{show_prefix}help" for all the commands!\n:bulb: **Tip:** you can use "{show_prefix}prefix" to change my prefix in this server!')
+        else:
+            show_prefix = data["custom_prefixes"][f"{message.guild.id}"]    
+            await message.channel.send(f'My prefix is **`{show_prefix}`**. Type "{show_prefix}help" for all the commands!\n:bulb: **Tip:** you can use "{show_prefix}prefix" to change my prefix in this server!')
+    await bot.process_commands(message)
 
 def is_it_me(ctx):
     owners = conf["owners"]
@@ -145,14 +158,9 @@ def get_Joke():
     joke = Joke(setup, punchline)
     return(joke)
 
-# @bot.event
-# async def on_message(msg):
-#     if msg == "<@!915488552568123403>":
-#         await msg.channel.send('My prefix is "<" type "<help" for all the commands!')
-
 
 @bot.event
-async def on_guild_join(guild):
+async def on_guild_join(guild): 
     
     embed = discord.Embed(color=discord.Color(0xC77FF3), title="Hey! I'm Slimey", description="Thanks for adding me to your server!\nType `<help` for commands and `<info` for some information on the bot and the owners of this bot!")
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/934713054678118500/9a79eebc8700d854ae683f7f2e8b1360.webp")
@@ -692,35 +700,43 @@ async def kill(ctx, target: discord.Member = None):
     await ctx.send(message)
     
 @bot.command(aliases=["pref", "setprefix", "changeprefix"])
-@commands.cooldown(1, 15, commands.BucketType.user)
-@commands.has_permissions(administrator=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+#@commands.has_permissions(administrator=True)
 async def prefix(ctx,*, pref=None):
-    reset = False
-
-    if len(pref) > 10 or len(pref) < 1:
-            await ctx.send("Prefixes can't be longer than 10 or smaller than 1.")
+    if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
+        if pref == None or pref == "<":
+            await ctx.send("Please set a **new** prefix.")
             return
+        else:
+            new_prefix = pref
+            response = f"I set the prefix to `{new_prefix}`."
+    elif pref == prefixes["custom_prefixes"][f"{ctx.guild.id}"]:
+        await ctx.send("That is not a *new* prefix lol")
+        return
 
     elif pref == None or pref == "<":
-        if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
-            print("Please enter a new prefix!")
+        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
+
+            response = "I reset the prefix to the default one. (`<`)"
+            await ctx.send(response)
+            with open('data.json', 'w') as f:
+                prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
+                json.dump(prefixes, f, indent=4)
+                return
+        else:
             return
-        new_prefix = "<"
-        response = "I reset the prefix to the default one. (`<`)"
-        reset = True
+
     else:
+        if len(pref) > 10:
+            await ctx.send("Prefixes can't be longer than 10.")
+            return
         new_prefix = pref
         if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
             old_prefix = prefixes["custom_prefixes"][f"{ctx.guild.id}"]
-            response = f"I set the prefix from {old_prefix} to {new_prefix}."
-        else:
-            response = f"I set the prefix to {new_prefix}."
+            response = f"I set the prefix from `{old_prefix}` to `{new_prefix}`."
+
     with open('data.json', 'w') as f:
-        if reset:
-            await ctx.send(response)
-            prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
-            json.dump(prefixes, f, indent=4)
-            return
+    
         prefixes["custom_prefixes"][f"{ctx.guild.id}"] = str(new_prefix)
         json.dump(prefixes, f, indent=4)
 
