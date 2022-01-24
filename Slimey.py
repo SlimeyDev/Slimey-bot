@@ -835,7 +835,7 @@ async def fox(ctx):
     em = discord.Embed(color=discord.Colour(0xE97451))
     em.set_image(url=fox_image_url)
     em.set_author(name="Random Fox!", url=fox_link)
-    await ctx.send(em)
+    await ctx.send(em=em)
 
 @fox.error
 async def command_name_error(ctx, error):
