@@ -895,13 +895,12 @@ async def foxshow(ctx):
 async def avatar(ctx, target: discord.Member = None):
     if target == None:
         target = ctx.author
-    
-    else:
+
         
-        em = discord.Embed(title = f"{target.name}'s Avatar")
-        em.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
-        em.set_image(url=target.avatar.url)
-        await ctx.send(embed = em)
+    em = discord.Embed(title = f"{target.name}'s Avatar")
+    em.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
+    em.set_image(url=target.avatar.url)
+    await ctx.send(embed = em)
 
 @avatar.error
 async def command_name_error(ctx, error):
