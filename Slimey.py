@@ -35,9 +35,22 @@ from PIL import Image
 from io import BytesIO
 import typing
 
+if not os.path.exists('data.json') or os.stat("data.json").st_size <=3:
+    with open("data.json", 'w') as f:
+        paste = json.dumps({"custom_prefixes":{}}, indent=4)
+        f.write(paste)
 
+with open('data.json', 'r') as data_source:
+    data = json.load(data_source)
+    prefixes = data
 
-bot = commands.Bot(command_prefix="<", help_command=None)
+def load_guild_prefix(client, message):
+    with open('data.json', 'r') as data_source:
+        data = json.load(data_source)
+        guild_prefix = data["custom_prefixes"][f"{message.guild.id}"]
+    return guild_prefix
+
+bot = commands.Bot(command_prefix=load_guild_prefix(), help_command=None)
 
 
 
@@ -672,7 +685,41 @@ async def kill(ctx, target: discord.Member = None):
     message = f"{target}{random.choice(kill)}"
 
     await ctx.send(message)
+    
+@bot.command(aliases=["pref", "setprefix", "changeprefix"])
+@commands.cooldown(1, 15, commands.BucketType.user)
+@commands.has_permissions(administrator=True)
+async def prefix(ctx,*, pref=None):
+    reset = False
 
+    if len(pref) > 10 or len(pref) < 1:
+            await ctx.send("Prefixes can't be longer than 10 or smaller than 1.")
+            return
+
+    elif pref == None or pref == "<":
+        if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
+            print("Please enter a new prefix!")
+            return
+        new_prefix = "<"
+        response = "I reset the prefix to the default one. (`<`)"
+        reset = True
+    else:
+        new_prefix = pref
+        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
+            old_prefix = prefixes["custom_prefixes"][f"{ctx.guild.id}"]
+            response = f"I set the prefix from {old_prefix} to {new_prefix}."
+        else:
+            response = f"I set the prefix to {new_prefix}."
+    with open('data.json', 'w') as f:
+        if reset:
+            await ctx.send(response)
+            prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
+            json.dump(prefixes, f, indent=4)
+            return
+        prefixes["custom_prefixes"][f"{ctx.guild.id}"] = str(new_prefix)
+        json.dump(prefixes, f, indent=4)
+
+        await ctx.send(response)
 
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
@@ -691,6 +738,14 @@ async def command_name_error(ctx, error):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
+
+@prefix.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+
 
 
 @report.error
