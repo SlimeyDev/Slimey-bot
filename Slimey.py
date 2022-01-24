@@ -708,17 +708,19 @@ async def kill(ctx, target: discord.Member = None):
 @bot.command()
 async def weather(ctx, location = None):
     if location == None:
+        await ctx.message.add_reaction('❌')
+
         await ctx.send("Please include a location, friend!")
         return
 
     response = requests.get(f"https://pixel-api-production.up.railway.app/data/weather/?location={location}")
     json_data = json.loads(response.text)
     if "error" in json_data:
+        await ctx.message.add_reaction('❌')
         if json_data["error"] == "Location not found":
             await ctx.send("I didn't found that city/location.")
         else:
             await ctx.send("Unknown Error. :person_shrugging:")
-        await ctx.message.add_reaction('❌')
         return
 
     await ctx.message.add_reaction('🔄')
@@ -746,14 +748,14 @@ async def weather(ctx, location = None):
         color = 0xf31106
     elif float(resp_temp_feel) <35:
         color = 0xc40900
-    embed = discord.Embed(color=discord.Colour(color), title=f"Weather in {resp_location} ({resp_country})", description=f"**`Temperatur`:** {resp_temp}\n"
-    f"**`Feels like`:** {resp_temp_feel}\n"
+    embed = discord.Embed(color=discord.Colour(color), title=f"Weather in {resp_location} ({resp_country})", description=f"**`Temperatur`:** {resp_temp} °C\n"
+    f"**`Feels like`:** {resp_temp_feel} °C\n"
     f"**`Description`:** {resp_desc}\n\nWind and humidity coming soon!")
     embed.set_thumbnail(url=resp_ico)
     embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
-    await ctx.message.remove_reaction('🔄', bot.user)
 
     await ctx.send(embed=embed)
+    await ctx.message.remove_reaction('🔄', bot.user)
 
 @bot.command(aliases=["pref", "setprefix", "changeprefix"])
 @commands.cooldown(1, 5, commands.BucketType.user)
