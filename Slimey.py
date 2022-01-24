@@ -833,9 +833,8 @@ async def fox(ctx):
     print(json_data)
     fox_image_url = json_data["image"]
     fox_link = json_data["link"]
-    em = discord.Embed(color=discord.Colour(0xE97451), title=f"[Random fox!]({fox_link})")
+    em = discord.Embed(color=discord.Colour(0xE97451), title="Random fox!", url=fox_link)
     em.set_image(url=fox_image_url)
-    em.set_author(name="Random Fox!", url=fox_link)
     await ctx.send(embed=em)
 
 @fox.error
