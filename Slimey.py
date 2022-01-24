@@ -381,7 +381,7 @@ async def help(ctx, mode: typing.Optional[str]):
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -830,14 +830,72 @@ async def sayweird(ctx, *, message: str = None):
 async def fox(ctx):
     response = requests.get("https://randomfox.ca/floof/")
     json_data = json.loads(response.text)
-    print(json_data)
     fox_image_url = json_data["image"]
     fox_link = json_data["link"]
     em = discord.Embed(color=discord.Colour(0xE97451), title="Random fox!", url=fox_link)
     em.set_image(url=fox_image_url)
     await ctx.send(embed=em)
+@bot.command(aliases=["megafox", "ultrafox", "foxslideshow"])
+@commands.cooldown(1, 18, commands.BucketType.user)
+async def foxshow(ctx):
+    response1 = requests.get("https://randomfox.ca/floof/")
+    json_data1 = json.loads(response1.text)
+    fox_image_url1 = json_data1["image"]
+    fox_link1 = json_data1["link"]
 
+    response2 = requests.get("https://randomfox.ca/floof/")
+    json_data2 = json.loads(response2.text)
+    fox_image_url2 = json_data2["image"]
+    fox_link2 = json_data2["link"]
+
+    response3 = requests.get("https://randomfox.ca/floof/")
+    json_data3 = json.loads(response1.text)
+    fox_image_url3 = json_data3["image"]
+    fox_link3 = json_data3["link"]
+
+    response4 = requests.get("https://randomfox.ca/floof/")
+    json_data4 = json.loads(response4.text)
+    fox_image_url4 = json_data4["image"]
+    fox_link4 = json_data4["link"]
+
+    response5 = requests.get("https://randomfox.ca/floof/")
+    json_data5 = json.loads(response5.text)
+    fox_image_url5 = json_data5["image"]
+    fox_link5 = json_data5["link"]
+
+
+    em1 = discord.Embed(color=discord.Colour(0xE97451), title="Fox show (1/5)", url=fox_link1)
+    em1.set_image(url=fox_image_url1)
+    
+    em2 = discord.Embed(color=discord.Colour(0xE97451), title="Fox show (2/5)", url=fox_link2)
+    em2.set_image(url=fox_image_url2)
+    
+    em3 = discord.Embed(color=discord.Colour(0xE97451), title="Fox show (3/5)", url=fox_link3)
+    em3.set_image(url=fox_image_url3)
+    
+    em4 = discord.Embed(color=discord.Colour(0xE97451), title="Fox show (4/5)", url=fox_link4)
+    em4.set_image(url=fox_image_url4)
+    
+    em5 = discord.Embed(color=discord.Colour(0xE97451), title="Fox show (5/5)", url=fox_link5)
+    em5.set_image(url=fox_image_url5)
+
+    m = await ctx.send(embed=em1)
+    await asyncio.sleep(3)
+    await m.edit(embed=em2)
+    await asyncio.sleep(3)
+    await m.edit(embed=em3)
+    await asyncio.sleep(3)
+    await m.edit(embed=em4)
+    await asyncio.sleep(3)
+    await m.edit(embed=em5)
+    await ctx.send(":fox: = :smiling_face_with_3_hearts:")
 @fox.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
+@foxshow.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
