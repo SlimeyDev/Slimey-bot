@@ -353,7 +353,7 @@ async def help(ctx, mode: typing.Optional[str]):
 
 @bot.command()
 async def invite(ctx):
-    await ctx.reply("click here to invite me!", url = "https://discord.com/api/oauth2/authorize?client_id=915488552568123403&permissions=8&scope=bot%20applications.commands")
+    await ctx.reply("https://discord.com/api/oauth2/authorize?client_id=915488552568123403&permissions=8&scope=bot%20applications.commands")
 
 
 @bot.command()
