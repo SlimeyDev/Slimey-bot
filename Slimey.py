@@ -1,3 +1,4 @@
+from ast import alias
 from lzma import PRESET_DEFAULT
 from ntpath import altsep
 import discord
@@ -386,7 +387,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "moderation":
-            em = discord.Embed(title="🔒 Moderation commands:", description=f"`{show_prefix}kick`\n`{show_prefix}ban`\n`/timeout`\n`{show_prefix}clear`", color=discord.Color.red())
+            em = discord.Embed(title="🔒 Moderation commands:", description=f"`{show_prefix}kick`\n`{show_prefix}ban`\n`/timeout`\n`{show_prefix}clear`\n`{show_prefix}slowmode`", color=discord.Color.red())
             
             await ctx.reply(embed=em)
         
@@ -835,6 +836,8 @@ async def fox(ctx):
     em = discord.Embed(color=discord.Colour(0xE97451), title="Random fox!", url=fox_link)
     em.set_image(url=fox_image_url)
     await ctx.send(embed=em)
+
+
 @bot.command(aliases=["megafox", "ultrafox", "foxslideshow"])
 @commands.cooldown(1, 18, commands.BucketType.user)
 async def foxshow(ctx):
@@ -889,6 +892,11 @@ async def foxshow(ctx):
     await asyncio.sleep(3)
     await m.edit(embed=em5)
     await ctx.send(":fox: = :smiling_face_with_3_hearts:")
+
+@bot.command(aliases = ["sm"])
+async def slowmode(ctx, seconds: int):
+    await ctx.channel.edit(slowmode_delay=seconds)
+    await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
 
 @bot.command()
 @commands.cooldown(1, 5, commands.BucketType.user)
