@@ -893,7 +893,9 @@ async def foxshow(ctx):
     await m.edit(embed=em5)
     await ctx.send(":fox: = :smiling_face_with_3_hearts:")
 
+
 @bot.command(aliases = ["sm"])
+@commands.has_permissions(manage_channel=True)
 async def slowmode(ctx, seconds: int):
     await ctx.channel.edit(slowmode_delay=seconds)
     await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
