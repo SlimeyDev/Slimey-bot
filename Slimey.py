@@ -895,7 +895,7 @@ async def foxshow(ctx):
 
 
 @bot.command(aliases = ["sm"])
-@commands.has_permissions(manage_channel=True)
+@commands.has_permissions(manage_messages=True)
 async def slowmode(ctx, seconds: int):
     await ctx.channel.edit(slowmode_delay=seconds)
     await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
