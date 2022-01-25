@@ -397,7 +397,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`\n`{show_prefix}avatar`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
