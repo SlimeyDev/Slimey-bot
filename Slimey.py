@@ -56,11 +56,11 @@ db.table_create()
 
 
 def load_prefix(self,ctx):
-    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
-    if not prefix[0][0]:
+    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
+    if not prefix:
         pref = "<"
     else:
-        pref = prefix[0][0]
+        pref = prefix
     return pref
 
 
@@ -101,7 +101,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
-    bot_version = "5.8.0"
+    bot_version = "6.8.0"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
