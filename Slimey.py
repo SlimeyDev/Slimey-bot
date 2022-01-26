@@ -37,6 +37,7 @@ import shutil
 from PIL import Image
 from io import BytesIO
 import typing
+import socket
 
 
 
@@ -119,7 +120,26 @@ async def on_ready():
 
     bottleflipvar = random.randint(30, 80)
     megaflip = random.randint(20, 60)
+    
+    # initialization of cogs
     bot.load_extension('cogs.Economy')
+    
+    # uploading backup to cloud
+    host = socket.gethostname()
+    if host != 'pons': # if the bot didn't started from the server with the main database, do not create a backup.
+        return
+    else:
+        try:
+            print("Creating backup of database... (Uploading to cloud)")
+            db_location = {'file': open('slimeybot.db' ,'rb')}
+            resp = requests.post(f'https://transfer.sh/', files=db_location)
+            print(f"Done: {resp.text}")
+            backup = bot.get_channel(935981038415532060)
+            em = discord.Embed(color=discord.Color.gold(), title="New backup!", description=f"**`Bot-Version:`** {bot_version}\n\**`Hostname:`** {host}\n**`Created at:`** <t:{int(time.time())}:f\nThis backup will stay in the cloud for 14 days.\nLink to the backup: {resp.text}")
+            await backup.send(embed = em)
+            await backup.send("**                                                       **\n** **")
+        except:
+            print("Something went wrong. Backup could not be created.")
 #sending a message when pinged
 
 @bot.event
