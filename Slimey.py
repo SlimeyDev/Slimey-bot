@@ -125,13 +125,13 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
-       prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
-    if not prefix:
-        pref = "<"
-    else:
-        pref = prefix[0][0]
-    await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
-    await bot.process_commands(message)
+        prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
+        if not prefix:
+            pref = "<"
+        else:
+            pref = prefix[0][0]
+        await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
+        await bot.process_commands(message)
 
 #defining all the important functions
 
