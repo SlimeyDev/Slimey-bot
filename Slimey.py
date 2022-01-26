@@ -58,7 +58,7 @@ db.table_create()
 def load_prefix(self,ctx):
     prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
     if not prefix:
-        pref = "t<"
+        pref = "<"
     else:
         pref = prefix[0][0]
     return pref
@@ -124,10 +124,10 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.content == "<@!915488552568123403>":
+    if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
        prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
     if not prefix:
-        pref = "t<"
+        pref = "<"
     else:
         pref = prefix[0][0]
     await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
@@ -917,11 +917,11 @@ async def avatar(ctx, target: discord.Member = None):
     await ctx.send(embed = em)
 
 @bot.command()
-@commands.cooldown(1, 23, commands.BucketType.user)
+@commands.cooldown(1, 35, commands.BucketType.user)
 @commands.has_permissions(manage_messages=True)
 async def countdown(ctx, count=10):
-    if count > 60:
-        await ctx.send("The maximum allowed value is 60.")
+    if count > 30:
+        await ctx.send("The maximum allowed value is 30.")
         return
     current_count = count+1
 
@@ -929,7 +929,7 @@ async def countdown(ctx, count=10):
         current_count += -1
         await ctx.send(str(current_count))
         await asyncio.sleep(1)
-
+    await ctx.send("**0**")
 
 #error handling
 
