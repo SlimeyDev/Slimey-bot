@@ -787,44 +787,47 @@ async def weather(ctx, location = None):
 @commands.cooldown(1, 5, commands.BucketType.user)
 @commands.has_permissions(kick_members=True)
 async def prefix(ctx,*, pref=None):
-    if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
-        if pref == None or pref == "<":
-            await ctx.send("Please set a **new** prefix.")
-            return
-        else:
-            new_prefix = pref
-            response = f"I set the prefix to `{new_prefix}`."
-    elif pref == prefixes["custom_prefixes"][f"{ctx.guild.id}"]:
-        await ctx.send("That is not a *new* prefix lol")
-        return
 
-    elif pref == None or pref == "<":
-        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
+    await ctx.send("This command is currently unavailable!")
 
-            response = "I reset the prefix to the default one. (`<`)"
-            await ctx.send(response)
-            with open('data.json', 'w') as f:
-                prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
-                json.dump(prefixes, f, indent=4)
-                return
-        else:
-            return
+    # if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
+    #     if pref == None or pref == "<":
+    #         await ctx.send("Please set a **new** prefix.")
+    #         return
+    #     else:
+    #         new_prefix = pref
+    #         response = f"I set the prefix to `{new_prefix}`."
+    # elif pref == prefixes["custom_prefixes"][f"{ctx.guild.id}"]:
+    #     await ctx.send("That is not a *new* prefix lol")
+    #     return
 
-    else:
-        if len(pref) > 3:
-            await ctx.send("Prefixes can't be longer than 3 characters.")
-            return
-        new_prefix = pref
-        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
-            old_prefix = prefixes["custom_prefixes"][f"{ctx.guild.id}"]
-            response = f"I set the prefix from `{old_prefix}` to `{new_prefix}`."
+    # elif pref == None or pref == "<":
+    #     if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
 
-    with open('data.json', 'w') as f:
+    #         response = "I reset the prefix to the default one. (`<`)"
+    #         await ctx.send(response)
+    #         with open('data.json', 'w') as f:
+    #             prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
+    #             json.dump(prefixes, f, indent=4)
+    #             return
+    #     else:
+    #         return
+
+    # else:
+    #     if len(pref) > 3:
+    #         await ctx.send("Prefixes can't be longer than 3 characters.")
+    #         return
+    #     new_prefix = pref
+    #     if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
+    #         old_prefix = prefixes["custom_prefixes"][f"{ctx.guild.id}"]
+    #         response = f"I set the prefix from `{old_prefix}` to `{new_prefix}`."
+
+    # with open('data.json', 'w') as f:
     
-        prefixes["custom_prefixes"][f"{ctx.guild.id}"] = str(new_prefix)
-        json.dump(prefixes, f, indent=4)
+    #     prefixes["custom_prefixes"][f"{ctx.guild.id}"] = str(new_prefix)
+    #     json.dump(prefixes, f, indent=4)
 
-        await ctx.send(response)
+    #     await ctx.send(response)
 
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
