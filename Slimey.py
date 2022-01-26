@@ -131,8 +131,7 @@ async def on_message(message):
         else:
             pref = prefix[0][0]
         await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
-        await bot.process_commands(message)
-
+    await bot.process_commands(message)
 #defining all the important functions
 
 def is_it_me(ctx):
@@ -380,7 +379,7 @@ async def stats(ctx):
 async def help(ctx, mode: typing.Optional[str]):
     prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
     if not prefix:
-        show_prefix = "t<"
+        show_prefix = "<"
     else:
         show_prefix = prefix[0][0]
     if mode == None:
