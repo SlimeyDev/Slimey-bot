@@ -38,6 +38,8 @@ from PIL import Image
 from io import BytesIO
 import typing
 
+#opening and setting up the server prefixes of the bot
+
 if not os.path.exists('data.json') or os.stat("data.json").st_size <=3:
     with open("data.json", 'w') as f:
         paste = json.dumps({"custom_prefixes":{}}, indent=4)
@@ -61,7 +63,7 @@ def load_prefix(self, ctx):
 
 bot = commands.Bot(command_prefix=load_prefix, help_command=None)
 
-
+#opening the jsson file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
 if not os.path.exists('config.json'):
@@ -73,6 +75,8 @@ if not os.path.exists('config.json'):
 
 with open("config.json", 'r') as f:
     conf = json.load(f)
+
+#start up of the bot
 
 @bot.event
 async def on_ready():
@@ -119,6 +123,8 @@ async def on_ready():
     bottleflipvar = random.randint(30, 80)
     megaflip = random.randint(20, 60)
 
+#sending a message when pinged
+
 @bot.event
 async def on_message(message):
     if message.content == "<@!915488552568123403>":
@@ -129,6 +135,8 @@ async def on_message(message):
             show_prefix = data["custom_prefixes"][f"{message.guild.id}"]    
             await message.channel.send(f'My prefix is **`{show_prefix}`**. Type "{show_prefix}help" for all the commands!\n:bulb: **Tip:** you can use "{show_prefix}prefix" to change my prefix in this server!')
     await bot.process_commands(message)
+
+#defining all the important functions
 
 def is_it_me(ctx):
     owners = conf["owners"]
@@ -166,6 +174,8 @@ def get_Joke():
     return(joke)
 
 
+#send a message when the bot joins a server
+
 @bot.event
 async def on_guild_join(guild): 
     
@@ -177,6 +187,8 @@ async def on_guild_join(guild):
         await joinchannel.send(embed=embed)
     except:
         await guild.text_channels[0].send(embed=embed)
+
+#commands
 
 @bot.command()
 @commands.check(is_it_me)
@@ -938,6 +950,9 @@ async def countdown(ctx, count=10):
         current_count += -1
         await ctx.send(str(current_count))
         await asyncio.sleep(1)
+
+
+#error handling
 
 @avatar.error
 async def command_name_error(ctx, error):
