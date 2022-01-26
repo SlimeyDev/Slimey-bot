@@ -8,7 +8,7 @@ class Economy(commands.Cog):
 
        
 @commands.command()
-async def work(ctx):
+async def work(self, ctx):
     await ctx.send("No.")
 
 
