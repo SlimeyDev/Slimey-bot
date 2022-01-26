@@ -119,7 +119,7 @@ async def on_ready():
 
     bottleflipvar = random.randint(30, 80)
     megaflip = random.randint(20, 60)
-
+    bot.load_extension('cogs.Economy')
 #sending a message when pinged
 
 @bot.event
