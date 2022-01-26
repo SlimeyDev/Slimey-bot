@@ -57,7 +57,7 @@ db.table_create()
 
 def load_prefix(self,ctx):
     prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
-    if not prefix:
+    if not prefix[0][0]:
         pref = "<"
     else:
         pref = prefix[0][0]
