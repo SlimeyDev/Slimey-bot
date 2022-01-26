@@ -7,9 +7,9 @@ class Economy(commands.Cog):
         self.bot = bot
 
        
-@commands.command()
-async def work(self, ctx):
-    await ctx.send("No.")
+    @commands.command()
+    async def work(self, ctx):
+        await ctx.send("No.")
 
 
 def setup(bot):
