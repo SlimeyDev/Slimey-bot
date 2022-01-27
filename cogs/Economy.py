@@ -8,8 +8,8 @@ class Economy(commands.Cog):
     @commands.command()
     async def work(self, ctx):
 
-        responses_good = ["You worked as a pizza delivery boy", "You worked as Discord mod"]
-        responses_bad = ["You were caught stealing", "You lied to your parents"]
+        responses_good = ["You worked as a pizza delivery boy", "You worked as Discord mod", "You worked at a pizza place", "You worked as a chef"]
+        responses_bad = ["You were caught stealing", "You lied to your parents", "You got caught stealing a cookie", "You ate pizza with pinnaples on it"]
         i = random.randint(1,2)
         if i == 1:
             r = random.choice(responses_good)
