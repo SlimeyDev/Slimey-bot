@@ -967,8 +967,12 @@ async def hack(ctx, member : discord.Member = None):
         word = random.choice(most_used_word)
         em2 = discord.Embed(title = f"Hacking {member}..", description = f"hacking epic games, roblox and minecraft account...(most used word in chat: {word})")
         app = random.choice(most_used_app)
+        locations = ["Nerd island", "Stupid island", "parents house", "basement of a serial killer", "in space"]
+        location_of_user = random.choice(locations)
         em3 = discord.Embed(title = f"Hacking {member}...", description = f"hacking their phone...(most used app: {app})")
-        em4 = discord.Embed(title = f"Succesfully hacked {member}!", description = f"Most used app: {app}\nMost used word: {word}")
+        em4 = discord.Embed(title = f"Hacking {member}..", description = f"hacking their location...(location: {location_of_user})")
+        em5 = discord.Embed(title = f"Succesfully hacked {member}!", description = f"Most used app: {app}\nMost used word: {word}\nlocation: ||{location_of_user}||")
+
         m = await ctx.reply(embed=em)
         await asyncio.sleep(random.randint(4, 6))
         await m.edit(embed = em2)
@@ -976,6 +980,8 @@ async def hack(ctx, member : discord.Member = None):
         await m.edit(embed = em3)
         await asyncio.sleep(random.randint(5, 8))
         await m.edit(embed = em4)
+        await asyncio.sleep(random.randint(6, 9))
+        await m.edit(embed = em5)
 
 
 #error handling
