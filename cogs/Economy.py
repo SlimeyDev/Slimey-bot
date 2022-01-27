@@ -18,11 +18,14 @@ class Economy(commands.Cog):
         # responses_bad = ["You were caught stealing", "You lied to your parents", "You got caught stealing a cookie", "You ate pizza with pinnaples on it"]
         i = random.randint(1,5)
         if i <= 4:
-            r = random.choice(responses_good[0])
+            r = random.choice(responses_good)
             money_s = "and earned"
+            r = r[0]
         else:
-            r = random.choice(responses_bad[0])
+            r = random.choice(responses_bad)
+
             money_s = "and lost"
+            r = r[0]
         money = random.randint(50,500)
         await ctx.send(f"[Early Beta]\n💰{r} {money_s} {money}$!")
 
