@@ -38,11 +38,12 @@ from PIL import Image
 from io import BytesIO
 import typing
 import socket
+import sqlite3
 
 
 
 # seting up the database
-import sqlite3
+
 conn = sqlite3.connect("slimeybot.db")
 curs = conn.cursor()
 
