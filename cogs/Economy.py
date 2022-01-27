@@ -20,7 +20,7 @@ class Economy(commands.Cog):
             s = ""
             money_s = "losed"
         money = random.randint(50,500)
-        await ctx.send(f"[Early Beta]\n{r} and {money_s}€!")
+        await ctx.send(f"[Early Beta]\n💰{r} and {money_s} {money}$!")
 
 def setup(bot):
     bot.add_cog(Economy(bot))
