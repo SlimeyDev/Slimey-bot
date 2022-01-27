@@ -37,32 +37,35 @@ import shutil
 from PIL import Image
 from io import BytesIO
 import typing
+import socket
 
-#opening and setting up the server prefixes of the bot
 
-if not os.path.exists('data.json') or os.stat("data.json").st_size <=3:
-    with open("data.json", 'w') as f:
-        paste = json.dumps({"custom_prefixes":{}}, indent=4)
-        f.write(paste)
 
-with open('data.json', 'r') as data_source:
-    data = json.load(data_source)
-    prefixes = data
+# seting up the database
+import sqlite3
+conn = sqlite3.connect("slimeybot.db")
+curs = conn.cursor()
 
-def load_prefix(self, ctx):
-    if (f"{ctx.guild.id}") not in data["custom_prefixes"]:
-        default_prefix = "<"
-        pref = default_prefix
+class db():
+    def table_create(name="custom_prefixes"):
+        curs.execute(f"CREATE TABLE IF NOT EXISTS {name} (guild INT PRIMARY KEY NOT NULL, prefix TEXT)")
+    def table_remove(name="custom_prefixes"):
+        curs.execute(f"DROP TABLE IF EXISTS {name}")
+
+db.table_create()
+
+
+
+def load_prefix(self,ctx):
+    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
+    if not prefix:
+        pref = "<"
     else:
-        custom_prefix = data["custom_prefixes"][f"{ctx.guild.id}"]
-        pref = custom_prefix
-
+        pref = prefix
     return pref
 
 
-
 bot = commands.Bot(command_prefix=load_prefix, help_command=None)
-
 #opening the jsson file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
@@ -75,17 +78,12 @@ if not os.path.exists('config.json'):
 
 with open("config.json", 'r') as f:
     conf = json.load(f)
-
+    
 #start up of the bot
 
 @bot.event
 async def on_ready():
-    print("Backup data file...")
-    with open('data.json', 'r') as data_src:
-        backup_data = json.load(data_src)
-        with open('data-{}.json'.format(datetime.datetime.now().strftime('%Y-%m-%d-%X')), 'w+') as backup_creation:
-            json.dump(backup_data, backup_creation)
-        print("Done")
+    
     #f"{len(bot.guilds)} servers | <help"
     # status=discord.Status.idle
     # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
@@ -104,7 +102,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
-    bot_version = "5.8.0"
+    bot_version = "6.8.0"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -122,20 +120,39 @@ async def on_ready():
 
     bottleflipvar = random.randint(30, 80)
     megaflip = random.randint(20, 60)
-
+    
+    # initialization of cogs
+    bot.load_extension('cogs.Economy')
+    
+    # uploading backup to cloud
+    host = socket.gethostname()
+    if host != 'pons': # if the bot didn't started from the server with the main database, do not create a backup.
+        return
+    else:
+        try:
+            print("Creating backup of database... (Uploading to cloud)")
+            db_location = {'file': open('slimeybot.db' ,'rb')}
+            resp = requests.post(f'https://transfer.sh/', files=db_location)
+            print(f"Done: {resp.text}")
+            backup = bot.get_channel(935981038415532060)
+            em = discord.Embed(color=discord.Color.gold(), title="New backup!", description=f"**`Bot-Version:`** {bot_version}\n**`Hostname:`** {host}\n**`Created at:`** <t:{int(time.time())}:f>\nThis backup will stay in the cloud for 14 days.\nLink to the backup: {resp.text}")
+            em.set_thumbnail(url="https://i.ibb.co/zGcnFhD/1635141.png")
+            await backup.send(embed = em)
+            await backup.send("**                                                       **\n** **")
+        except:
+            print("Something went wrong. Backup could not be created.")
 #sending a message when pinged
 
 @bot.event
 async def on_message(message):
-    if message.content == "<@!915488552568123403>":
-        if (f"{message.guild.id}") not in data["custom_prefixes"]:
-                show_prefix = "<"
-                await message.channel.send(f'My prefix is **`{show_prefix}`**. Type "{show_prefix}help" for all the commands!\n:bulb: **Tip:** you can use "{show_prefix}prefix" to change my prefix in this server!')
+    if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
+        prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
+        if not prefix:
+            pref = "<"
         else:
-            show_prefix = data["custom_prefixes"][f"{message.guild.id}"]    
-            await message.channel.send(f'My prefix is **`{show_prefix}`**. Type "{show_prefix}help" for all the commands!\n:bulb: **Tip:** you can use "{show_prefix}prefix" to change my prefix in this server!')
+            pref = prefix[0][0]
+        await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
     await bot.process_commands(message)
-
 #defining all the important functions
 
 def is_it_me(ctx):
@@ -381,10 +398,11 @@ async def stats(ctx):
 
 @bot.command()
 async def help(ctx, mode: typing.Optional[str]):
-    if (f"{ctx.guild.id}") not in data["custom_prefixes"]:
+    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
+    if not prefix:
         show_prefix = "<"
     else:
-        show_prefix = data["custom_prefixes"][f"{ctx.guild.id}"]    
+        show_prefix = prefix[0][0]
     if mode == None:
         em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`, `{show_prefix}help chatbot`, `{show_prefix}help economy`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
@@ -787,47 +805,25 @@ async def weather(ctx, location = None):
 @commands.cooldown(1, 5, commands.BucketType.user)
 @commands.has_permissions(kick_members=True)
 async def prefix(ctx,*, pref=None):
-
     # await ctx.send("This command is currently unavailable!")
-
-    if f"{ctx.guild.id}" not in prefixes["custom_prefixes"]:
-        if pref == None or pref == "<":
-            await ctx.send("Please set a **new** prefix.")
-            return
-        else:
-            new_prefix = pref
-            response = f"I set the prefix to `{new_prefix}`."
-    elif pref == prefixes["custom_prefixes"][f"{ctx.guild.id}"]:
-        await ctx.send("That is not a *new* prefix lol")
-        return
-
-    elif pref == None or pref == "<":
-        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
-
-            response = "I reset the prefix to the default one. (`<`)"
-            await ctx.send(response)
-            with open('data.json', 'w') as f:
-                prefixes["custom_prefixes"].pop(f"{ctx.guild.id}")
-                json.dump(prefixes, f, indent=4)
-                return
-        else:
-            return
-
-    else:
-        if len(pref) > 3:
-            await ctx.send("Prefixes can't be longer than 3 characters.")
-            return
-        new_prefix = pref
-        if f"{ctx.guild.id}" in prefixes["custom_prefixes"]:
-            old_prefix = prefixes["custom_prefixes"][f"{ctx.guild.id}"]
-            response = f"I set the prefix from `{old_prefix}` to `{new_prefix}`."
-
-    with open('data.json', 'w') as f:
+    check = curs.execute(f"SELECT * FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
     
-        prefixes["custom_prefixes"][f"{ctx.guild.id}"] = str(new_prefix)
-        json.dump(prefixes, f, indent=4)
+    if not check:
+        
+        curs.execute(f"INSERT INTO custom_prefixes(guild) VALUES({ctx.guild.id})")
+        conn.commit()
 
-        await ctx.send(response)
+    if pref == None or pref == "<":
+        await ctx.send("Please add a prefix!")
+        return
+    if len(pref) > 3:
+        await ctx.send("Prefixes can't be longer than 3 characters.")
+        return
+    new_prefix = pref
+    em = discord.Embed(color=discord.Color.red(), title="Prefix change", description=f"The prefix on this server is now **`{new_prefix}`**.")
+    await ctx.send(embed=em)
+    curs.execute(f"INSERT OR REPLACE INTO custom_prefixes(guild,prefix) VALUES({ctx.guild.id},'{new_prefix}')")
+    conn.commit()
 
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
@@ -941,11 +937,11 @@ async def avatar(ctx, target: discord.Member = None):
     await ctx.send(embed = em)
 
 @bot.command()
-@commands.cooldown(1, 23, commands.BucketType.user)
+@commands.cooldown(1, 35, commands.BucketType.user)
 @commands.has_permissions(manage_messages=True)
 async def countdown(ctx, count=10):
-    if count > 60:
-        await ctx.send("The maximum allowed value is 60.")
+    if count > 30:
+        await ctx.send("The maximum allowed value is 30.")
         return
     current_count = count+1
 
@@ -953,7 +949,7 @@ async def countdown(ctx, count=10):
         current_count += -1
         await ctx.send(str(current_count))
         await asyncio.sleep(1)
-
+    await ctx.send("**0**")
 
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
@@ -1082,3 +1078,4 @@ async def on_command_error(ctx, error):
 
 
 bot.run(conf["token"])
+conn.close()

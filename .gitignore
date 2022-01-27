@@ -2,3 +2,4 @@
 config.json
 rip_gen.jpg
 data*.json
+*.db
