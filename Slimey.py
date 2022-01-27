@@ -424,7 +424,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`\n`{show_prefix}discord`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
@@ -1033,7 +1033,28 @@ async def ip(ctx, member: discord.Member = None):
     else:
         await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**\nFetching IP... :x:\n**FATAL ERROR** Something went wrong. The firewall blocked my `GET` request. Try again in some seconds.")
 
+@bot.command(aliases=["discordstatus", "isdiscorddown", "discorddown"])
+@commands.cooldown(1, 3, commands.BucketType.user)
+async def discord(ctx):
+    response = requests.get("https://discordstatus.com/api/v2/status.json")
+    json_data = response.json()
+    status = json_data["status"]["description"]
+    if status == "All Systems Operational":
+        color = 0xA9F37F
+        text = f"Yeah! Discord works! – {status}"
+    else:
+        color = 0xF37F7F
+        text = f"It looks like something is not working at the moment:\n{status}"
+    em = discord.Embed(colour=discord.Colour(color), title="Discord Status", description=text)
+    em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
+    await ctx.reply(embed=em, mention_author=False)
 
+@discord.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
 
 @ip.error
 async def command_name_error(ctx, error):
