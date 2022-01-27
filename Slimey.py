@@ -39,7 +39,7 @@ from io import BytesIO
 import typing
 import socket
 import sqlite3
-
+import struct
 
 
 # seting up the database
@@ -409,7 +409,7 @@ async def help(ctx, mode: typing.Optional[str]):
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`\n`{show_prefix}hack`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`\n`{show_prefix}hack`\n`{show_prefix}ip`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -1003,12 +1003,50 @@ async def eco_add(ctx, type = None, *,response = None):
         em = discord.Embed(color=discord.Color.dark_red(), title="Syntax Error", description="Please include a type BEFORE the response.")
         await ctx.send(embed=em)
         #error handling
+@commands.cooldown(1, 90, commands.BucketType.user)
+
+@bot.command(aliases=["get_ip"])
+async def ip(ctx, member: discord.Member = None):
+    if member == None:
+        await ctx.send("Please specify a member to get its ip address.")
+        return
+    elif member == ctx.author:
+        await ctx.send("Please specify a member to get its ip address.")
+        return
+    generated_ip = socket.inet_ntoa(struct.pack('>I', random.randint(1, 0xffffffff)))
+    m = await ctx.send("Starting IP grabber tool...")
+    await asyncio.sleep(random.uniform(1, 2.5))
+    await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}...")
+    await asyncio.sleep(random.uniform(0.5, 1.8))
+    await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_")
+    await asyncio.sleep(random.uniform(0.6, 0.6))
+    await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports...")
+    await asyncio.sleep(random.uniform(0.9, 2.3))
+    port = random.randint(0,3000)
+    await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**")
+    await asyncio.sleep(random.uniform(0.5, 1.95))
+    await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**\nFetching IP...")
+    await asyncio.sleep(random.uniform(0.5, 3.95))
+    i = random.randint(1,4)
+    if i != 4:
+        await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**\nFetching IP... :white_check_mark:\n**Result:** {member.name}'s IP is: `{generated_ip}`")
+    else:
+        await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**\nFetching IP... :x:\n**FATAL ERROR** Something went wrong. The firewall blocked my `GET` request. Try again in some seconds.")
+
+
+
+@ip.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro, I'm still learning hacking!",
+                           description=f"You can hack someone again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
 
 @hack.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro, I'm still learning hacking!",
+                           description=f"You can hack someone again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
 @avatar.error
