@@ -983,7 +983,7 @@ async def hack(ctx, member : discord.Member = None):
 
 @bot.command(aliases=["economy_add", "response", "add_response"])
 @commands.check(is_it_me)
-async def eco_add(ctx, type = None, response = None):
+async def eco_add(ctx, type = None, *,response = None):
     if type == "good" or "bad":
         if response == None:
 
