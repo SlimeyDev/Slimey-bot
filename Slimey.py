@@ -1033,9 +1033,9 @@ async def ip(ctx, member: discord.Member = None):
     else:
         await m.edit(f"Starting IP grabber tool... :white_check_mark:\nSending request to {member.id}... :x: HTTP 403: _REQUEST DENIED_\nSearching opened ports... :white_check_mark:\nSuccess! Port **{port}**\nFetching IP... :x:\n**FATAL ERROR** Something went wrong. The firewall blocked my `GET` request. Try again in some seconds.")
 
-@bot.command(aliases=["discordstatus", "isdiscorddown", "discorddown"])
+@bot.command(aliases=["discord", "isdiscorddown", "discorddown"])
 @commands.cooldown(1, 3, commands.BucketType.user)
-async def discord(ctx):
+async def discordstatus(ctx):
     response = requests.get("https://discordstatus.com/api/v2/status.json")
     json_data = response.json()
     status = json_data["status"]["description"]
@@ -1049,7 +1049,7 @@ async def discord(ctx):
     em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
     await ctx.reply(embed=em, mention_author=False)
 
-@discord.error
+@discordstatus.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
