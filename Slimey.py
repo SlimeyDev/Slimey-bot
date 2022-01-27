@@ -394,7 +394,7 @@ async def help(ctx, mode: typing.Optional[str]):
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`\n`{show_prefix}hack`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -955,7 +955,41 @@ async def countdown(ctx, count=10):
         await asyncio.sleep(1)
 
 
+@bot.command()
+@commands.cooldown(1, 10, commands.BucketType.user)
+async def hack(ctx, member : discord.Member = None):
+
+    if member == None:
+        await ctx.send("Please include the member you want to hack.")
+
+    else:
+        most_used_word = ["Chungus", "Big Chungus", "Me is nerd", "I like pinapples on pizzas", "I like homework"]
+        most_used_app = ["Discord", "Facebook(damn what a dweeb)", "Instagram", "Twitter", "Tik Tok"]
+
+        files = random.randint(2000,10000)
+        em = discord.Embed(title = f"Hacking {member}.", description = f"hacking computer...({files} files)")
+        word = random.choice(most_used_word)
+        em2 = discord.Embed(title = f"Hacking {member}..", description = f"hacking epic games, roblox and minecraft account...(most used word in chat: {word})")
+        app = random.choice(most_used_app)
+        em3 = discord.Embed(title = f"Hacking {member}...", description = f"hacking their phone...(most used app: {app})")
+        em4 = discord.Embed(title = f"Succesfully hacked {member}!", description = f"Most used app: {app}\nMost used word: {word}")
+        m = await ctx.reply(embed=em)
+        await asyncio.sleep(random.randint(4, 6))
+        await m.edit(embed = em2)
+        await asyncio.sleep(random.randint(3, 6))
+        await m.edit(embed = em3)
+        await asyncio.sleep(random.randint(5, 8))
+        await m.edit(embed = em4)
+
+
 #error handling
+
+@hack.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
 
 @avatar.error
 async def command_name_error(ctx, error):
