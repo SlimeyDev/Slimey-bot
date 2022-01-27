@@ -47,13 +47,9 @@ import sqlite3
 conn = sqlite3.connect("slimeybot.db")
 curs = conn.cursor()
 
-class db():
-    def table_create(name="custom_prefixes"):
-        curs.execute(f"CREATE TABLE IF NOT EXISTS {name} (guild INT PRIMARY KEY NOT NULL, prefix TEXT)")
-    def table_remove(name="custom_prefixes"):
-        curs.execute(f"DROP TABLE IF EXISTS {name}")
 
-db.table_create()
+curs.execute(f"CREATE TABLE IF NOT EXISTS custom_prefixes (guild INT PRIMARY KEY NOT NULL, prefix TEXT)")
+curs.execute(f"CREATE TABLE IF NOT EXISTS economy_responses (response TEXT, type INT)")
 
 
 
@@ -814,7 +810,7 @@ async def prefix(ctx,*, pref=None):
         curs.execute(f"INSERT INTO custom_prefixes(guild) VALUES({ctx.guild.id})")
         conn.commit()
 
-    if pref == None or pref == "<":
+    if pref == None:
         await ctx.send("Please add a prefix!")
         return
     if len(pref) > 3:
@@ -985,7 +981,28 @@ async def hack(ctx, member : discord.Member = None):
         await m.edit(embed = em5)
 
 
-#error handling
+@bot.command(aliases=["economy_add", "response", "add_response"])
+@commands.check(is_it_me)
+async def eco_add(ctx, type = None, response = None):
+    if type == "good" or "bad":
+        if response == None:
+
+            em = discord.Embed(color=discord.Color.dark_red(), title="Syntax Error", description="Please include a response AFTER the type.")
+            await ctx.send(embed=em)
+            return
+        m = await ctx.send(f'I will add the response "{response}" with the type "{type}".\nStatus: In progress')
+        if type == 'good':
+            dbtype = 1
+        if type == 'bad':
+            dbtype = 2
+
+        curs.execute(f"INSERT INTO economy_responses VALUES ('{response}', {dbtype})")
+        conn.commit()
+        await m.edit(f'I will add the response "{response}" with the type "{type}".\nStatus: Done, it\'s now in the database.')
+    else:
+        em = discord.Embed(color=discord.Color.dark_red(), title="Syntax Error", description="Please include a type BEFORE the response.")
+        await ctx.send(embed=em)
+        #error handling
 
 @hack.error
 async def command_name_error(ctx, error):
