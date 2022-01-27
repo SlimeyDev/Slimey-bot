@@ -22,7 +22,7 @@ class Economy(commands.Cog):
             money_s = "and earned"
         else:
             r = random.choice(responses_bad[0])
-            money_s = "and losed"
+            money_s = "and lost"
         money = random.randint(50,500)
         await ctx.send(f"[Early Beta]\n💰{r} {money_s} {money}$!")
 
