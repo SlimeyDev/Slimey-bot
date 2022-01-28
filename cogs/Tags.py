@@ -16,7 +16,7 @@ class Tags(commands.Cog):
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         if not name:
             await ctx.send(f"What's the name of the tag which content you want to see?\n**Usage: `{prefix}tag <name>`**")
             return
