@@ -77,12 +77,15 @@ class Tags(commands.Cog):
             return
         em = discord.Embed(title="Successfully created tag", color=discord.Color.green(), description=f"Tag created.\n**Creator:** {ctx.author.mention}\n**Tag name:** {name}\n**Tag description:** {description}")
         em.set_footer(text=f"You can see the content of the tag with {prefix}tag {name_s}")
+        await ctx.send("debug.")
         curs.execute("""
         
         INSERT INTO tags(guild,creator,current_owner,name,description) 
                VALUES (?,?,?,?,?);""", (ctx.guild.id,ctx.author.id,ctx.author.id,name,description))
-        conn.commit()
-        await ctx.send(embed=em)
+        await ctx.send('debug 2.')
+       conn.commit()
+       await ctx.send('debug 3.')
+       await ctx.send(embed=em)
     @commands.command()
     async def tag_edit(self, ctx, name=None, description=None):
         if not name or not description:
