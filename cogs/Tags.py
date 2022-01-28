@@ -52,7 +52,6 @@ class Tags(commands.Cog):
         await ctx.send(tag_description[0])
     @commands.command()
     async def tag_create(self, ctx, name=None, description=None):
-        await ctx.send("debug.")
         if not name or not description:
             await ctx.send("Please include a `name` and a `description` for the tag.")
             return
@@ -62,11 +61,8 @@ class Tags(commands.Cog):
         if len(description) > 500:
             await ctx.send("Please don't choose a higher value than 500 for the `description` of the tag.")
             return
-        await ctx.send("debug.") 
         data = curs.execute("SELECT name FROM tags WHERE name=? AND guild=?",(name,ctx.guild.id)).fetchall()
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
-        prefix = prefix[0]
-        await ctx.send("debug.")
         if not prefix:
             prefix = "<"
         else:
@@ -77,15 +73,13 @@ class Tags(commands.Cog):
         if data:
             await ctx.send(f'The tag "{name_s}" already exists. Please use the command `{prefix}tag_edit {name_s}` instead or delete this tag first with `{prefix}tag_delete {name_s}`. (coming soon)')
             return
-        await ctx.send("debug.")
         em = discord.Embed(title="Successfully created tag", color=discord.Color.green(), description=f"Tag created.\n**Creator:** {ctx.author.mention}\n**Tag name:** {name}\n**Tag description:** {description}")
         em.set_footer(text=f"You can see the content of the tag with {prefix}tag {name_s}")
-        await ctx.send("debug.")
-        curs.execute(""" 
-        INSERT INTO tags(guild,creator,current_owner,name,description) VALUES (?,?,?,?,?);""", (ctx.guild.id,ctx.author.id,ctx.author.id,name,description))
-        await ctx.send('debug 2.')
+        curs.execute("""
+        
+        INSERT INTO tags(guild,creator,current_owner,name,description) 
+               VALUES (?,?,?,?,?);""", (ctx.guild.id,ctx.author.id,ctx.author.id,name,description))
         conn.commit()
-        await ctx.send('debug 3.')
         await ctx.send(embed=em)
     @commands.command()
     async def tag_edit(self, ctx, name=None, description=None):
