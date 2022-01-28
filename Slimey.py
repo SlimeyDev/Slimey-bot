@@ -50,6 +50,16 @@ curs = conn.cursor()
 
 curs.execute(f"CREATE TABLE IF NOT EXISTS custom_prefixes (guild INT PRIMARY KEY NOT NULL, prefix TEXT)")
 curs.execute(f"CREATE TABLE IF NOT EXISTS economy_responses (response TEXT, type INT)")
+curs.execute(f"""
+CREATE TABLE IF NOT EXISTS tags
+(guild INT,
+creator INT, creation_time INT,
+current_owner INT,
+last_edited INT,
+last_edited_from INT,
+name TEXT,
+description TEXT,
+aliases TEXT)""")
 
 
 
@@ -99,7 +109,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Current stats:", stats)
     global bot_version
-    bot_version = "6.8.0"
+    bot_version = "6.9.1"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -120,7 +130,8 @@ async def on_ready():
     
     # initialization of cogs
     bot.load_extension('cogs.Economy')
-    
+    bot.load_extension('cogs.Tags')
+
     # uploading backup to cloud
     host = socket.gethostname()
     if host != 'pons': # if the bot didn't started from the server with the main database, do not create a backup.
@@ -401,7 +412,7 @@ async def help(ctx, mode: typing.Optional[str]):
     else:
         show_prefix = prefix[0][0]
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`, `{show_prefix}help chatbot`, `{show_prefix}help economy`", color = discord.Color.gold())
+        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`, `{show_prefix}help chatbot`, `{show_prefix}help economy`, `{show_prefix}help tags`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
         em.add_field(name="Support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
@@ -435,7 +446,10 @@ async def help(ctx, mode: typing.Optional[str]):
             em = discord.Embed(title="💰 Economy commands:", description="*Coming soon!*", color=discord.Color.dark_magenta())
     
             await ctx.reply(embed=em)
-
+        elif mode == "tags":
+            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n{show_prefix}tag_create`\n{show_prefix}tag_edit`\n{show_prefix}tag`", color=discord.Color.dark_teal())
+    
+            await ctx.reply(embed=em)
 @bot.command()
 async def invite(ctx):
     await ctx.reply("https://discord.com/api/oauth2/authorize?client_id=915488552568123403&permissions=8&scope=bot%20applications.commands")
