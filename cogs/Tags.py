@@ -13,7 +13,6 @@ class Tags(commands.Cog):
     @commands.command()
     async def tag(self, ctx, *, name: str = None):
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild = ?", (ctx.guild.id,)).fetchone()
-        prefix = prefix[0]
         if not prefix:
             prefix = "<"
         else:
