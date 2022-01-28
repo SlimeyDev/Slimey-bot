@@ -72,7 +72,7 @@ def load_prefix(self,ctx):
     return pref
 
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(str(load_prefix)), help_command=None)
+bot = commands.Bot(command_prefix=load_prefix, help_command=None)
 #opening the jsson file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
@@ -159,7 +159,7 @@ async def on_message(message):
             pref = "<"
         else:
             pref = prefix[0][0]
-        await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server! You can also use a @mention as prefix.')
+        await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
     await bot.process_commands(message)
 #defining all the important functions
 
