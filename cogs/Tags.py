@@ -52,8 +52,8 @@ class Tags(commands.Cog):
         await ctx.send(tag_description[0])
     @commands.command()
     async def tag_create(self, ctx, name=None, description=None):
-            await ctx.send("debug.")
-            if not name or not description:
+        await ctx.send("debug.")
+        if not name or not description:
             await ctx.send("Please include a `name` and a `description` for the tag.")
             return
         if len(name) > 55:
