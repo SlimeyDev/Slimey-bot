@@ -443,11 +443,11 @@ async def help(ctx, mode: typing.Optional[str]):
     
             await ctx.reply(embed=em)
         elif mode == "economy":
-            em = discord.Embed(title="💰 Economy commands:", description="*Coming soon!*", color=discord.Color.dark_magenta())
+            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n{show_prefix}work", color=discord.Color.dark_magenta())
     
             await ctx.reply(embed=em)
         elif mode == "tags":
-            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n{show_prefix}tag_create`\n{show_prefix}tag_edit`\n{show_prefix}tag`", color=discord.Color.dark_teal())
+            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`{show_prefix}tag_create`\n`{show_prefix}tag_edit`\n`{show_prefix}tag`", color=discord.Color.dark_teal())
     
             await ctx.reply(embed=em)
 @bot.command()
