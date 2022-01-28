@@ -93,8 +93,6 @@ class Tags(commands.Cog):
             return
         data = curs.execute("SELECT name FROM tags WHERE name=? AND guild=?",(name,ctx.guild.id)).fetchall()
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
-        prefix = prefix[0]
-
         if not prefix:
             prefix = "<"
         else:
