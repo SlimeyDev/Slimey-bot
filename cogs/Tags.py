@@ -65,7 +65,7 @@ class Tags(commands.Cog):
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         name_s = name
         if len(name) >= 20:
             name_s = f'{name[:20]}… '
@@ -96,7 +96,7 @@ class Tags(commands.Cog):
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         name_s = name
         if len(name) >= 20:
             name_s = f'{name[:20]}… '
