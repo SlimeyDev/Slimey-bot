@@ -13,11 +13,10 @@ class Tags(commands.Cog):
     @commands.command()
     async def tag(self, ctx, *, name: str = None):
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild = ?", (ctx.guild.id,)).fetchone()
-        prefix = prefix[0]
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         if not name:
             await ctx.send(f"What's the name of the tag which content you want to see?\n**Usage: `{prefix}tag <name>`**")
             return
@@ -63,12 +62,10 @@ class Tags(commands.Cog):
             return
         data = curs.execute("SELECT name FROM tags WHERE name=? AND guild=?",(name,ctx.guild.id)).fetchall()
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
-        prefix = prefix[0]
-
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         name_s = name
         if len(name) >= 20:
             name_s = f'{name[:20]}… '
@@ -96,12 +93,10 @@ class Tags(commands.Cog):
             return
         data = curs.execute("SELECT name FROM tags WHERE name=? AND guild=?",(name,ctx.guild.id)).fetchall()
         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
-        prefix = prefix[0]
-
         if not prefix:
             prefix = "<"
         else:
-            prefix = prefix
+            prefix = prefix[0]
         name_s = name
         if len(name) >= 20:
             name_s = f'{name[:20]}… '
