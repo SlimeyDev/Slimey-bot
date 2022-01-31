@@ -49,7 +49,10 @@ class Tags(commands.Cog):
         tag_description = curs.execute("SELECT description FROM tags WHERE guild = ? AND name = ?", (ctx.guild.id, name)).fetchone()
         await ctx.message.add_reaction('✅')
         await ctx.send(tag_description[0])
+
+    
     @commands.command()
+    @commands.has_permissions(kick_members=True)
     async def tag_create(self, ctx, name=None, description=None):
         if not name or not description:
             await ctx.send("Please include a `name` and a `description` for the tag.")
