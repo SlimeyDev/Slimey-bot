@@ -84,6 +84,7 @@ class Tags(commands.Cog):
         conn.commit()
         await ctx.send(embed=em)
     @commands.command()
+    @commands.has_permissions(kick_members=True)
     async def tag_edit(self, ctx, name=None, description=None):
         if not name or not description:
             await ctx.send("Please include a `name` and a `description` for the tag.")
