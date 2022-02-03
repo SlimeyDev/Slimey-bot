@@ -60,7 +60,7 @@ last_edited_from INT,
 name TEXT,
 description TEXT,
 aliases TEXT)""")
-
+curs.execute("CREATE TABLE IF NOT EXISTS chatbot (serverID integer, channelID integer)")
 
 
 def load_prefix(self,ctx):
@@ -118,7 +118,7 @@ async def on_ready():
     os_system = platform.system()
     os_release = platform.release()
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk** Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk** Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
     print("All stats loaded\n----------")
 
     
@@ -131,6 +131,7 @@ async def on_ready():
     # initialization of cogs
     bot.load_extension('cogs.Economy')
     bot.load_extension('cogs.Tags')
+    bot.load_extention('cogs.Chatbot')
 
     # uploading backup to cloud
     host = socket.gethostname()

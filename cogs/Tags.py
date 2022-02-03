@@ -115,5 +115,6 @@ class Tags(commands.Cog):
         em = discord.Embed(title="Successfully updated tag", color=discord.Color.green(), description=f"Tag updated.\n**Creator:** <@{creator[0]}>\n**Tag name:** {name}\n**Tag description:** {description}")
         em.set_footer(text=f"You can see the content of the tag with {prefix}tag {name_s}")
         await ctx.send(embed=em)
+
 def setup(bot):
     bot.add_cog(Tags(bot))
