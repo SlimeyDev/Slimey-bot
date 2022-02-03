@@ -9,6 +9,11 @@ import sqlite3
 conn = sqlite3.connect("slimeybot.db")
 c = conn.cursor()
 
+def is_it_me(ctx):
+    owners = 830751616927268884, 873079348855472148
+    if ctx.author.id in owners:
+        return ctx.author.id
+
 def add_server(channel, server):
     c.execute(f"INSERT INTO chatbot ('{channel}', '{server}')")
     conn.commit()
@@ -16,7 +21,7 @@ def add_server(channel, server):
 class Chatbot(commands.Cog):
     def init(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_message(message):
 
@@ -38,6 +43,7 @@ class Chatbot(commands.Cog):
         await commands.process_commands(message)
 
     @commands.command()
+    @commands.check(is_it_me)
     async def add_chatbot(ctx):
         m = await ctx.send("This channel will be the chatbot channel in a few seconds...")
         await asyncio.sleep(1)
