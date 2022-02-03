@@ -50,7 +50,7 @@ class Chatbot(commands.Cog):
         await m.edit("adding to database...")
         channel = ctx.channel.id
         server = ctx.guild.id
-        add_server(channel, server)
+        add_server(server, channel)
         await m.edit("This channel is now the chatbot channel!")
 
 
