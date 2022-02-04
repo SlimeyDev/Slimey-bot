@@ -417,7 +417,6 @@ async def help(ctx, mode: typing.Optional[str]):
         em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
         em.add_field(name="Support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
         em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
-        em.add_field(name="**WARNING:**", value="*This website is still now  finnished so do not use it just yet! We also add more detailed descriptions for each command soon.*", inline=False)
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
@@ -453,7 +452,7 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
 @bot.command()
 async def invite(ctx):
-    await ctx.reply("https://discord.com/api/oauth2/authorize?client_id=915488552568123403&permissions=8&scope=bot%20applications.commands")
+    await ctx.reply("Heaad over to https://slimey.tk and invite our bot!")
 
 
 @bot.command()
