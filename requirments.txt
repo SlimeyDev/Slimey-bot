@@ -1,0 +1,14 @@
+typing==3.7.4.3
+typing_extensions==4.0.1
+urllib3==1.26.7
+aiohttp==3.7.4.post0
+aiosqlite==0.17.0   
+async-timeout==3.0.1
+attrs==21.2.0       
+beautifulsoup4==4.10.0
+discord==1.7.3
+discord-components==2.1.2
+multidict==5.2.0
+Pillow==8.4.0
+psutil==5.9.0
+py-cord==2.0.0b1
