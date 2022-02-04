@@ -215,27 +215,6 @@ async def on_guild_join(guild):
         await guild.text_channels[0].send(embed=embed)
 
 #commands
-
-@bot.command()
-@commands.check(is_it_me)
-async def restart(ctx):
-    em = discord.Embed(title="<:Slimey_tick:933232568210436136> Bot will be restarted",
-                       description="The bot will restarting now", color=discord.Colour.purple())
-    await ctx.reply(embed=em)
-    # Restarting the bot
-    os.execv(sys.executable, ['python'] + sys.argv)
-
-
-@bot.command()
-@commands.check(is_it_me)
-async def update(ctx):
-    em = discord.Embed(title="<:Slimey_tick:933232568210436136> Bot will be updating",
-                       description="Fetching new code if available", color=discord.Colour.purple())
-    await ctx.reply(embed=em)
-    # Running git pull for getting last commit
-    os.system("git pull")
-
-
 @bot.command()
 async def ping(ctx):
     em = discord.Embed(
