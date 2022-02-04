@@ -13,3 +13,4 @@ Pillow==8.4.0
 psutil==5.9.0
 py-cord==2.0.0b1
 requests
+sqlite==3
