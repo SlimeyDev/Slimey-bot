@@ -339,7 +339,7 @@ async def bottleflip(ctx):
 @commands.cooldown(1, 10, commands.BucketType.user)
 
 async def info(ctx):
-    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `TheSlimeyDev_YT#8584` and hosted by `HappyFox#7590`.\n**Our website:** <https://www.slimey.tk/>\n"
+    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `TheSlimeyDev_YT#8584`.\n**Our website:** https://www.slimey.tk\n"
     f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
     f"**Last restarted** <t:{start_time}:R>\n"
