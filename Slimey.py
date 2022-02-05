@@ -131,7 +131,7 @@ async def on_ready():
     # initialization of cogs
     bot.load_extension('cogs.Economy')
     bot.load_extension('cogs.Tags')
-    bot.load_extention('cogs.Chatbot')
+    bot.load_extension('cogs.Chatbot')
 
     # uploading backup to cloud
     host = socket.gethostname()

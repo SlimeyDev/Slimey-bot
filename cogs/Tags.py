@@ -20,25 +20,6 @@ class Tags(commands.Cog):
         if not name:
             await ctx.send(f"What's the name of the tag which content you want to see?\n**Usage: `{prefix}tag <name>`**")
             return
-        # if method == "create":
-        #     pass
-        # elif method == "delete" or "remove":
-        #     pass
-        # elif method == "transfer":
-        #     pass    
-        # elif method == "edit":
-        #     pass
-        # elif method == "help":
-        #     pass
-        # elif method == "info":
-        #     pass
-        # elif method == "list":
-        #     pass
-        # elif method == "search":
-        #     pass
-        # else:
-        #     pass
-
         name_s = name
         if len(name) >= 20:
             name_s = f'{name[:20]}… '
