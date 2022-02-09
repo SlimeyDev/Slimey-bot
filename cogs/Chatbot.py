@@ -48,7 +48,7 @@ class Chatbot(commands.Cog):
         await m.edit("adding to database...")
         channel = ctx.channel.id
         server = ctx.guild.id
-        c.execute(f"INSERT INTO chatbot VALUES ('{str(channel)}', '{str(server)}')")
+        c.execute("INSERT INTO chatbot VALUES(?,?)", (str(channel), str(server)))
         conn.commit()
         await m.edit("This channel is now the chatbot channel!")
 

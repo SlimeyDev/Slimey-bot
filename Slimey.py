@@ -733,6 +733,10 @@ async def kill(ctx, target: discord.Member = None):
         " died due to cold",
         " died because they were noob",
         " died after he found out he was alergic to air"
+        " died after looking at his horrifying face"
+        " died because he realised he was dead"
+        " died cuz y not"
+        " died cus Ikaris#2402 killed them"
     ]
 
     message = f"{target}{random.choice(kill)}"
