@@ -147,9 +147,11 @@ async def on_ready():
           
         except:
             print("Something went wrong. Backup could not be created.")
+    print("-"*10)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Bot is ready!")
+    print("-"*20)
         
 
 #sending a message when pinged
