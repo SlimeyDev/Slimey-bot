@@ -119,9 +119,6 @@ async def on_ready():
     os_release = platform.release()
     total, used, free = shutil.disk_usage("/")
     disk_stats = f"**Disk** Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
-    print("All stats loaded\n----------")
-
-    
     global bottleflipvar
     global megaflip
 
@@ -132,9 +129,10 @@ async def on_ready():
     bot.load_extension('cogs.Economy')
     bot.load_extension('cogs.Tags')
     bot.load_extension('cogs.Chatbot')
-
+    print("All stats loaded\n----------")
     # uploading backup to cloud
     host = socket.gethostname()
+    print("host name: ", host)
     if host != 'pons': # if the bot didn't started from the server with the main database, do not create a backup.
         return
     else:
@@ -142,7 +140,8 @@ async def on_ready():
             print("Creating backup of database... (Uploading to cloud)")
             db_location = {'file': open('slimeybot.db' ,'rb')}
             resp = requests.post(f'https://transfer.sh/', files=db_location)
-            print(f"Done: {resp.text}")
+            print("Backup created successfully!")
+            print(f"backup(german website please use VPN): {resp.text}")
             backup = bot.get_channel(935981038415532060)
             em = discord.Embed(color=discord.Color.gold(), title="New backup!", description=f"**`Bot-Version:`** {bot_version}\n**`Hostname:`** {host}\n**`Created at:`** <t:{int(time.time())}:f>\nThis backup will stay in the cloud for 14 days.\nLink to the backup: {resp.text}")
             em.set_thumbnail(url="https://i.ibb.co/zGcnFhD/1635141.png")
@@ -150,6 +149,8 @@ async def on_ready():
           
         except:
             print("Something went wrong. Backup could not be created.")
+        
+
 #sending a message when pinged
 
 @bot.event
