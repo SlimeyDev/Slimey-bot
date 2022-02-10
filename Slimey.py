@@ -660,7 +660,7 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
         em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Kicked successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
-        
+        await member.send(embed = em)        
         await ctx.send(embed = em)
 
 
@@ -682,7 +682,7 @@ async def ban(ctx, member : discord.Member = None, *, reason = None):
         em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Banned successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
-
+        await member.send(embed = em)  
         await ctx.send(embed = em)
 
 
@@ -732,11 +732,11 @@ async def kill(ctx, target: discord.Member = None):
         " died because of shame",
         " died due to cold",
         " died because they were noob",
-        " died after he found out he was alergic to air"
-        " died after looking at his horrifying face"
-        " died because he realised he was dead"
-        " died cuz y not"
-        " died cus Ikaris#2402 killed them"
+        " died after he found out he was alergic to air",
+        " died after looking at his horrifying face",
+        " died because he realised he was dead",
+        " died cuz y not",
+        " died cus Ikaris#2402 killed them",
     ]
 
     message = f"{target}{random.choice(kill)}"
