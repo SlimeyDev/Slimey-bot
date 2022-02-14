@@ -29,3 +29,6 @@ class ChannelEditing(commands.Cog):
             else:
                 await ctx.channel.edit(slowmode_delay=seconds)
                 await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
+
+def setup(bot):
+    bot.add_cog(ChannelEditing(bot))
