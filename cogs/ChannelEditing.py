@@ -36,7 +36,7 @@ class ChannelEditing(commands.Cog):
             em = discord.Embed(title="<:Slimey_x:933232568055267359> Permission Error",
                             description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
-        await ctx.reply(embed=em)
+            await ctx.reply(embed=em)
 
 def setup(bot):
     bot.add_cog(ChannelEditing(bot))
