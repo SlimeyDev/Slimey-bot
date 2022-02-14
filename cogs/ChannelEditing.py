@@ -6,16 +6,10 @@ class ChannelEditing(commands.Cog):
         self.bot = bot
     
     @commands.command(aliases = ["cc", "createtextchannel"])
-    @commands.has_permissions
+    @commands.has_permissions(manage_messages=True)
     async def createchannel(self, ctx, channel_name):
         guild = ctx.guild
         channel = await guild.create_text_channel(channel_name)
-
-    # @commands.command(aliases = ["cv", "createvoicechannel"])
-    # @commands.has_permissions
-    # async def createvoice(self, ctx, channel_name):
-    #     guild = ctx.guild
-    #     channel = await guild.create_text_channel(channel_name)
 
     @commands.command(aliases = ["sm"])
     @commands.cooldown(1, 5, commands.BucketType.user)
