@@ -31,7 +31,7 @@ class ChannelEditing(commands.Cog):
     
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(self, error, commands.MissingPermissions):
+        if isinstance(error, commands.MissingPermissions):
 
             em = discord.Embed(title="<:Slimey_x:933232568055267359> Permission Error",
                             description="You don't have the permission(s) to do that!", color=discord.Colour.red())
