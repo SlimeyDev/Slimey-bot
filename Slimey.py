@@ -903,25 +903,6 @@ async def foxshow(ctx):
     await ctx.send(":fox: = :smiling_face_with_3_hearts:")
 
 
-@bot.command(aliases = ["sm"])
-@commands.cooldown(1, 5, commands.BucketType.user)
-@commands.has_permissions(manage_messages=True)
-async def slowmode(ctx, seconds: int = 0):
-
-    if seconds > 21600:
-        
-        await ctx.reply("The limit for slow mode is 21600 seconds(6 hours)!")
-
-    else:
-
-        if seconds == 0:
-            await ctx.channel.edit(slowmode_delay=seconds)
-            await ctx.reply("Reset slow mode to 0 seconds!")
-        
-        else:
-            await ctx.channel.edit(slowmode_delay=seconds)
-            await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
-
 @bot.command()
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def avatar(ctx, target: discord.Member = None):
