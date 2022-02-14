@@ -127,7 +127,7 @@ async def on_ready():
     bot.load_extension('cogs.Economy')
     bot.load_extension('cogs.Tags')
     bot.load_extension('cogs.Chatbot')
-    bot.load_extenstion('cogs.ChannelEditing')
+    bot.load_extension('cogs.ChannelEditing')
     print("All stats loaded\n----------")
     # uploading backup to cloud
     host = socket.gethostname()
