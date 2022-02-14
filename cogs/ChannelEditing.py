@@ -23,10 +23,6 @@ class ChannelEditing(commands.Cog):
 
             if seconds == 0:
                 await ctx.channel.edit(slowmode_delay=seconds)
-                await ctx.reply("Reset slow mode to 0 seconds!")
-            
-            else:
-                await ctx.channel.edit(slowmode_delay=seconds)
                 await ctx.send(f"Set the slowmode in this channel to {seconds} seconds!")
     
     @commands.Cog.listener()
