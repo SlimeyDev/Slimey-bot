@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class Chatbot(commands.Cog):
+class ChannelEditing(commands.Cog):
     def init(self, bot):
         self.bot = bot
     
