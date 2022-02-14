@@ -131,7 +131,7 @@ async def on_ready():
     # uploading backup to cloud
     host = socket.gethostname()
     print("host name: ", host)
-    if host != 'pons': # if the bot didn't started from the server with the main database, do not create a backup.
+    if host != 'railway': # if the bot didn't started from the server with the main database, do not create a backup.
         return
     else:
         try:
