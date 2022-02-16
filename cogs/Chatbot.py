@@ -24,7 +24,7 @@ class Chatbot(commands.Cog):
         if message.author.bot:
             return
 
-        if message.channel.id == 938356541810167840:
+        if message.channel.id == 943424168593063967:
 
 
             author_input = urllib.parse.quote(message.content, safe="")
