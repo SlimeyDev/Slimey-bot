@@ -141,7 +141,7 @@ async def on_ready():
             resp = requests.post(f'https://transfer.sh/', files=db_location)
             print("Backup created successfully!")
             print(f"backup: {resp.text}")
-            backup = bot.get_channel(935981038415532060)
+            backup = bot.get_channel(990933663300595732)
             em = discord.Embed(color=discord.Color.gold(), title="New backup!", description=f"**`Bot-Version:`** {bot_version}\n**`Hostname:`** {host}\n**`Created at:`** <t:{int(time.time())}:f>\nThis backup will stay in the cloud for 14 days.\nLink to the backup: {resp.text}")
             em.set_thumbnail(url="https://i.ibb.co/zGcnFhD/1635141.png")
             await backup.send(embed = em)
@@ -306,13 +306,8 @@ async def inspire(ctx):
     await ctx.reply(quote)
 
 @bot.command()
-async def twitch(ctx):
-    await ctx.reply("GO FOLLOW ME ON TWITCH RIGHT NOW: https://www.twitch.tv/theslimeydevloper")
-
-
-@bot.command()
 async def youtube(ctx):
-    await ctx.reply("The youtube channel of TheSlimeyDevloper is - https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A SO GO SUB!")
+    await ctx.reply("The youtube channel of SlimeyDev is - https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A SO GO SUB!")
 
 
 @bot.command()
@@ -434,9 +429,11 @@ async def help(ctx, mode: typing.Optional[str]):
             em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`{show_prefix}tag_create`\n`{show_prefix}tag_edit`\n`{show_prefix}tag`", color=discord.Color.dark_teal())
     
             await ctx.reply(embed=em)
-@bot.command()
-async def invite(ctx):
-    await ctx.reply("Heaad over to https://slimey.tk and invite our bot!")
+
+
+# @bot.command()
+# async def invite(ctx):
+#     await ctx.reply("Heaad over to https://slimeydev.github.io and invite our bot!")
 
 
 @bot.command()
@@ -483,8 +480,6 @@ async def odds(ctx):
 
     em = discord.Embed(title="channces of getting bottle flip -", description="Normal bottle flip - " + str(
         bottleflipvar) + " in 100\nTriple mega bottle flip - " + str(megaflip) + " in 100", color=discord.Color.gold())
-    em.add_field(name="These odds will randomize every 12 hours",
-                 value="To make it a little bit more fun the bottleflip chances will randomize every 12 hours!", inline=False)
 
     await ctx.reply(embed=em)
 
@@ -578,12 +573,6 @@ async def test(ctx):
     view.add_item(button4)
 
     await ctx.send("Test button command!", view = view)
-
-
-@bot.command()
-@commands.check(is_it_me)
-async def modapps(ctx):
-    await ctx.send("Mod apps are now **OPEN**: https://forms.gle/kDBwcC8BQHe2YQkX9")
 
 
 @bot.slash_command(pass_context=True)
@@ -691,15 +680,15 @@ async def ban(ctx, member : discord.Member = None, *, reason = None):
         await ctx.send(embed = em)
 
 
-@bot.command()
-async def vote(ctx):
+# @bot.command()
+# async def vote(ctx):
 
-    button = Button(label="Top.gg", url="https://top.gg/bot/915488552568123403/vote")
+#     button = Button(label="Top.gg", url="https://top.gg/bot/915488552568123403/vote")
 
-    view = View()
-    view.add_item(button)
+#     view = View()
+#     view.add_item(button)
 
-    await ctx.reply("Vote this bot on top.gg!", view = view)
+#     await ctx.reply("Vote this bot on top.gg!", view = view)
 
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
@@ -964,28 +953,6 @@ async def hack(ctx, member : discord.Member = None):
         await m.edit(embed = em5)
 
 
-@bot.command(aliases=["economy_add", "response", "add_response"])
-@commands.check(is_it_me)
-async def eco_add(ctx, type = None, *,response = None):
-    if type == "good" or "bad":
-        if response == None:
-
-            em = discord.Embed(color=discord.Color.dark_red(), title="Syntax Error", description="Please include a response AFTER the type.")
-            await ctx.send(embed=em)
-            return
-        m = await ctx.send(f'I will add the response "{response}" with the type "{type}".\nStatus: In progress')
-        if type == 'good':
-            dbtype = 1
-        if type == 'bad':
-            dbtype = 2
-
-        curs.execute(f"INSERT INTO economy_responses VALUES ('{response}', {dbtype})")
-        conn.commit()
-        await m.edit(f'I will add the response "{response}" with the type "{type}".\nStatus: Done, it\'s now in the database.')
-    else:
-        em = discord.Embed(color=discord.Color.dark_red(), title="Syntax Error", description="Please include a type BEFORE the response.")
-        await ctx.send(embed=em)
-        #error handling
 @commands.cooldown(1, 90, commands.BucketType.user)
 
 @bot.command(aliases=["get_ip"])
