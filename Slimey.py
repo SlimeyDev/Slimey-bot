@@ -41,38 +41,7 @@ import socket
 import sqlite3
 import struct
 
-
-# seting up the database
-
-conn = sqlite3.connect("slimeybot.db")
-curs = conn.cursor()
-
-
-curs.execute(f"CREATE TABLE IF NOT EXISTS custom_prefixes (guild INT PRIMARY KEY NOT NULL, prefix TEXT)")
-curs.execute(f"CREATE TABLE IF NOT EXISTS economy_responses (response TEXT, type INT)")
-curs.execute(f"""
-CREATE TABLE IF NOT EXISTS tags
-(guild INT,
-creator INT, creation_time INT,
-current_owner INT,
-last_edited INT,
-last_edited_from INT,
-name TEXT,
-description TEXT,
-aliases TEXT)""")
-curs.execute("CREATE TABLE IF NOT EXISTS chatbot (serverID integer, channelID integer)")
-
-
-def load_prefix(self,ctx):
-    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchone()
-    if not prefix:
-        pref = "<"
-    else:
-        pref = prefix
-    return pref
-
-
-bot = commands.Bot(command_prefix=load_prefix, help_command=None)
+bot = commands.Bot(command_prefix="!", help_command=None)
 #opening the json file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
@@ -157,16 +126,16 @@ async def on_ready():
 
 #sending a message when pinged
 
-@bot.event
-async def on_message(message):
-    if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
-        prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
-        if not prefix:
-            pref = "<"
-        else:
-            pref = prefix[0][0]
-        await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
-    await bot.process_commands(message)
+# @bot.event
+# async def on_message(message):
+#     if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
+#         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
+#         if not prefix:
+#             pref = "<"
+#         else:
+#             pref = prefix[0][0]
+#         await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
+#     await bot.process_commands(message)
 #defining all the important functions
 
 def is_it_me(ctx):
@@ -339,7 +308,7 @@ async def bottleflip(ctx):
 @commands.cooldown(1, 10, commands.BucketType.user)
 
 async def info(ctx):
-    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `TheSlimeyDev_YT#8584`.\n**Our website:** <https://www.slimey.tk>\n"
+    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `TheSlimeyDev_YT#8584`.\n"
     f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
     f"**Last restarted** <t:{start_time}:R>\n"
@@ -386,35 +355,28 @@ async def stats(ctx):
 
 @bot.command()
 async def help(ctx, mode: typing.Optional[str]):
-    prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
-    if not prefix:
-        show_prefix = "<"
-    else:
-        show_prefix = prefix[0][0]
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`{show_prefix}help fun`, `{show_prefix}help moderation`, `{show_prefix}help minigame`, `{show_prefix}help utility`, `{show_prefix}help chatbot`, `{show_prefix}help economy`, `{show_prefix}help tags`", color = discord.Color.gold())
-        em.add_field(name="Prefix", value=f"My prefix on this server is currently '`{show_prefix}`'. To change it, use the command `{show_prefix}prefix`.", inline=False)
-        em.add_field(name="Support server", value="[Click here](https://discord.gg/eHteZEmfXe)", inline=False)
-        em.add_field(name="website", value="[Click here](https://www.slimey.tk/)", inline=False)
+        em = discord.Embed(title="Current commands:", description=f"`!help fun`, `!help moderation`, `!help minigame`, `!help utility`, `!help chatbot`, `!help economy`, `!help tags`", color = discord.Color.gold())
+        em.add_field(name="Prefix", value=f"My prefix is '`!`'..", inline=False)
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`{show_prefix}dadjoke`\n`{show_prefix}inspire`\n`{show_prefix}magic8ball`\n`{show_prefix}yesorno`\n`{show_prefix}sayweird`\n`{show_prefix}say`\n`/send_meme`\n`/send_password`\n`{show_prefix}rip`\n`{show_prefix}kill`\n`{show_prefix}ping`\n`{show_prefix}fox`\n`{show_prefix}foxshow`\n`{show_prefix}hack`\n`{show_prefix}ip`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`!dadjoke`\n`!inspire`\n`!magic8ball`\n`!yesorno`\n`!sayweird`\n`!say`\n`/send_meme`\n`/send_password`\n`!rip`\n`!kill`\n`!ping`\n`!fox`\n`!foxshow`\n`!hack`\n`!ip`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
         elif mode == "moderation":
-            em = discord.Embed(title="🔒 Moderation commands:", description=f"`{show_prefix}kick`\n`{show_prefix}ban`\n`/timeout`\n`{show_prefix}clear`\n`{show_prefix}slowmode`", color=discord.Color.red())
+            em = discord.Embed(title="🔒 Moderation commands:", description=f"`!kick`\n`!ban`\n`/timeout`\n`!clear`\n`!slowmode`", color=discord.Color.red())
             
             await ctx.reply(embed=em)
         
         elif mode == "minigame":
-            em = discord.Embed(title="🎲 Minigames commands:", description = f"`{show_prefix}coinflip`\n`{show_prefix}bottleflip`\n`{show_prefix}rps`\n`{show_prefix}odds`", color=discord.Color.blue())
+            em = discord.Embed(title="🎲 Minigames commands:", description = f"`!coinflip`\n`!bottleflip`\n`!rps`\n`!odds`", color=discord.Color.blue())
     
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`{show_prefix}youtube`\n`{show_prefix}twitch`\n`{show_prefix}invite`\n`{show_prefix}report`\n`{show_prefix}info`\n`{show_prefix}weather`\n`{show_prefix}avatar`\n`{show_prefix}countdown`\n`{show_prefix}discord`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`!youtube`\n`!twitch`\n`!invite`\n`!report`\n`!info`\n`!weather`\n`!avatar`\n`!countdown`\n`!discord`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
@@ -422,18 +384,14 @@ async def help(ctx, mode: typing.Optional[str]):
     
             await ctx.reply(embed=em)
         elif mode == "economy":
-            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n{show_prefix}work", color=discord.Color.dark_magenta())
+            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n!work", color=discord.Color.dark_magenta())
     
             await ctx.reply(embed=em)
         elif mode == "tags":
-            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`{show_prefix}tag_create`\n`{show_prefix}tag_edit`\n`{show_prefix}tag`", color=discord.Color.dark_teal())
+            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`!tag_create`\n`!tag_edit`\n`!tag`", color=discord.Color.dark_teal())
     
             await ctx.reply(embed=em)
 
-
-# @bot.command()
-# async def invite(ctx):
-#     await ctx.reply("Heaad over to https://slimeydev.github.io and invite our bot!")
 
 
 @bot.command()
@@ -789,30 +747,6 @@ async def weather(ctx, location = None):
     await ctx.send(embed=embed)
     await ctx.message.remove_reaction('🔄', bot.user)
 
-@bot.command(aliases=["pref", "setprefix", "changeprefix"])
-@commands.cooldown(1, 5, commands.BucketType.user)
-@commands.has_permissions(kick_members=True)
-async def prefix(ctx,*, pref=None):
-    # await ctx.send("This command is currently unavailable!")
-    check = curs.execute(f"SELECT * FROM custom_prefixes WHERE guild IS {ctx.guild.id}").fetchall()
-    
-    if not check:
-        
-        curs.execute(f"INSERT INTO custom_prefixes(guild) VALUES({ctx.guild.id})")
-        conn.commit()
-
-    if pref == None:
-        await ctx.send("Please add a prefix!")
-        return
-    if len(pref) > 3:
-        await ctx.send("Prefixes can't be longer than 3 characters.")
-        return
-    new_prefix = pref
-    em = discord.Embed(color=discord.Color.red(), title="Prefix change", description=f"The prefix on this server is now **`{new_prefix}`**.")
-    await ctx.send(embed=em)
-    curs.execute(f"INSERT OR REPLACE INTO custom_prefixes(guild,prefix) VALUES({ctx.guild.id},'{new_prefix}')")
-    conn.commit()
-
 @bot.command(aliases=["weird", "weirdify", "upper_lower", "ul", "kek", "weirdsay"])
 async def sayweird(ctx, *, message: str = None):
     if message == None:
@@ -1055,22 +989,12 @@ async def command_name_error(ctx, error):
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 
-@prefix.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-
 @report.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
-
 
 @rps.error
 async def command_name_error(ctx, error):
@@ -1111,4 +1035,3 @@ async def on_command_error(ctx, error):
 
 
 bot.run(conf["token"])
-conn.close()
