@@ -38,10 +38,9 @@ from PIL import Image
 from io import BytesIO
 import typing
 import socket
-import sqlite3
 import struct
 
-bot = commands.Bot(command_prefix="!", help_command=None)
+bot = commands.Bot(command_prefix="<", help_command=None)
 #opening the json file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
@@ -50,7 +49,7 @@ if not os.path.exists('config.json'):
         f.write(json.dumps(config_json, indent=4))
     
     print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs in the config.json file.")
-    exit("Run the bot again after you entered the config values")
+    exit("Run the bot again after you entered the config values")   
 
 with open("config.json", 'r') as f:
     conf = json.load(f)
@@ -59,10 +58,6 @@ with open("config.json", 'r') as f:
 
 @bot.event
 async def on_ready():
-    
-    #f"{len(bot.guilds)} servers | <help"
-    # status=discord.Status.idle
-    # await bot.change_presence(status=discord.Status.online, activity=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | <help")
     Bot_Status = f"{len(bot.guilds)} servers | <help"
     
     global members
@@ -86,38 +81,14 @@ async def on_ready():
     os_release = platform.release()
     total, used, free = shutil.disk_usage("/")
     disk_stats = f"**Disk** Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
-    global bottleflipvar
-    global megaflip
-
-    bottleflipvar = random.randint(30, 80)
-    megaflip = random.randint(20, 60)
     
     # initialization of cogs
-    bot.load_extension('cogs.Economy')
-    bot.load_extension('cogs.Tags')
-    bot.load_extension('cogs.Chatbot')
-    bot.load_extension('cogs.ChannelEditing')
+    # bot.load_extension('cogs.Economy')
+    # bot.load_extension('cogs.Tags')
+    # bot.load_extension('cogs.Chatbot')
+    # bot.load_extension('cogs.ChannelEditing')
     print("All stats loaded\n----------")
-    # uploading backup to cloud
     host = socket.gethostname()
-    print("host name: ", host)
-    if host != 'railway': # if the bot didn't started from the server with the main database, do not create a backup.
-        return
-    else:
-        try:
-            print("Creating backup of database... (Uploading to cloud)")
-            db_location = {'file': open('slimeybot.db' ,'rb')}
-            resp = requests.post(f'https://transfer.sh/', files=db_location)
-            print("Backup created successfully!")
-            print(f"backup: {resp.text}")
-            backup = bot.get_channel(990933663300595732)
-            em = discord.Embed(color=discord.Color.gold(), title="New backup!", description=f"**`Bot-Version:`** {bot_version}\n**`Hostname:`** {host}\n**`Created at:`** <t:{int(time.time())}:f>\nThis backup will stay in the cloud for 14 days.\nLink to the backup: {resp.text}")
-            em.set_thumbnail(url="https://i.ibb.co/zGcnFhD/1635141.png")
-            await backup.send(embed = em)
-          
-        except:
-            print("Something went wrong. Backup could not be created.")
-    print("-"*10)
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Bot is ready!")
@@ -126,16 +97,11 @@ async def on_ready():
 
 #sending a message when pinged
 
-# @bot.event
-# async def on_message(message):
-#     if message.content == "<@!915488552568123403>" or message.content == "<@915488552568123403>":
-#         prefix = curs.execute(f"SELECT prefix FROM custom_prefixes WHERE guild IS {message.guild.id}").fetchall()
-#         if not prefix:
-#             pref = "<"
-#         else:
-#             pref = prefix[0][0]
-#         await message.channel.send(f'My prefix is **`{pref}`**. Type "{pref}help" for all the commands!\n:bulb: **Tip:** you can use "{pref}prefix" to change my prefix in this server!')
-#     await bot.process_commands(message)
+@bot.event
+async def on_message(message):
+    if message.content == "<@!990460875309723659>" or message.content == "<@990460875309723659>":
+        await message.channel.send(f'My prefix is **`<`**. Type "<help" for all the commands!')
+    await bot.process_commands(message)
 #defining all the important functions
 
 def is_it_me(ctx):
@@ -279,31 +245,6 @@ async def youtube(ctx):
     await ctx.reply("The youtube channel of SlimeyDev is - https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A SO GO SUB!")
 
 
-@bot.command()
-@commands.cooldown(1, 5, commands.BucketType.user)
-async def bottleflip(ctx):
-    y = random.randint(1, 101)
-    z = random.randint(1, 101)
-
-    if (z < megaflip):
-        em = discord.Embed(title="Triple Mega Flip!",
-                           description="Wait it can't be.....**YOU JUST GOT THE TRIPPLE MEGA FLIP!!**The bottle landed on its cap after it fliped **THRICE**!!", color=discord.Colour.blue())
-        await ctx.reply(embed=em)
-
-    else:
-        if (y < bottleflipvar):
-            em = discord.Embed(
-                title="Bottle Fliped!", description="THE BOTTLE FLIPED AND FELL UP RIGHT! Bravo!", color=discord.Colour.green())
-
-            await ctx.reply(embed=em)
-
-        else:
-            em = discord.Embed(title="Bottle did not flip...",
-                               description="The bottle did not fall upright...Better luck next time!", color=discord.Colour.red())
-
-            await ctx.reply(embed=em)
-
-
 @bot.command(aliases=["about", "botinfo", "bot"])
 @commands.cooldown(1, 10, commands.BucketType.user)
 
@@ -356,39 +297,39 @@ async def stats(ctx):
 @bot.command()
 async def help(ctx, mode: typing.Optional[str]):
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`!help fun`, `!help moderation`, `!help minigame`, `!help utility`, `!help chatbot`, `!help economy`, `!help tags`", color = discord.Color.gold())
-        em.add_field(name="Prefix", value=f"My prefix is '`!`'..", inline=False)
+        em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help minigame`, `<help utility`, `<help chatbot`, `<help economy`, `<help tags`", color = discord.Color.gold())
+        em.add_field(name="Prefix", value=f"My prefix is '`<`'..", inline=False)
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`!dadjoke`\n`!inspire`\n`!magic8ball`\n`!yesorno`\n`!sayweird`\n`!say`\n`/send_meme`\n`/send_password`\n`!rip`\n`!kill`\n`!ping`\n`!fox`\n`!foxshow`\n`!hack`\n`!ip`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say\n`/send_password`\n`<rip`\n`<kill`\n`<ping`\n`<fox`\n`<foxshow`\n`<hack`\n`<ip`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
         elif mode == "moderation":
-            em = discord.Embed(title="🔒 Moderation commands:", description=f"`!kick`\n`!ban`\n`/timeout`\n`!clear`\n`!slowmode`", color=discord.Color.red())
+            em = discord.Embed(title="🔒 Moderation commands:", description=f"`<kick`\n`<ban`\n`/timeout`\n`<clear`\n`<slowmode`", color=discord.Color.red())
             
             await ctx.reply(embed=em)
         
         elif mode == "minigame":
-            em = discord.Embed(title="🎲 Minigames commands:", description = f"`!coinflip`\n`!bottleflip`\n`!rps`\n`!odds`", color=discord.Color.blue())
+            em = discord.Embed(title="🎲 Minigames commands:", description = f"`<coinflip`\n`<rps`\n`<odds`", color=discord.Color.blue())
     
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`!youtube`\n`!twitch`\n`!invite`\n`!report`\n`!info`\n`!weather`\n`!avatar`\n`!countdown`\n`!discord`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`\n`<weather`\n`<avatar`\n`<countdown`\n`<discord`", color=discord.Color.purple())
     
             await ctx.reply(embed=em)
         elif mode == "chatbot":
-            em = discord.Embed(title="💬 Chatbot commands:", description="*Coming soon!*", color=discord.Color.dark_orange())
+            em = discord.Embed(title="💬 Chatbot commands:", description="*Coming soon<*", color=discord.Color.dark_orange())
     
             await ctx.reply(embed=em)
         elif mode == "economy":
-            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n!work", color=discord.Color.dark_magenta())
+            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n<work", color=discord.Color.dark_magenta())
     
             await ctx.reply(embed=em)
         elif mode == "tags":
-            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`!tag_create`\n`!tag_edit`\n`!tag`", color=discord.Color.dark_teal())
+            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`<tag_create`\n`<tag_edit`\n`<tag`", color=discord.Color.dark_teal())
     
             await ctx.reply(embed=em)
 
@@ -430,15 +371,6 @@ async def rps(ctx, response=None):
 async def report(ctx):
     em = discord.Embed(title="Report problems!", url="https://forms.gle/zwioTfRoErEZfTim6",
                        description="Click the title to report a bug/problem!", color=discord.Color.gold())
-    await ctx.reply(embed=em)
-
-
-@bot.command()
-async def odds(ctx):
-
-    em = discord.Embed(title="channces of getting bottle flip -", description="Normal bottle flip - " + str(
-        bottleflipvar) + " in 100\nTriple mega bottle flip - " + str(megaflip) + " in 100", color=discord.Color.gold())
-
     await ctx.reply(embed=em)
 
 
@@ -487,33 +419,33 @@ async def send_password(ctx, length):
         await ctx.respond(embed=embed)
 
 
-@bot.slash_command()
-async def send_meme(ctx):
-    url = "https://meme-api.herokuapp.com/gimme/memes"
-    resp = requests.get(url=url)
-    meme_json = resp.json()
-    random_meme = meme_json["url"]
+# @bot.slash_command()
+# async def send_meme(ctx):
+#     url = "https://meme-api.herokuapp.com/gimme/memes"
+#     resp = requests.get(url=url)
+#     meme_json = resp.json()
+#     random_meme = meme_json["url"]
 
-    meme_subreddit = meme_json["subreddit"]
-    meme_author = meme_json["author"]
-    meme_title = meme_json["title"]
-    meme_link = meme_json["postLink"]
-    meme_upvotes = meme_json["ups"]
-    if meme_upvotes > 1000:
-        meme_upvotes = round(meme_json["ups"], -3)
+#     meme_subreddit = meme_json["subreddit"]
+#     meme_author = meme_json["author"]
+#     meme_title = meme_json["title"]
+#     meme_link = meme_json["postLink"]
+#     meme_upvotes = meme_json["ups"]
+#     if meme_upvotes > 1000:
+#         meme_upvotes = round(meme_json["ups"], -3)
 
-    api_meme = discord.Embed(title="Meme", colour=discord.Colour.blue(), description=(f"**`Subreddit`** „r/{meme_subreddit}“\n**`Title`** „[{meme_title}]({meme_link})“\n\n"
-                                                                                      f"**`Post-Creator`** „{meme_author}“\n**`Upvotes`** {meme_upvotes}"), timestamp=datetime.datetime.now())
-    api_meme.set_image(url=random_meme)
-    await ctx.respond(embed=api_meme)
-    m = await ctx.interaction.original_message()
-    await m.add_reaction("👍")
-    await m.add_reaction("👎")
+#     api_meme = discord.Embed(title="Meme", colour=discord.Colour.blue(), description=(f"**`Subreddit`** „r/{meme_subreddit}“\n**`Title`** „[{meme_title}]({meme_link})“\n\n"
+#                                                                                       f"**`Post-Creator`** „{meme_author}“\n**`Upvotes`** {meme_upvotes}"), timestamp=datetime.datetime.now())
+#     api_meme.set_image(url=random_meme)
+#     await ctx.respond(embed=api_meme)
+#     m = await ctx.interaction.original_message()
+#     await m.add_reaction("👍")
+#     await m.add_reaction("👎")
 
 
-@bot.command()
-async def meme(ctx):
-    await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_meme`)")
+# @bot.command()
+# async def meme(ctx):
+#     await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_meme`)")
 
 
 @bot.command()
@@ -975,14 +907,6 @@ async def command_name_error(ctx, error):
                            description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
         await ctx.send(embed=em)
 @foxshow.error
-async def command_name_error(ctx, error):
-    if isinstance(error, commands.CommandOnCooldown):
-        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
-                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
-        await ctx.send(embed=em)
-
-
-@bottleflip.error
 async def command_name_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
