@@ -242,20 +242,18 @@ async def inspire(ctx):
     await ctx.reply(quote)
 
 @bot.command()
-async def askGPT(ctx, *, asking):
+async def askGPT(ctx, *, asking: str = None):
     await ctx.message.add_reaction('🔄')
-    openai.api_key = "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"
+    openai.api_key = conf["openai"]
     messages = []
     system_msg = "chat"
     messages.append({"role": "system", "content": system_msg})
     messages.append({"role": "user", "content": asking})
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages)
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
     reply = response["choices"][0]["message"]["content"]
     messages.append({"role": "assistant", "content": reply})
-    await ctx.reply(str(reply))      
-    await ctx.message.remove_reaction("🔄") 
+    await ctx.reply("ChatGPT says:\n",str(reply))
+    await ctx.message.remove_reaction("🔄", bot.user) 
 
 @bot.command()
 async def youtube(ctx):
@@ -312,7 +310,7 @@ async def stats(ctx):
 
 
 @bot.command()
-async def help(ctx, mode):
+async def help(ctx, mode: str = None):
     if mode == None:
         em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix is '`<`'..", inline=False)
@@ -575,16 +573,6 @@ async def ban(ctx, member : discord.Member = None, *, reason = None):
         await ctx.send(embed = em)
 
 
-# @bot.command()
-# async def vote(ctx):
-
-#     button = Button(label="Top.gg", url="https://top.gg/bot/915488552568123403/vote")
-
-#     view = View()
-#     view.add_item(button)
-
-#     await ctx.reply("Vote this bot on top.gg!", view = view)
-
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
 async def rip(ctx, target: discord.Member = None):
@@ -636,7 +624,7 @@ async def weather(ctx, location = None):
     if location == None:
         await ctx.message.add_reaction('❌')
 
-        await ctx.send("Please include a location, friend!")
+        await ctx.send("Please include a location!")
         return
 
     response = requests.get(f"https://pixel-api-production.up.railway.app/data/weather/?location={location}")
