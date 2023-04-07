@@ -243,9 +243,8 @@ async def inspire(ctx):
 
 @bot.command()
 async def askGPT(ctx, *, asking: str = None):
-    await ctx.message.add_reaction('🔄')
-    key = conf["openai"]
-    print(key)
+    # await ctx.message.add_reaction('🔄')
+    key = str(conf["openai"])
     openai.api_key = key
     messages = []
     system_msg = "chat"
@@ -254,8 +253,8 @@ async def askGPT(ctx, *, asking: str = None):
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
     reply = response["choices"][0]["message"]["content"]
     messages.append({"role": "assistant", "content": reply})
-    await ctx.reply("ChatGPT says:\n",str(reply))
-    await ctx.message.remove_reaction("🔄", bot.user) 
+    await ctx.reply("ChatGPT says:\n"+str(reply))
+    # await ctx.message.remove_reaction("🔄", bot.user)
 
 @bot.command()
 async def youtube(ctx):
