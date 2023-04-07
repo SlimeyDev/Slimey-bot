@@ -36,11 +36,13 @@ import platform
 import shutil
 from PIL import Image
 from io import BytesIO
-import typing
 import socket
 import struct
+import openai
 
-bot = commands.Bot(command_prefix="<", help_command=None)
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="<", help_command=None, intents=intents)
 #opening the json file that contains the bot token and owner ID's
 
 config_json = {"token":"","owners":[]}
@@ -57,9 +59,7 @@ with open("config.json", 'r') as f:
 #start up of the bot
 
 @bot.event
-async def on_ready():
-    Bot_Status = f"{len(bot.guilds)} servers | <help"
-    
+async def on_ready():    
     global members
     global stats
     global channels
@@ -71,7 +71,7 @@ async def on_ready():
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     print("Current stats:", stats)
     global bot_version
-    bot_version = "7.1.0"
+    bot_version = "10.0.5"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -89,6 +89,7 @@ async def on_ready():
     # bot.load_extension('cogs.ChannelEditing')
     print("All stats loaded\n----------")
     host = socket.gethostname()
+    Bot_Status = f"{len(bot.guilds)} servers | <help"
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=Bot_Status))
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Bot is ready!")
@@ -241,6 +242,22 @@ async def inspire(ctx):
     await ctx.reply(quote)
 
 @bot.command()
+async def askGPT(ctx, *, asking):
+    await ctx.message.add_reaction('🔄')
+    openai.api_key = "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"
+    messages = []
+    system_msg = "chat"
+    messages.append({"role": "system", "content": system_msg})
+    messages.append({"role": "user", "content": asking})
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages)
+    reply = response["choices"][0]["message"]["content"]
+    messages.append({"role": "assistant", "content": reply})
+    await ctx.reply(str(reply))      
+    await ctx.message.remove_reaction("🔄") 
+
+@bot.command()
 async def youtube(ctx):
     await ctx.reply("The youtube channel of SlimeyDev is - https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A SO GO SUB!")
 
@@ -249,7 +266,7 @@ async def youtube(ctx):
 @commands.cooldown(1, 10, commands.BucketType.user)
 
 async def info(ctx):
-    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `TheSlimeyDev_YT#8584`.\n"
+    info = (f"Information on the bot: This bot was made using VS Code using the language Python. It's maintained by `slimeydev#5493`.\n"
     f':information_source: __**Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
     f"**Last restarted** <t:{start_time}:R>\n"
@@ -276,7 +293,7 @@ async def stats(ctx):
     
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk**"+"\n"+"Total: %d GiB" % (total // (2**30))+"\n Used: %d GiB" % (used // (2**30)) + "\n Free: %d GiB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk**"+"\n"+"Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
 
     info = (f'__**CURRENT Stats**__\n\nTotal users: {stats["users"]}\nTotal channels: {stats["channels"]}\nGuilds: {stats["guilds"]}\n--------------------\n'
     
@@ -295,14 +312,14 @@ async def stats(ctx):
 
 
 @bot.command()
-async def help(ctx, mode: typing.Optional[str]):
+async def help(ctx, mode):
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help minigame`, `<help utility`, `<help chatbot`, `<help economy`, `<help tags`", color = discord.Color.gold())
+        em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help minigame`, `<help utility`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix is '`<`'..", inline=False)
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say\n`/send_password`\n`<rip`\n`<kill`\n`<ping`\n`<fox`\n`<foxshow`\n`<hack`\n`<ip`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`\n`<fox`\n`<foxshow`\n`<hack`\n`<ip`\n`<askGPT`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -312,25 +329,13 @@ async def help(ctx, mode: typing.Optional[str]):
             await ctx.reply(embed=em)
         
         elif mode == "minigame":
-            em = discord.Embed(title="🎲 Minigames commands:", description = f"`<coinflip`\n`<rps`\n`<odds`", color=discord.Color.blue())
+            em = discord.Embed(title="🎲 Minigames commands:", description = f"`<coinflip`\n`<rps`", color=discord.Color.blue())
     
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<twitch`\n`<invite`\n`<report`\n`<info`\n`<weather`\n`<avatar`\n`<countdown`\n`<discord`", color=discord.Color.purple())
-    
-            await ctx.reply(embed=em)
-        elif mode == "chatbot":
-            em = discord.Embed(title="💬 Chatbot commands:", description="*Coming soon<*", color=discord.Color.dark_orange())
-    
-            await ctx.reply(embed=em)
-        elif mode == "economy":
-            em = discord.Embed(title="💰 Economy commands:", description=f"*Note: these are beta commands.*\n<work", color=discord.Color.dark_magenta())
-    
-            await ctx.reply(embed=em)
-        elif mode == "tags":
-            em = discord.Embed(title="#️⃣ Tag commands:", description=f"*Note: This is a beta feature.*\n`<tag_create`\n`<tag_edit`\n`<tag`", color=discord.Color.dark_teal())
-    
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<invite`\n`<report`\n`<info`\n`<weather`\n`<avatar`\n`<countdown`\n`<discord`", color=discord.Color.purple())
+            
             await ctx.reply(embed=em)
 
 
@@ -582,7 +587,6 @@ async def ban(ctx, member : discord.Member = None, *, reason = None):
 
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
-
 async def rip(ctx, target: discord.Member = None):
     if target == None:
         target = ctx.author
@@ -773,10 +777,9 @@ async def avatar(ctx, target: discord.Member = None):
 
 @bot.command()
 @commands.cooldown(1, 35, commands.BucketType.user)
-@commands.has_permissions(manage_messages=True)
 async def countdown(ctx, count=10):
-    if count > 30:
-        await ctx.send("The maximum allowed value is 30.")
+    if count > 100:
+        await ctx.send("The maximum allowed value is 100.")
         return
     current_count = count+1
 
@@ -955,7 +958,5 @@ async def on_command_error(ctx, error):
                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
 
         await ctx.reply(embed=em)
-
-
 
 bot.run(conf["token"])

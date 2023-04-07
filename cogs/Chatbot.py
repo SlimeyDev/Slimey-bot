@@ -25,8 +25,6 @@ class Chatbot(commands.Cog):
             return
 
         if message.channel.id == 943424168593063967:
-
-
             author_input = urllib.parse.quote(message.content, safe="")
 
             chat_endpoint = f"https://pixel-api-production.up.railway.app/fun/chatbot/?message={author_input}?name="
@@ -37,19 +35,6 @@ class Chatbot(commands.Cog):
                 chat_response = requests.get(chat_endpoint).json()
                 chat_message = chat_response["message"]
             await message.reply(chat_message, mention_author=False)
-
-
-    @commands.command()
-    @commands.check(is_it_me)
-    async def add_chatbot(self, ctx):
-        m = await ctx.send("This channel will be the chatbot channel in a few seconds...")
-        await asyncio.sleep(1)
-        await m.edit("adding to database...")
-        channel = ctx.channel.id
-        server = ctx.guild.id
-        c.execute("INSERT INTO chatbot VALUES(?,?)", (str(channel), str(server)))
-        conn.commit()
-        await m.edit("This channel is now the chatbot channel!")
 
 
 def setup(bot):
