@@ -244,7 +244,9 @@ async def inspire(ctx):
 @bot.command()
 async def askGPT(ctx, *, asking: str = None):
     await ctx.message.add_reaction('🔄')
-    openai.api_key = conf["openai"]
+    key = conf["openai"]
+    print(key)
+    openai.api_key = key
     messages = []
     system_msg = "chat"
     messages.append({"role": "system", "content": system_msg})
