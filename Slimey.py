@@ -71,7 +71,7 @@ async def on_ready():
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     print("Current stats:", stats)
     global bot_version
-    bot_version = "10.0.5"
+    bot_version = "10.1.3"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -242,8 +242,10 @@ async def inspire(ctx):
     await ctx.reply(quote)
 
 @bot.command()
+@commands.cooldown(1, 10, commands.BucketType.user)
 async def askGPT(ctx, *, asking: str = None):
-    # await ctx.message.add_reaction('🔄')
+    print("chatGPT command used by "+str(ctx.author))
+    await ctx.reply("chatGPT is thinking, this might take a while...", mention_author=False)
     key = str(conf["openai"])
     openai.api_key = key
     messages = []
@@ -253,8 +255,8 @@ async def askGPT(ctx, *, asking: str = None):
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
     reply = response["choices"][0]["message"]["content"]
     messages.append({"role": "assistant", "content": reply})
+    print("ChatGPT says:\n"+str(reply)+"\n"+str(ctx.author))
     await ctx.reply("ChatGPT says:\n"+str(reply))
-    # await ctx.message.remove_reaction("🔄", bot.user)
 
 @bot.command()
 async def youtube(ctx):
@@ -333,11 +335,17 @@ async def help(ctx, mode: str = None):
             await ctx.reply(embed=em)
         
         elif mode == "utility":
-            em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<invite`\n`<report`\n`<info`\n`<weather`\n`<avatar`\n`<countdown`\n`<discord`", color=discord.Color.purple())
+            em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<weather`\n`<avatar`\n`<countdown`\n`<discord`", color=discord.Color.purple())
             
             await ctx.reply(embed=em)
 
+@bot.command()
+async def invite(ctx):
+    await ctx.reply("You can invite this bot using this link: https://slimeydev.github.io/SlimeyBOT")
 
+@bot.command()
+async def website(ctx):
+    await ctx.reply("You can view SlimeyDev's website through this link: https://slimeydev.github.io")
 
 @bot.command()
 @commands.cooldown(1, 10, commands.BucketType.user)
@@ -810,9 +818,6 @@ async def hack(ctx, member : discord.Member = None):
         await asyncio.sleep(random.randint(6, 9))
         await m.edit(embed = em5)
 
-
-@commands.cooldown(1, 90, commands.BucketType.user)
-
 @bot.command(aliases=["get_ip"])
 async def ip(ctx, member: discord.Member = None):
     if member == None:
@@ -856,6 +861,13 @@ async def discordstatus(ctx):
     em = discord.Embed(colour=discord.Colour(color), title="Discord Status", description=text)
     em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
     await ctx.reply(embed=em, mention_author=False)
+
+@askGPT.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"<:Slimey_x:933232568055267359> Slow it down bro!",
+                           description=f"Try again in {error.retry_after:.2f}s.", color=discord.Colour.red())
+        await ctx.send(embed=em)
 
 @discordstatus.error
 async def command_name_error(ctx, error):
