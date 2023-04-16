@@ -8,7 +8,6 @@ from discord import asset
 from discord import message
 from discord import channel
 from discord import emoji
-from discord import components
 from discord.colour import Color
 from discord.embeds import Embed
 from discord.enums import Status
@@ -961,4 +960,4 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=em)
 
 
-bot.run(os.getenv("TOKEN"))
+bot.run("OTkwNDYwODc1MzA5NzIzNjU5.GVHJA4.Eb1p6R5q9NBcaAKnvkPpVuKksl9dzCWz-p7CYA")
