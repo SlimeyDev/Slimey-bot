@@ -25,6 +25,7 @@ import sys
 import string
 import secrets
 import asyncio
+from discord import commands
 from discord.commands import Option
 import time
 import psutil
