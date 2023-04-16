@@ -2,6 +2,7 @@ from ast import alias
 from lzma import PRESET_DEFAULT
 from ntpath import altsep
 import discord
+from discord import *
 from discord import embeds
 from discord import colour
 from discord import asset
