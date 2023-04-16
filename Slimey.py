@@ -38,18 +38,19 @@ import openai
 
 intents = discord.Intents(messages=True, guilds=True)
 bot = commands.Bot(command_prefix="<", help_command=None, intents=intents)
+
 #opening the json file that contains the bot token and owner ID's
 
-config_json = {"token":"","owners":[]}
-if not os.path.exists('config.json'):
-    with open ("config.json", 'w') as f:
-        f.write(json.dumps(config_json, indent=4))
+# config_json = {"token":"","owners":[]}
+# if not os.path.exists('config.json'):
+#     with open ("config.json", 'w') as f:
+#         f.write(json.dumps(config_json, indent=4))
     
-    print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs in the config.json file.")
-    exit("Run the bot again after you entered the config values")   
+#     print("WARNING: It looks like the configuration file does not exists. Please enter the Bot-Token and Owner IDs in the config.json file.")
+#     exit("Run the bot again after you entered the config values")   
 
-with open("config.json", 'r') as f:
-    conf = json.load(f)
+# with open("config.json", 'r') as f:
+#     conf = json.load(f)
     
 #start up of the bot
 
@@ -101,7 +102,7 @@ async def on_message(message):
 #defining all the important functions
 
 def is_it_me(ctx):
-    owners = conf["owners"]
+    owners = [986619341132951562]
     if ctx.author.id in owners:
         return ctx.author.id
 
