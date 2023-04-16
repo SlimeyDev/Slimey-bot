@@ -16,7 +16,6 @@ from discord.ext import commands, tasks
 import json
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
-from discord.utils import V
 import requests
 import random
 from requests.models import Response
