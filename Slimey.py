@@ -36,8 +36,7 @@ import socket
 import struct
 import openai
 
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents(messages=True, guilds=True)
 bot = commands.Bot(command_prefix="<", help_command=None, intents=intents)
 #opening the json file that contains the bot token and owner ID's
 
