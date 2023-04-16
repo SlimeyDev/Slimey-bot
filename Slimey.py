@@ -13,11 +13,9 @@ from discord.embeds import Embed
 from discord.enums import Status
 from discord.errors import ClientException
 from discord.ext import commands, tasks
-from discord.ui import Button, View
 import json
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.core import guild_only
-from discord.ui import Button, View
 from discord.utils import V
 import requests
 import random
@@ -457,23 +455,6 @@ async def send_password(ctx, length):
 # @bot.command()
 # async def meme(ctx):
 #     await ctx.reply("<:slash:928599693984944138> Please use the **slash command**! (`/send_meme`)")
-
-
-@bot.command()
-@commands.check(is_it_me)
-async def test(ctx):
-    button = Button(label="Test button!", style=discord.ButtonStyle.green, emoji="👋")
-    button2 = Button(emoji="😊")
-    button3 = Button(label="red", style=discord.ButtonStyle.red)
-    button4 = Button(label="my yt", url="https://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A")
-
-    view = View()
-    view.add_item(button)
-    view.add_item(button2)
-    view.add_item(button3)
-    view.add_item(button4)
-
-    await ctx.send("Test button command!", view = view)
 
 
 @bot.slash_command(pass_context=True)
