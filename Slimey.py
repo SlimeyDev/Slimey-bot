@@ -960,4 +960,4 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=em)
 
 
-bot.run("OTkwNDYwODc1MzA5NzIzNjU5.GVHJA4.Eb1p6R5q9NBcaAKnvkPpVuKksl9dzCWz-p7CYA")
+bot.run(os.getenv("TOKEN"))
