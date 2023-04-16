@@ -393,7 +393,7 @@ async def say(ctx, *, message: str = None):
         await ctx.send(message, allowed_mentions=discord.AllowedMentions.none())
 
 
-@bot.slash_command()
+@bot.command()
 async def password(ctx, length):
     length = int(length)
     if length <= 100:
