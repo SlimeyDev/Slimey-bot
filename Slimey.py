@@ -246,10 +246,10 @@ async def inspire(ctx):
 async def askGPT(ctx, *, asking: str = None):
     print("chatGPT command used by "+str(ctx.author))
     await ctx.reply("chatGPT is thinking, this might take a while...", mention_author=False)
-    key = str(conf["openai"])
+    key = str(os.getenv("OPEN_AI"))
     openai.api_key = key
     messages = []
-    system_msg = "chat"
+    system_msg = "cat"
     messages.append({"role": "system", "content": system_msg})
     messages.append({"role": "user", "content": asking})
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
@@ -960,4 +960,5 @@ async def on_command_error(ctx, error):
 
         await ctx.reply(embed=em)
 
-bot.run(conf["token"])
+
+bot.run(os.getenv("TOKEN"))
