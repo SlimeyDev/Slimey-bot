@@ -36,7 +36,8 @@ import socket
 import struct
 import openai
 
-intents = discord.Intents(messages=True, guilds=True)
+intents = discord.Intents.default()
+intents.message_content = True
 bot = commands.Bot(command_prefix="<", help_command=None, intents=intents)
 
 #opening the json file that contains the bot token and owner ID's
@@ -67,7 +68,7 @@ async def on_ready():
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     print("Current stats:", stats)
     global bot_version
-    bot_version = "10.1.3"
+    bot_version = "10.2.5"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -316,7 +317,7 @@ async def help(ctx, mode: str = None):
         await ctx.reply(embed=em)
     else:
         if mode == "fun":
-            em = discord.Embed(title="😂 Fun commands:", description=f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`/send_password`\n`<rip`\n`<kill`\n`<ping`\n`<fox`\n`<foxshow`\n`<hack`\n`<ip`\n`<askGPT`", color=discord.Color.green())
+            em = discord.Embed(title="😂 Fun commands:", description=f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`<password`\n`<rip`\n`<kill`\n`<ping`\n`<fox`\n`<foxshow`\n`<hack`\n`<ip`\n`<askGPT`", color=discord.Color.green())
     
             await ctx.reply(embed=em)
         
@@ -377,7 +378,7 @@ async def rps(ctx, response=None):
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def report(ctx):
-    em = discord.Embed(title="Report problems!", url="https://forms.gle/zwioTfRoErEZfTim6",
+    em = discord.Embed(title="Report problems!", url="https://forms.gle/enMgTqXoVcYzm59a9",
                        description="Click the title to report a bug/problem!", color=discord.Color.gold())
     await ctx.reply(embed=em)
 
@@ -420,64 +421,64 @@ async def password(ctx, length):
         await ctx.respond(embed=embed)
 
 
-# @bot.slash_command(pass_context=True)
-# async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
-#     if not ctx.author.guild_permissions.moderate_members:
-#         await ctx.respond("<:Slimey_x:933232568055267359> You have no permission to timeout members!", ephemeral=True)
-#         return
+@bot.command()
+async def timeout(ctx, target: Option(discord.Member, "The member you want to timeout"), time: Option(int, "Time you want to time them out for"), time_unit: Option(str, "Time unit", choices=["s", "min", "h", "d"]),  reason: Option(str, "Reason", required=False, default="No reason was specified.")):
+    if not ctx.author.guild_permissions.moderate_members:
+        await ctx.respond("<:Slimey_x:933232568055267359> You have no permission to timeout members!", ephemeral=True)
+        return
 
-#     duration = None
-#     time_unit_text = None
+    duration = None
+    time_unit_text = None
 
-#     if time_unit == "s":
-#         duration = time * 1
-#         time_unit_text = "Second(s)"
-#     elif time_unit == "min":
-#         duration = time * 60
-#         time_unit_text = "Minute(s)"
-#     elif time_unit == "h":
-#         duration = time * 3600
-#         time_unit_text = "Hour(s)"
-#     elif time_unit == "d":
-#         duration = time * 86400
-#         time_unit_text = "Day(s)"
+    if time_unit == "s":
+        duration = time * 1
+        time_unit_text = "Second(s)"
+    elif time_unit == "min":
+        duration = time * 60
+        time_unit_text = "Minute(s)"
+    elif time_unit == "h":
+        duration = time * 3600
+        time_unit_text = "Hour(s)"
+    elif time_unit == "d":
+        duration = time * 86400
+        time_unit_text = "Day(s)"
 
-#     time_to_timeout = datetime.timedelta(seconds=duration)
-#     try:
-#         await target.timeout_for(time_to_timeout, reason=reason)
-#     except discord.HTTPException:
-#         await ctx.respond("I don't have the permission to do that.", ephemeral=True)
-#         return
+    time_to_timeout = datetime.timedelta(seconds=duration)
+    try:
+        await target.timeout_for(time_to_timeout, reason=reason)
+    except discord.HTTPException:
+        await ctx.respond("I don't have the permission to do that.", ephemeral=True)
+        return
 
-#     timeout_embed = discord.Embed(
-#         title=f"Timed {target} out", color=discord.Colour.blue())
-#     timeout_embed.add_field(
-#         name="Server", value=f"{ctx.guild.name}", inline=True)
-#     timeout_embed.add_field(
-#         name="Responsible moderator", value=f"<@{ctx.author.id}>", inline=True)
-#     timeout_embed.add_field(
-#         name="Target", value=f"<@{target.id}>", inline=True)
-#     timeout_embed.add_field(
-#         name="Time", value=f"{time} {time_unit_text}", inline=True)
-#     timeout_embed.add_field(
-#         name="Reason", value=f"```{reason}```", inline=True)
+    timeout_embed = discord.Embed(
+        title=f"Timed {target} out", color=discord.Colour.blue())
+    timeout_embed.add_field(
+        name="Server", value=f"{ctx.guild.name}", inline=True)
+    timeout_embed.add_field(
+        name="Responsible moderator", value=f"<@{ctx.author.id}>", inline=True)
+    timeout_embed.add_field(
+        name="Target", value=f"<@{target.id}>", inline=True)
+    timeout_embed.add_field(
+        name="Time", value=f"{time} {time_unit_text}", inline=True)
+    timeout_embed.add_field(
+        name="Reason", value=f"```{reason}```", inline=True)
 
-#     await ctx.respond(embed=timeout_embed)
+    await ctx.respond(embed=timeout_embed)
 
-#     try:
-#         timeout_embed = discord.Embed(
-#             title=f"You have been timed out!", description=f"You have been timed-out on {ctx.guild.name} for {time} {time_unit_text}!\nReason: ```{reason}```", color=discord.Colour.blue())
-#         await target.send(embed=timeout_embed)
-#     except discord.errors.DiscordException:
-#         pass
+    try:
+        timeout_embed = discord.Embed(
+            title=f"You have been timed out!", description=f"You have been timed-out on {ctx.guild.name} for {time} {time_unit_text}!\nReason: ```{reason}```", color=discord.Colour.blue())
+        await target.send(embed=timeout_embed)
+    except discord.errors.DiscordException:
+        pass
 
-#     await asyncio.sleep(duration)
-#     try:
-#         timeout_over_embed = discord.Embed(
-#             title=f"Your timeout has expired", description=f"Your timeout on {ctx.guild.name} for {time} {time_unit_text} has expired.", color=discord.Colour.blue())
-#         await target.send(embed=timeout_over_embed)
-#     except discord.errors.DiscordException:
-#         pass
+    await asyncio.sleep(duration)
+    try:
+        timeout_over_embed = discord.Embed(
+            title=f"Your timeout has expired", description=f"Your timeout on {ctx.guild.name} for {time} {time_unit_text} has expired.", color=discord.Colour.blue())
+        await target.send(embed=timeout_over_embed)
+    except discord.errors.DiscordException:
+        pass
 
 
 
@@ -494,13 +495,13 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
 
             reason="No reason was specified"
 
-        await ctx.guild.kick(member)
+        await member.kick(reason=reason)
         
         em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Kicked successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
-        await member.send(embed = em)        
-        await ctx.send(embed = em)
+        await member.send(embed=em)
+        await ctx.reply(embed=em)
 
 
 @bot.command()
@@ -516,13 +517,13 @@ async def ban(ctx, member : discord.Member = None, *, reason = None):
 
             reason="No reason was specified"
             
-        await member.ban(reason = reason)
+        await member.ban(reason=reason)
 
         em = discord.Embed(title = f"<:Slimey_tick:933232568210436136> Banned successfully", color = discord.Color.green())
         em.add_field(name = "Member", value = f"Name: {member.name}" + "\n" + f"ID: {member.id}")
         em.add_field(name = "Reason", value = f"{reason}")
-        await member.send(embed = em)  
-        await ctx.send(embed = em)
+        await member.send(embed=em)
+        await ctx.reply(embed=em)
 
 
 @bot.command()
@@ -904,4 +905,4 @@ async def on_command_error(ctx, error):
         await ctx.reply(embed=em)
 
 
-bot.run(os.getenv("TOKEN"))
+bot.run("OTkwNDYwODc1MzA5NzIzNjU5.GvGtW2.35X0FGBSGGyWNsE5OPdoFj7uxdeGZj5QAQ7jEY")
