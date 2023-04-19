@@ -485,7 +485,6 @@ async def timeout(ctx, target: Option(discord.Member, "The member you want to ti
 @bot.command()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member = None, *, reason=None):
-
     if member==None:
         await ctx.reply("<:Slimey_x:933232568055267359> Please specify a member to kick")
     
@@ -507,7 +506,6 @@ async def kick(ctx, member: discord.Member = None, *, reason=None):
 @bot.command()
 @commands.has_permissions(ban_members = True)
 async def ban(ctx, member : discord.Member = None, *, reason = None):
-
     if member==None:
         await ctx.reply("<:Slimey_x:933232568055267359> Please specify a member to ban")
     
