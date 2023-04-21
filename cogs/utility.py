@@ -3,6 +3,8 @@ from discord.ext import commands
 from PIL import Image
 from io import BytesIO
 import asyncio
+import requests
+import json
 
 class utility(commands.Cog):
     def __init__(self, bot):
@@ -47,6 +49,53 @@ class utility(commands.Cog):
             await ctx.send(str(current_count))
             await asyncio.sleep(1)
         await ctx.send("**0**")
+    
+    @commands.command()
+    async def weather(self, ctx, location = None):
+        if location == None:
+            await ctx.send("Please include a location!")
+            return
+
+        response = requests.get(f"https://pixel-api-blvw.onrender.com/data/weather/?location={location}")
+        json_data = json.loads(response.text)
+        if "error" in json_data:
+            if json_data["error"] == "Location not found":
+                await ctx.send("I didn't find that city/location.")
+            else:
+                await ctx.send("Unknown Error. :person_shrugging:")
+            return
+
+        resp_location = json_data["info"]["location"]
+        resp_country = json_data["info"]["country"]
+        #resp_region = json_data["info"]["region"]
+        resp_temp = json_data["weather"]["temp_c"]
+        resp_temp_feel = json_data["weather"]["feels_c"]
+        resp_desc = json_data["weather"]["condition"]
+        resp_ico = json_data["weather"]["icon"]
+
+        if float(resp_temp_feel) <4:
+            color = 0x153db0
+        elif float(resp_temp_feel) <4:
+            color = 0x3a80d3
+        elif float(resp_temp_feel) <8:
+            color = 0x3ad3c5
+        elif float(resp_temp_feel) <15:
+            color = 0xf0da3d
+        elif float(resp_temp_feel) <20:
+            color = 0xf08e3d
+        elif float(resp_temp_feel) <25:
+            color = 0xf0633d
+        elif float(resp_temp_feel) <30:
+            color = 0xf31106
+        elif float(resp_temp_feel) <35:
+            color = 0xc40900
+        embed = discord.Embed(color=discord.Colour(color), title=f"Weather in {resp_location} ({resp_country})", description=f"**`Temperatur`:** {resp_temp} °C\n"
+        f"**`Feels like`:** {resp_temp_feel} °C\n"
+        f"**`Description`:** {resp_desc}\n\nWind and humidity coming soon!")
+        embed.set_thumbnail(url=resp_ico)
+        embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
+
+        await ctx.send(embed=embed)
     
 def setup(bot):
     bot.add_cog(utility(bot))
