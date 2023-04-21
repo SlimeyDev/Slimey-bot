@@ -1,6 +1,5 @@
 openai
 py-cord
-platform
 psutil
 dotenv
 requests
