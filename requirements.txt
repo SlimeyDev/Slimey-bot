@@ -2,4 +2,4 @@ openai
 py-cord
 psutil
 requests
-PIL
+pillow
