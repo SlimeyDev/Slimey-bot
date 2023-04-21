@@ -1,17 +1,5 @@
 openai
 py-cord
 psutil
-dotenv
 requests
-datetime
-struct
-socket
-asyncio
-secrets
-string
-random
-json
-io
-openai
 PIL
-os
