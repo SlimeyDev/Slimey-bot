@@ -49,10 +49,10 @@ async def on_ready():
     print("-"*50)
     print("Loading cogs...")
     # initialization of cogs
-    await bot.load_extension('cogs.moderation')
-    await bot.load_extension('cogs.fun')
-    await bot.load_extension('cogs.utility')
-    await bot.load_extension('cogs.ai')
+    bot.load_extension('cogs.moderation')
+    bot.load_extension('cogs.fun')
+    bot.load_extension('cogs.utility')
+    bot.load_extension('cogs.ai')
     print("All cogs loaded!")
     print("-"*50)
     Bot_Status = f"{len(bot.guilds)} servers | <help"
