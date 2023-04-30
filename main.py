@@ -60,7 +60,7 @@ async def on_ready():
     print(f"Logged in as {bot.user} (ID: {bot.user.id})")
     print("Bot is ready!")
     #sending message in bot status channel
-    channel = bot.get_channel(1097606810468352123)
+    channel = bot.get_channel(1097962463661670480)
     em = discord.Embed(title="Bot status", description="Bot is online and all systems are operational!",color=discord.Colour.green())
     em.set_thumbnail(url="https://i.ibb.co/9t7bbhY/Slimey.jpg")
     await channel.send(embed=em)
