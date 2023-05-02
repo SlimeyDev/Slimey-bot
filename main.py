@@ -104,6 +104,7 @@ def is_it_me(ctx):
     if ctx.author.id in owners:
         return ctx.author.id
 
+#commands
 @bot.command()
 async def ping(ctx):
     em = discord.Embed(
@@ -205,5 +206,7 @@ async def discordstatus(ctx):
     em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
     await ctx.reply(embed=em, mention_author=False)
 
+#loading TOKEN from env
 load_dotenv()
+#logging into bot using TOKEN
 bot.run(os.environ.get("TOKEN"))

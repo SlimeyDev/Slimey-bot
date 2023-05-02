@@ -5,9 +5,11 @@ import os
 from dotenv import load_dotenv
 
 class ai(commands.Cog):
+    #initializing cog
     def __init__(self, bot):
         self.bot = bot
 
+    #commands
     @commands.command()
     async def askGPT(self, ctx, *, asking: str = None):
         if asking == None:
@@ -27,4 +29,5 @@ class ai(commands.Cog):
             await ctx.reply("ChatGPT says:\n"+str(reply))
 
 def setup(bot):
+    #adding cog
     bot.add_cog(ai(bot))

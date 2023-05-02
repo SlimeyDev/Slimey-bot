@@ -7,9 +7,11 @@ import requests
 import json
 
 class utility(commands.Cog):
+    #initializing cog
     def __init__(self, bot):
         self.bot = bot
     
+    #commands
     @commands.command()
     async def youtube(self, ctx):
         await ctx.reply("SlimeyDev's youtube channel:\nhttps://www.youtube.com/channel/UCH-QFhiX-G8FFjQp8oL9_2A\nGO DROP ME A SUB!")
@@ -97,5 +99,6 @@ class utility(commands.Cog):
 
         await ctx.send(embed=embed)
     
+#adding cog
 def setup(bot):
     bot.add_cog(utility(bot))

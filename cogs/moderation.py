@@ -3,9 +3,11 @@ from discord.ext import commands
 import datetime
 
 class moderation(commands.Cog):
+    #initializing cog
     def __init__(self, bot):
         self.bot = bot
     
+    #commands
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def kick(self, ctx, user: discord.Member = None, *, reason=None):
@@ -85,5 +87,6 @@ class moderation(commands.Cog):
 
             await ctx.reply(embed=em)
 
+#adding cog
 def setup(bot):
     bot.add_cog(moderation(bot))

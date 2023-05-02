@@ -9,6 +9,7 @@ import asyncio
 import socket
 import struct
 
+#important functions
 def get_quote():
     response = requests.get("https://zenquotes.io/api/random")
     json_data = json.loads(response.text)
@@ -39,9 +40,11 @@ def get_Joke():
     return(joke)
 
 class fun(commands.Cog):
+    #initializing cog
     def __init__(self, bot):
         self.bot = bot
     
+    #commands
     @commands.command()
     async def dadjoke(self, ctx):
         joke = get_Joke()
@@ -315,5 +318,6 @@ class fun(commands.Cog):
 
             await ctx.reply(embed=em)
 
+#adding cog
 def setup(bot):
     bot.add_cog(fun(bot))
