@@ -9,6 +9,7 @@ import socket
 import os
 from dotenv import load_dotenv
 import requests
+from online import keep_online
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -206,6 +207,8 @@ async def discordstatus(ctx):
     em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
     await ctx.reply(embed=em, mention_author=False)
 
+#setting up server to keep bot online
+keep_online()
 #loading TOKEN from env
 load_dotenv()
 #logging into bot using TOKEN
