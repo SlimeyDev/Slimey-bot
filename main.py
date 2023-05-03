@@ -44,7 +44,7 @@ async def on_ready():
     os_system = platform.system()
     os_release = platform.release()
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk** Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk** Total: %d MB" % (total // (2**30))+"\n Used: %d MB" % (used // (2**30)) + "\n Free: %d MB" % (free // (2**30))+"\n"
     host = socket.gethostname()
     print("All stats loaded!")
     print("-"*50)
