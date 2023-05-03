@@ -99,6 +99,18 @@ class utility(commands.Cog):
 
         await ctx.send(embed=embed)
     
+    @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def avatar(self, ctx, target: discord.Member = None):
+        if target == None:
+            target = ctx.author
+
+            
+        em = discord.Embed(title = f"{target.name}'s Avatar")
+        em.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
+        em.set_image(url=target.avatar.url)
+        await ctx.send(embed = em)
+    
 #adding cog
 def setup(bot):
     bot.add_cog(utility(bot))
