@@ -187,7 +187,7 @@ async def invite(ctx):
 
 @bot.command()
 async def support(ctx):
-    await ctx.reply("You can join our support server from this link:\nhttps://discord.gg/KvUHQby2")
+    await ctx.reply("You can join our support server from this link:\nhttps://discord.gg/f8WgAS733R")
 
 @bot.command(aliases=["discord", "isdiscorddown", "discorddown"])
 async def discordstatus(ctx):
