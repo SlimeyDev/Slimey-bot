@@ -52,7 +52,6 @@ async def on_ready():
     bot.load_extension('cogs.moderation')
     bot.load_extension('cogs.fun')
     bot.load_extension('cogs.utility')
-    bot.load_extension('cogs.ai')
     print("All cogs loaded!")
     print("-"*50)
     Bot_Status = f"{len(bot.guilds)} servers | <help"
@@ -132,8 +131,6 @@ async def help(ctx, mode: str = None):
             em = discord.Embed(title="👀 Utility/other commands:", description=f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<avatar`\n`<countdown`\n`<discord`\n`<ping`", color=discord.Color.purple())
             
             await ctx.reply(embed=em)
-        elif mode == "ai":
-            em = discord.Embed(title="🤖 AI commands (more coming soon)", description = f"`<askGPT`", color=discord.Color.green())
             
             await ctx.reply(embed=em)
 
