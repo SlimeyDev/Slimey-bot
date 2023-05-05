@@ -115,7 +115,7 @@ async def ping(ctx):
 @bot.command()
 async def help(ctx, mode: str = None):
     if mode == None:
-        em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help utility`, `<help ai`", color = discord.Color.gold())
+        em = discord.Embed(title="Current commands:", description=f"`<help fun`, `<help moderation`, `<help utility`", color = discord.Color.gold())
         em.add_field(name="Prefix", value=f"My prefix is '`<`'..", inline=False)
         await ctx.reply(embed=em)
     else:
