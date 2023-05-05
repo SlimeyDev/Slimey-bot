@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#replit
+.replit
+replit.nix
+poetry.lock
+pyproject.toml
+
 # C extensions
 *.so
 

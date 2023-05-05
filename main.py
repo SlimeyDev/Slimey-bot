@@ -9,6 +9,7 @@ import socket
 import os
 from dotenv import load_dotenv
 import requests
+from online import keep_online
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -34,7 +35,7 @@ async def on_ready():
     stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
     print("Current stats:", stats)
     global bot_version
-    bot_version = "20.0.0"
+    bot_version = "20.1.2"
     global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
     start_time = int(time.time())
     cpu_usage = psutil.cpu_percent(4)
@@ -43,7 +44,7 @@ async def on_ready():
     os_system = platform.system()
     os_release = platform.release()
     total, used, free = shutil.disk_usage("/")
-    disk_stats = f"**Disk** Total: %d GB" % (total // (2**30))+"\n Used: %d GB" % (used // (2**30)) + "\n Free: %d GB" % (free // (2**30))+"\n"
+    disk_stats = f"**Disk** Total: %d MB" % (total // (2**30))+"\n Used: %d MB" % (used // (2**30)) + "\n Free: %d MB" % (free // (2**30))+"\n"
     host = socket.gethostname()
     print("All stats loaded!")
     print("-"*50)
@@ -203,6 +204,8 @@ async def discordstatus(ctx):
     em.set_thumbnail(url="https://i.ibb.co/0Cz6QWz/Discord.png")
     await ctx.reply(embed=em, mention_author=False)
 
+#setting up server to keep bot online
+keep_online()
 #loading TOKEN from env
 load_dotenv()
 #logging into bot using TOKEN
