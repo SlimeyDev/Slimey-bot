@@ -76,7 +76,7 @@ class moderation(commands.Cog):
             await member.timeout_for(duration)
             await ctx.reply(f"{member} timed out for {minutes} minutes.")
         elif minutes == 0:
-            await ctx.reply(":red_circle:Please mention the number of minutes you want to timeout someone please!")
+            await ctx.reply(":red_circle:Please mention the number of minutes you want to timeout someone please!\n`<timeout [member] [time in minutes]`")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
