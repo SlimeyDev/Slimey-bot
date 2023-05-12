@@ -9,6 +9,9 @@ replit.nix
 poetry.lock
 pyproject.toml
 
+#rip.jpg
+rip_gen.jpg
+
 # C extensions
 *.so
 

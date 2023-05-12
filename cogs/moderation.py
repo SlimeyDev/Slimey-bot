@@ -69,14 +69,14 @@ class moderation(commands.Cog):
                 await ctx.reply("Disabled slowmode!")
     
     @commands.command()
-    async def timeout(self, ctx, member: discord.Member, minutes: int):
+    async def timeout(self, ctx, member: discord.Member = None, minutes: int = 10):
 
         if minutes > 0:
             duration = datetime.timedelta(minutes=minutes)
             await member.timeout_for(duration)
             await ctx.reply(f"{member} timed out for {minutes} minutes.")
-        elif minutes == 0:
-            await ctx.reply(":red_circle:Please mention the number of minutes you want to timeout someone please!\n`<timeout [member] [time in minutes]`")
+        elif minutes == 0 or member == None:
+            await ctx.reply(":red_circle:Parameter not mentioned!\n`<timeout [member] [time in minutes]`")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
