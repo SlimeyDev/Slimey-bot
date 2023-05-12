@@ -71,12 +71,12 @@ class moderation(commands.Cog):
     @commands.command()
     async def timeout(self, ctx, member: discord.Member = None, minutes: int = 10):
 
-        if minutes > 0:
+        if minutes > 0 and not member == None:
             duration = datetime.timedelta(minutes=minutes)
             await member.timeout_for(duration)
             await ctx.reply(f"{member} timed out for {minutes} minutes.")
         elif minutes == 0 or member == None:
-            await ctx.reply(":red_circle:Parameter not mentioned!\n`<timeout [member] [time in minutes]`")
+            await ctx.reply(":red_circle: Parameter not mentioned!\n`<timeout [member] [time in minutes]`")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):

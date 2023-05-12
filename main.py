@@ -36,7 +36,7 @@ async def on_ready():
   stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
   print("Current stats:", stats)
   global bot_version
-  bot_version = "20.1.2"
+  bot_version = "20.1.3"
   global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
   start_time = int(time.time())
   cpu_usage = psutil.cpu_percent(4)
