@@ -39,7 +39,7 @@ class utility(commands.Cog):
         rip.paste(pic, (337, 215))
         rip.save("rip_gen.jpg")
 
-        await ctx.send(file=discord.File("rip_gen.jpg", filename="rip.jpg"))
+        await ctx.repond(file=discord.File("rip_gen.jpg", filename="rip.jpg"))
     
     @commands.command()
     async def countdown(self, ctx, count=10):
