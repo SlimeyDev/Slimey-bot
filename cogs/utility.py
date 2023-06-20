@@ -26,18 +26,20 @@ class utility(commands.Cog):
                         description="Click the title to report a bug/problem!", color=discord.Color.gold())
         await ctx.reply(embed=em)
     
-    @commands.command()
+    @commands.slash_command()
     async def rip(self, ctx, target: discord.Member = None):
-        if target == None:
+        if target is None:
             target = ctx.author
+
         rip = Image.open("rip.jpg")
-        asset = target.avatar
+        asset = target.avatar_url_as(size=128)
         data = BytesIO(await asset.read())
         pic = Image.open(data)
         pic = pic.resize((213, 213))
         rip.paste(pic, (337, 215))
         rip.save("rip_gen.jpg")
-        await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
+
+        await ctx.send(file=discord.File("rip_gen.jpg", filename="rip.jpg"))
     
     @commands.command()
     async def countdown(self, ctx, count=10):
