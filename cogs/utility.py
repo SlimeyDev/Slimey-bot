@@ -99,16 +99,20 @@ class utility(commands.Cog):
 
         await ctx.send(embed=embed)
     
-    @commands.command()
-    async def avatar(self, ctx, target: discord.Member = None):
-        if target == None:
-            target = ctx.author
-  
-              
-        em = discord.Embed(title = f"{target.name}'s Avatar")
+    @commands.slash_command(
+        name="avatar",
+        description="Displays the avatar of a user or the mentioned user.",
+        guild_ids=[1097606809629503578]
+    )
+    async def avatar(self, ctx, user: discord.User = None):
+        if not user:
+            user = ctx.author
+
+        em = discord.Embed(title=f"{user.name}'s Avatar")
         em.set_footer(icon_url=ctx.author.avatar, text=f"Requested by {ctx.author.name}")
-        em.set_image(url=target.avatar.url)
-        await ctx.send(embed = em)
+        em.set_image(url=user.avatar.url)
+
+        await ctx.respond(embed=em)
     
 #adding cog
 def setup(bot):
