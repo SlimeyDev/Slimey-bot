@@ -26,7 +26,10 @@ class utility(commands.Cog):
                         description="Click the title to report a bug/problem!", color=discord.Color.gold())
         await ctx.reply(embed=em)
     
-    @commands.slash_command()
+    @commands.slash_command(
+      name="rip",
+      description="Edits the user's profile into a gravestone."
+    )
     async def rip(self, ctx, target: discord.Member = None):
         if target is None:
             target = ctx.author
@@ -103,8 +106,7 @@ class utility(commands.Cog):
     
     @commands.slash_command(
         name="avatar",
-        description="Displays the avatar of a user or the mentioned user.",
-        guild_ids=[1097606809629503578]
+        description="Displays the avatar of a user or the mentioned user."
     )
     async def avatar(self, ctx, user: discord.User = None):
         if not user:
