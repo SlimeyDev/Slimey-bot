@@ -25,7 +25,7 @@ class utility(commands.Cog):
         em = discord.Embed(title="Report problems!", url="https://forms.gle/enMgTqXoVcYzm59a9",
                         description="Click the title to report a bug/problem!", color=discord.Color.gold())
         await ctx.reply(embed=em)
-    
+
     @commands.command()
     async def countdown(self, ctx, count=10):
         if count > 100:
@@ -85,7 +85,7 @@ class utility(commands.Cog):
         embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
 
         await ctx.send(embed=embed)
-    
+        
 #adding cog
 def setup(bot):
     bot.add_cog(utility(bot))
