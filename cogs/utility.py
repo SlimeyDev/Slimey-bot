@@ -26,21 +26,6 @@ class utility(commands.Cog):
                         description="Click the title to report a bug/problem!", color=discord.Color.gold())
         await ctx.reply(embed=em)
     
-    @commands.slash_command()
-    async def rip(self, ctx, target: discord.Member = None):
-        if target is None:
-            target = ctx.author
-
-        rip = Image.open("rip.jpg")
-        asset = target.avatar_url_as(size=128)
-        data = BytesIO(await asset.read())
-        pic = Image.open(data)
-        pic = pic.resize((213, 213))
-        rip.paste(pic, (337, 215))
-        rip.save("rip_gen.jpg")
-
-        await ctx.repond(file=discord.File("rip_gen.jpg", filename="rip.jpg"))
-    
     @commands.command()
     async def countdown(self, ctx, count=10):
         if count > 100:
@@ -100,21 +85,6 @@ class utility(commands.Cog):
         embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
 
         await ctx.send(embed=embed)
-    
-    @commands.slash_command(
-        name="avatar",
-        description="Displays the avatar of a user or the mentioned user.",
-        guild_ids=[1097606809629503578]
-    )
-    async def avatar(self, ctx, user: discord.User = None):
-        if not user:
-            user = ctx.author
-
-        em = discord.Embed(title=f"{user.name}'s Avatar")
-        em.set_footer(icon_url=ctx.author.avatar, text=f"Requested by {ctx.author.name}")
-        em.set_image(url=user.avatar.url)
-
-        await ctx.respond(embed=em)
     
 #adding cog
 def setup(bot):

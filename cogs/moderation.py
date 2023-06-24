@@ -1,6 +1,7 @@
 import discord
-from discord.ext import commands
 import datetime
+import asyncio
+from discord.ext import commands
 
 class moderation(commands.Cog):
     #initializing cog
@@ -67,25 +68,6 @@ class moderation(commands.Cog):
             elif seconds == 0:
                 await ctx.channel.edit(slowmode_delay=seconds)
                 await ctx.reply("Disabled slowmode!")
-    
-    @commands.command()
-    async def timeout(self, ctx, member: discord.Member = None, minutes: int = 10):
-
-        if minutes > 0 and not member == None:
-            duration = datetime.timedelta(minutes=minutes)
-            await member.timeout_for(duration)
-            await ctx.reply(f"{member} timed out for {minutes} minutes.")
-        elif minutes == 0 or member == None:
-            await ctx.reply(":red_circle: Parameter not mentioned!\n`<timeout [member] [time in minutes]`")
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-
-            em = discord.Embed(title=":red_circle: Permission Error",
-                            description="You don't have the permission(s) to do that!", color=discord.Colour.red())
-
-            await ctx.reply(embed=em)
 
 #adding cog
 def setup(bot):
