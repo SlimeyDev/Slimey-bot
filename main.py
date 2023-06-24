@@ -323,7 +323,7 @@ async def avatar(self, ctx, user: discord.User):
   embed.set_image(url=user.avatar_url)
   await ctx.respond(embed=embed)
 
-@commands.command()
+@bot.command()
 async def rip(self, ctx, target: discord.Member = None):
     if target is None:
         target = ctx.author
