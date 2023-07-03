@@ -25,7 +25,20 @@ class utility(commands.Cog):
         em = discord.Embed(title="Report problems!", url="https://forms.gle/enMgTqXoVcYzm59a9",
                         description="Click the title to report a bug/problem!", color=discord.Color.gold())
         await ctx.reply(embed=em)
-
+    
+    @commands.command()
+    async def rip(self, ctx, target: discord.Member = None):
+        if target == None:
+            target = ctx.author
+        rip = Image.open("rip.jpg")
+        asset = target.avatar
+        data = BytesIO(await asset.read())
+        pic = Image.open(data)
+        pic = pic.resize((213, 213))
+        rip.paste(pic, (337, 215))
+        rip.save("rip_gen.jpg")
+        await ctx.send(file = discord.File("rip_gen.jpg", filename="rip.jpg"))
+    
     @commands.command()
     async def countdown(self, ctx, count=10):
         if count > 100:
@@ -85,7 +98,18 @@ class utility(commands.Cog):
         embed.set_footer(icon_url=ctx.author.avatar.url, text=f"Requested by {ctx.author.name}")
 
         await ctx.send(embed=embed)
-        
+    
+    @commands.command()
+    async def avatar(self, ctx, target: discord.Member = None):
+        if target == None:
+            target = ctx.author
+  
+              
+        em = discord.Embed(title = f"{target.name}'s Avatar")
+        em.set_footer(icon_url=ctx.author.avatar, text=f"Requested by {ctx.author.name}")
+        em.set_image(url=target.avatar.url)
+        await ctx.send(embed = em)
+    
 #adding cog
 def setup(bot):
     bot.add_cog(utility(bot))
