@@ -69,6 +69,7 @@ class moderation(commands.Cog):
                 await ctx.reply("Disabled slowmode!")
     
     @commands.command()
+    @commands.has_permissions(timeout_members=True)
     async def timeout(self, ctx, member: discord.Member = None, minutes: int = 10):
 
         if minutes > 0 and not member == None:
