@@ -11,10 +11,6 @@ import os
 from dotenv import load_dotenv
 import requests
 from online import keep_online
-import datetime
-import asyncio
-from PIL import Image
-from io import BytesIO
 
 intents = discord.Intents.default()
 intents.message_content = True
