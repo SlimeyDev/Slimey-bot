@@ -144,7 +144,7 @@ async def help(ctx, mode: str = None):
       title="Current commands:",
       description=f"`<help fun`, `<help moderation`, `<help utility`",
       color=discord.Color.gold())
-    em.add_field(name="Prefix", value=f"My prefix is '`<`'..", inline=False)
+    em.add_field(name="Prefix", value=f"My prefix is '`<`'.", inline=False)
     await ctx.reply(embed=em)
   else:
     if mode == "fun":
