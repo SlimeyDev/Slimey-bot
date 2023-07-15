@@ -10,7 +10,16 @@ class utility(commands.Cog):
     #initializing cog
     def __init__(self, bot):
         self.bot = bot
+        self.sniped_messages = {}
     
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        # Store the deleted message in the sniped_messages dictionary
+        self.sniped_messages[message.channel.id] = {
+            'content': message.content,
+            'author': message.author.name
+        }
+
     #commands
     @commands.command()
     async def youtube(self, ctx):
@@ -109,6 +118,27 @@ class utility(commands.Cog):
         em.set_footer(icon_url=ctx.author.avatar, text=f"Requested by {ctx.author.name}")
         em.set_image(url=target.avatar.url)
         await ctx.send(embed = em)
+    
+    @commands.command()
+    async def snipe(self, ctx):
+        # Check if there is a sniped message in the current channel
+        if ctx.channel.id in self.sniped_messages:
+            sniped_message = self.sniped_messages[ctx.channel.id]
+            # Retrieve and send the sniped message
+            embed = discord.Embed(
+                title="Sniped Message",
+                description=sniped_message['content'],
+                color=0x00FF00  # You can customize the color as desired
+            )
+            embed.set_footer(text=f"Sent by {sniped_message['author']}")
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="No Sniped Message",
+                description="No recently deleted messages to snipe.",
+                color=0xFF0000  # You can customize the color as desired
+            )
+            await ctx.send(embed=embed)
     
 #adding cog
 def setup(bot):

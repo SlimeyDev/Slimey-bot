@@ -36,7 +36,7 @@ async def on_ready():
   stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
   print("Current stats:", stats)
   global bot_version
-  bot_version = "20.2.0"
+  bot_version = "20.3.0"
   global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
   start_time = int(time.time())
   cpu_usage = psutil.cpu_percent(4)
@@ -167,7 +167,7 @@ async def help(ctx, mode: str = None):
       em = discord.Embed(
         title="👀 Utility/other commands:",
         description=
-        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`/avatar`\n`<countdown`\n`<discord`\n`<ping`",
+        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`/avatar`\n`<countdown`\n`<discord`\n`<ping`\n`<snipe`",
         color=discord.Color.purple())
 
       await ctx.reply(embed=em)
