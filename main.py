@@ -149,7 +149,7 @@ async def help(ctx, mode: str = None):
       em = discord.Embed(
         title="😂 Fun commands:",
         description=
-        f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`<password`\n`/rip`\n`<kill`\n`<fox`\n`<hack`\n`<ip`\n`<coinflip`\n`<rps`",
+        f"`<dadjoke`\n`<inspire`\n`<magic8ball`\n`<yesorno`\n`<sayweird`\n`<say`\n`<password`\n`<rip`\n`<kill`\n`<fox`\n`<hack`\n`<ip`\n`<coinflip`\n`<rps`",
         color=discord.Color.green())
 
       await ctx.reply(embed=em)
