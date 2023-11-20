@@ -50,10 +50,16 @@ async def on_ready():
   print("All stats loaded!")
   print("-" * 50)
   print("Loading cogs...")
-  # initialization of cogs
-  bot.load_extension('cogs.moderation')
-  bot.load_extension('cogs.fun')
-  bot.load_extension('cogs.utility')
+  cogs_to_load = ['cogs.moderation', 'cogs.fun', 'cogs.utility']
+
+  # Iterate through cogs and load them if they are not already loaded
+  for cog in cogs_to_load:
+    if cog not in bot.extensions:
+      bot.load_extension(cog)
+      print(f"Cog '{cog}' loaded.")
+    else:
+      print(f"Cog '{cog}' is already loaded.")
+
   print("All cogs loaded!")
   print("-" * 50)
   Bot_Status = f"{len(bot.guilds)} servers | <help"
@@ -165,7 +171,7 @@ async def help(ctx, mode: str = None):
       em = discord.Embed(
         title="👀 Utility/other commands:",
         description=
-        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<avatar`\n`<countdown`\n`<discord`\n`<ping`\n`<snipe`",
+        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<avatar`\n`<countdown`\n`<discord`\n`<ping`\n`<snipe`\n`<wiki`",
         color=discord.Color.purple())
 
       await ctx.reply(embed=em)
