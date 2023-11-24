@@ -98,8 +98,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
   if message.content == "<@!990460875309723659>" or message.content == "<@990460875309723659>":
-    await message.channel.send(
-      f'My prefix is **`<`**. Type "<help" for all the commands!')
+    await message.channel.send(f'My prefix is **`<`**. Type "<help" for all the commands!')
   await bot.process_commands(message)
 
 
