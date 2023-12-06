@@ -122,14 +122,12 @@ class utility(commands.Cog):
     
     @commands.command()
     async def snipe(self, ctx):
-        # Check if there is a sniped message in the current channel
         if ctx.channel.id in self.sniped_messages:
             sniped_message = self.sniped_messages[ctx.channel.id]
-            # Retrieve and send the sniped message
             embed = discord.Embed(
                 title="Sniped Message",
                 description=sniped_message['content'],
-                color=0x00FF00  # You can customize the color as desired
+                color=0x00FF00
             )
             embed.set_footer(text=f"Sent by {sniped_message['author']}")
             await ctx.send(embed=embed)
@@ -137,16 +135,20 @@ class utility(commands.Cog):
             embed = discord.Embed(
                 title="No Sniped Message",
                 description="No recently deleted messages to snipe.",
-                color=0xFF0000  # You can customize the color as desired
+                color=0xFF0000
             )
             await ctx.send(embed=embed)
 
     @commands.command()
     async def wiki(ctx,*, query):
         try:
-            results = wikipedia.summary(query, sentences=10)
-            embed = discord.Embed(title=query, description=results, color=discord.Color.green())
-            await ctx.send(embed=embed)
+            if query == None:
+                embed = discord.Embed(title=":red_circle: No query!", description="Please inculde a topic to search on wikipedia.\n`<wiki [topic]`", color=discord.Color.red())
+                await ctx.send(embed=embed)
+            else:
+                results = wikipedia.summary(query, sentences=10)
+                embed = discord.Embed(title=query, description=results, color=discord.Color.green())
+                await ctx.send(embed=embed)
         except Exception as e:
             embed = discord.Embed(title=":red_circle: An Error Occured!", description="This topic is either not on wikipedia or there has been an internal error.", color=discord.Color.red())
             await ctx.send(embed=embed)
