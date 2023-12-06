@@ -140,7 +140,7 @@ class utility(commands.Cog):
             await ctx.send(embed=embed)
 
     @commands.command()
-    async def wiki(ctx,*, query):
+    async def wiki(ctx,*, query: str==None):
         try:
             if query == None:
                 embed = discord.Embed(title=":red_circle: No query!", description="Please inculde a topic to search on wikipedia.\n`<wiki [topic]`", color=discord.Color.red())
