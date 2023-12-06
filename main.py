@@ -9,6 +9,7 @@ import socket
 import os
 from dotenv import load_dotenv
 import requests
+import sys
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -204,6 +205,13 @@ async def stats(ctx):
   await ctx.send(info)
   await ctx.message.remove_reaction("🔄", bot.user)
 
+
+@bot.command()
+@commands.check(is_it_me)
+async def restart(ctx):
+  await ctx.send('Restarting the bot.... This might take some time')
+  await bot.close()
+  os.execl(sys.executable, sys.executable, *sys.argv)
 
 @bot.command(aliases=["about", "botinfo", "bot"])
 async def info(ctx):
