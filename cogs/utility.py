@@ -5,6 +5,7 @@ from io import BytesIO
 import asyncio
 import requests
 import json
+import wikipedia
 
 class utility(commands.Cog):
     #initializing cog
@@ -138,6 +139,16 @@ class utility(commands.Cog):
                 description="No recently deleted messages to snipe.",
                 color=0xFF0000  # You can customize the color as desired
             )
+            await ctx.send(embed=embed)
+
+    @commands.command()
+    async def wiki(ctx,*, query):
+        try:
+            results = wikipedia.summary(query, sentences=10)
+            embed = discord.Embed(title=query, description=results, color=discord.Color.green())
+            await ctx.send(embed=embed)
+        except Exception as e:
+            embed = discord.Embed(title=":red_circle: An Error Occured!", description="This topic is either not on wikipedia or there has been an internal error.", color=discord.Color.red())
             await ctx.send(embed=embed)
     
 #adding cog

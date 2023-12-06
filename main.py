@@ -34,7 +34,7 @@ async def on_ready():
   stats = {"guilds": len(bot.guilds), "users": members, "channels": channels}
   print("Current stats:", stats)
   global bot_version
-  bot_version = "20.3.0"
+  bot_version = "20.4.0"
   global cpu_usage, ram_usage, python_version, os_system, os_release, disk_stats
   start_time = int(time.time())
   cpu_usage = psutil.cpu_percent(4)
@@ -174,7 +174,6 @@ async def help(ctx, mode: str = None):
         color=discord.Color.purple())
 
       await ctx.reply(embed=em)
-
 
 @bot.command()
 @commands.check(is_it_me)
