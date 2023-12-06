@@ -170,7 +170,7 @@ async def help(ctx, mode: str = None):
       em = discord.Embed(
         title="👀 Utility/other commands:",
         description=
-        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<avatar`\n`<countdown`\n`<discord`\n`<ping`\n`<snipe`\n`<wiki`",
+        f"`<youtube`\n`<website`\n`<invite`\n`<report`\n`<info`\n`<avatar`\n`<countdown`\n`<discord`\n`<ping`\n`<snipe`\n`<wiki`\n`<userinfo`",
         color=discord.Color.purple())
 
       await ctx.reply(embed=em)

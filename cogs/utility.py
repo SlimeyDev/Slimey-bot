@@ -6,6 +6,7 @@ import asyncio
 import requests
 import json
 import wikipedia
+import datetime
 
 class utility(commands.Cog):
     #initializing cog
@@ -152,6 +153,25 @@ class utility(commands.Cog):
         except Exception as e:
             embed = discord.Embed(title=":red_circle: An Error Occured!", description="This topic is either not on wikipedia or there has been an internal error.", color=discord.Color.red())
             await ctx.send(embed=embed)
+
+    @commands.command()
+    async def userinfo(self, ctx, member: discord.Member = None):
+        if not member:
+            member = ctx.author
+
+        date_format = "%a, %d %b %Y %I:%M %p"
+
+        embed = discord.Embed(title="User information", color=member.color, timestamp=datetime.datetime.now(datetime.timezone.utc))
+        embed.set_author(name=str(member), icon_url=member.avatar.url)
+        embed.set_thumbnail(url=member.avatar.url)
+        embed.add_field(name="ID", value=member.id, inline=False)
+        embed.add_field(name="Server join date", value=member.joined_at.strftime(date_format), inline=False)
+        embed.add_field(name="Discord join date", value=member.created_at.strftime(date_format), inline=False)
+        roles = [role for role in member.roles]
+        embed.add_field(name="Roles", value=" ".join([role.mention for role in roles if role != ctx.guild.default_role]), inline=False)
+        embed.add_field(name="Boosted", value=bool(member.premium_since), inline=False)
+
+        await ctx.send(embed=embed)
     
 #adding cog
 def setup(bot):
